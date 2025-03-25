@@ -11,7 +11,12 @@ const Footer = () => {
         <button className="flex items-center bg-blue-500 text-white px-4 py-1 rounded">
           <FaTwitter className="mr-2" /> Twitter
         </button>
-        <button className="flex items-center bg-red-600 text-white px-4 py-1 rounded">
+        <button 
+          className="flex items-center text-white px-4 py-1 rounded" 
+          style={{ 
+            background: "linear-gradient(90deg, #4285F4, #34A853, #FBBC05, #EA4335)"
+          }}
+        >
           <FaGoogle className="mr-2" /> Google+
         </button>
       </div>
