@@ -8,9 +8,6 @@ const MainLayout = () => {
     <>
       <Navbar />
       <main className="flex flex-col items-center justify-center min-h-screen">
-        <h1 className="text-3xl font-bold">
-          Welcome to Smart Shopping Assistant!
-        </h1>
         <Outlet />
       </main>
       <Footer />
