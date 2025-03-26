@@ -51,7 +51,7 @@ export default function SearchResults() {
   };
 
   return (
-    <div className="min-h-screen bg-white p-8">
+    <div className="min-h-screen bg-white p-8 mt-16">
       {/* Breadcrumb Navigation */}
       <nav className="text-sm mb-4">
         <Link to="/" className="text-blue-600 hover:underline">Home</Link>
