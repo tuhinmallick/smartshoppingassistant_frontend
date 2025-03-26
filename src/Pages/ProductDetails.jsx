@@ -100,7 +100,8 @@ const ProductDetails = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gray-100 p-8">
+    <div className="min-h-screen bg-gray-100 p-8 mt-16">
+
       <div className="max-w-6xl mx-auto bg-white rounded-lg shadow-lg p-6">
         <div className="flex flex-col md:flex-row gap-8">
           {/* Product Image */}
