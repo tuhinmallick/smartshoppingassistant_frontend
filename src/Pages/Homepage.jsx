@@ -1,4 +1,5 @@
 import React from "react";
+import Sidebar from "../components/Sidebar";
 import { Link } from "react-router-dom";
 
 export default function HomePage() {
@@ -7,8 +8,7 @@ export default function HomePage() {
      
       <section
         className="w-full h-screen flex flex-col justify-center items-center text-center bg-cover bg-center text-white"
-        style={{ backgroundImage: "url('/images/hero-bg.jpg')" }}
-      >
+        style={{ backgroundImage: "url('/images/hero-bg.jpg')" }}>
         <div className="bg-black bg-opacity-50 p-6 rounded-lg">
           <h1 className="text-4xl sm:text-5xl font-bold">
             Find the Best Mobile Deals

@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from "react";
+import { getFromLocalStorage } from "../data/localstorage"; // Updated import path
 
 const SavedProducts = () => {
   const [products, setProducts] = useState([]);
 
   useEffect(() => {
-    const saved = JSON.parse(localStorage.getItem("savedProducts")) || [];
-    setProducts(saved);
+    const savedProducts = getFromLocalStorage("savedProducts") || [];
+    setProducts(savedProducts);
   }, []);
 
   return (
@@ -16,7 +17,7 @@ const SavedProducts = () => {
       ) : (
         <ul className="list-disc pl-5">
           {products.map((product, index) => (
-            <li key={index}>{product}</li>
+            <li key={index}>{product.name}</li>
           ))}
         </ul>
       )}
