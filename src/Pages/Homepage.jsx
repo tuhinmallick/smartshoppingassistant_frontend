@@ -1,5 +1,5 @@
 import React from "react";
-import Sidebar from "../components/Sidebar"; // Adjust the path as necessary
+import Sidebar from "../components/Sidebar";
 
 export default function Homepage() {
   return (

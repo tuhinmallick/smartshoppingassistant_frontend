@@ -1,10 +1,13 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { fakePriceAlerts } from "../data/fakeData"; // Import the fake price alert data
 
 const PriceAlerts = () => {
-  const [alerts, setAlerts] = useState([
-    "iPhone 13 - $699",
-    "Samsung TV - $499",
-  ]);
+  const [alerts, setAlerts] = useState([]);
+
+  useEffect(() => {
+    // Simulating fetching price alert data
+    setAlerts(fakePriceAlerts); // Use the fakePriceAlerts directly for now
+  }, []);
 
   return (
     <div className="max-w-3xl mx-auto p-6 bg-white shadow-md rounded-xl mt-10">
@@ -13,8 +16,12 @@ const PriceAlerts = () => {
         <p>No price alerts set.</p>
       ) : (
         <ul className="list-disc pl-5">
-          {alerts.map((alert, index) => (
-            <li key={index}>{alert}</li>
+          {alerts.map((alert) => (
+            <li key={alert.id}>
+              <strong>{alert.product}</strong> - Current Price:{" "}
+              {alert.currentPrice} - Alert Price: {alert.alertPrice} - Status:{" "}
+              {alert.status}
+            </li>
           ))}
         </ul>
       )}
