@@ -17,22 +17,29 @@ const Navbar = () => {
   }, []);
 
   return (
-    <nav className="bg-gray-300 p-4 flex justify-between items-center">
-      {/* Logo / Branding */}
+    <nav className="bg-gradient-to-r from-blue-500  p-4 flex justify-between items-center shadow-lg rounded-b-xl fixed top-0 left-0 w-full z-50">
       <div className="flex items-center space-x-4">
-        <span className="text-lg font-bold">Smart Shopping Assistant</span>
+        {/* Link to Homepage */}
+        <Link to="/" className="text-3xl font-bold text-white tracking-wide hover:text-yellow-300 transition">
+          Smart Shopping Assistant
+        </Link>
       </div>
 
       {/* Icons */}
-      <div className="flex space-x-4 relative">
-        <a href="#" className="text-yellow-500">
-          🔔
+      <div className="flex space-x-6 items-center">
+        {/* Notification Icon */}
+        <a href="#" className="text-white text-xl hover:text-yellow-400 transition-colors duration-300">
+          <span role="img" aria-label="Notification">🔔</span>
         </a>
-        <a href="#" className="text-green-500">
-          💬
+
+        {/* Wishlist Icon */}
+        <a href="#" className="text-white text-xl hover:text-red-400 transition-colors duration-300">
+          <span role="img" aria-label="Wishlist">❤️</span>
         </a>
-        <a href="#" className="text-red-500">
-          ❤️
+
+        {/* Chat Icon */}
+        <a href="#" className="text-white text-xl hover:text-green-400 transition-colors duration-300">
+          <span role="img" aria-label="Chat">💬</span>
         </a>
 
         {/* User Icon with Dropdown */}
@@ -43,9 +50,9 @@ const Navbar = () => {
               e.preventDefault();
               setMenuOpen(!menuOpen);
             }}
-            className="text-gray-600 cursor-pointer"
-          >
-            👤
+            className="text-white text-xl hover:text-gray-400 transition-colors duration-300">
+           {/* User Profile Icon */}
+              <span role="img" aria-label="Profile">👤</span>
           </a>
 
           {menuOpen && (
