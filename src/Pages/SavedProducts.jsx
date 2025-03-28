@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { getFromLocalStorage } from "../data/localstorage"; // Updated import path
+import { getFromLocalStorage } from "../data/localstorage";
 
 const SavedProducts = () => {
   const [products, setProducts] = useState([]);

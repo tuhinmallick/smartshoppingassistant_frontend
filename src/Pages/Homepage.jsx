@@ -5,10 +5,10 @@ import { Link } from "react-router-dom";
 export default function HomePage() {
   return (
     <div className="min-h-screen flex flex-col bg-gray-100">
-     
       <section
         className="w-full h-screen flex flex-col justify-center items-center text-center bg-cover bg-center text-white"
-        style={{ backgroundImage: "url('/images/hero-bg.jpg')" }}>
+        style={{ backgroundImage: "url('/images/hero-bg.jpg')" }}
+      >
         <div className="bg-black bg-opacity-50 p-6 rounded-lg">
           <h1 className="text-4xl sm:text-5xl font-bold">
             Find the Best Mobile Deals
@@ -19,7 +19,6 @@ export default function HomePage() {
         </div>
       </section>
 
-      
       <section className="w-full flex justify-center py-8 bg-white shadow-md">
         <div className="flex w-full max-w-2xl">
           <input
@@ -33,10 +32,11 @@ export default function HomePage() {
         </div>
       </section>
 
-      
       <section className="py-12 px-4 bg-gray-100">
         <div className="max-w-6xl mx-auto">
-          <h2 className="text-3xl font-bold text-center mb-8">Shop by Category</h2>
+          <h2 className="text-3xl font-bold text-center mb-8">
+            Shop by Category
+          </h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {[
               { name: "Electronics", icon: "🖥️", color: "bg-indigo-400" },
@@ -56,10 +56,11 @@ export default function HomePage() {
         </div>
       </section>
 
-      
       <section className="py-12 px-4 bg-white">
         <div className="max-w-6xl mx-auto">
-          <h2 className="text-3xl font-bold text-center mb-8">Featured Deals</h2>
+          <h2 className="text-3xl font-bold text-center mb-8">
+            Featured Deals
+          </h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
             {[
               {
@@ -96,7 +97,9 @@ export default function HomePage() {
                 <h3 className="text-xl font-semibold">{deal.name}</h3>
                 <p className="text-sm text-gray-600">{deal.desc}</p>
                 <div className="flex justify-between">
-                  <span className="text-lg font-bold text-red-600">{deal.discount}</span>
+                  <span className="text-lg font-bold text-red-600">
+                    {deal.discount}
+                  </span>
                   <Link
                     to={`/product/${deal.id}`}
                     className="mt-3 inline-block bg-blue-500 text-white px-5 py-2 rounded-md hover:bg-blue-600 transition"
@@ -110,7 +113,6 @@ export default function HomePage() {
         </div>
       </section>
 
-      
       <section className="py-8 px-4 bg-white w-full">
         <div className="max-w-5xl mx-auto text-center">
           <h2 className="text-2xl font-semibold mb-4">Shop by Brand</h2>
@@ -128,7 +130,6 @@ export default function HomePage() {
         </div>
       </section>
 
-     
       <section
         className="py-12 px-4 bg-cover bg-center text-white"
         style={{ backgroundImage: "url('/images/products-bg.jpg')" }}
@@ -139,7 +140,6 @@ export default function HomePage() {
           </h2>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-         
             {[
               {
                 id: 1,

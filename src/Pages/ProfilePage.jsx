@@ -1,38 +1,52 @@
 import React, { useEffect, useState } from "react";
-import { getProfile } from "../data/auth"; // Make sure this is correct
+import { fetchProfile } from "../api/auth";
 
 const ProfilePage = () => {
   const [profile, setProfile] = useState(null);
+  const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    const fetchProfile = async () => {
+    const loadProfile = async () => {
       try {
-        const profileData = await getProfile(); // Assuming getProfile is a function
+        const token = localStorage.getItem("token");
+        console.log("Token in localStorage:", token);
+        if (!token) {
+          throw new Error("Unauthorized: No token found");
+        }
+        const profileData = await fetchProfile();
         setProfile(profileData);
       } catch (err) {
-        setError("Failed to fetch profile data");
+        setError(err.message);
+      } finally {
+        setLoading(false);
       }
     };
 
-    fetchProfile();
+    loadProfile();
   }, []);
 
-  if (error) {
-    return <p>{error}</p>;
-  }
+  if (loading) return <p>Loading profile...</p>;
+  if (error) return <p style={{ color: "red" }}>{error}</p>;
 
   return (
     <div>
       <h2>User Profile</h2>
       {profile ? (
         <div>
-          <p>Name: {profile.name}</p>
-          <p>Email: {profile.email}</p>
-          <p>Joined: {profile.joined}</p>
+          <p>
+            <strong>Name:</strong> {profile.name}
+          </p>
+          <p>
+            <strong>Email:</strong> {profile.email}
+          </p>
+          <p>
+            <strong>Joined:</strong>{" "}
+            {new Date(profile.createdAt).toLocaleDateString()}
+          </p>
         </div>
       ) : (
-        <p>Loading profile...</p>
+        <p>No profile data available.</p>
       )}
     </div>
   );

@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { signupUser } from "../data/auth"; // Importing the signupUser function
+import { signupUser } from "../api/auth";
 
 const Signup = () => {
   const [formData, setFormData] = useState({
@@ -20,41 +20,56 @@ const Signup = () => {
     setError(null);
 
     try {
-      const data = await signupUser(formData);
-      navigate("/dashboard"); // Redirect to Dashboard
+      await signupUser(formData);
+      navigate("/login");
     } catch (err) {
-      setError(err.message || "Signup failed");
+      setError(err.message);
     }
   };
 
   return (
-    <div>
-      <h2>Sign Up</h2>
-      {error && <p style={{ color: "red" }}>{error}</p>}
-      <form onSubmit={handleSubmit}>
-        <input
-          type="text"
-          name="name"
-          placeholder="Name"
-          onChange={handleChange}
-          required
-        />
-        <input
-          type="email"
-          name="email"
-          placeholder="Email"
-          onChange={handleChange}
-          required
-        />
-        <input
-          type="password"
-          name="password"
-          placeholder="Password"
-          onChange={handleChange}
-          required
-        />
-        <button type="submit">Sign Up</button>
-      </form>
+    <div className="flex items-center justify-center min-h-screen bg-gradient-to-r from-purple-700 to-pink-600">
+      <div className="card w-96 bg-base-200 shadow-2xl border-2 border-pink-500 p-6 rounded-xl">
+        <h2 className="text-3xl font-bold text-center text-white mb-4">
+          Sign Up
+        </h2>
+        {error && <p className="text-red-500 text-center">{error}</p>}
+        <form onSubmit={handleSubmit} className="space-y-4">
+          <input
+            type="text"
+            name="name"
+            placeholder="Full Name"
+            className="input input-bordered w-full bg-transparent text-white placeholder-pink-300"
+            onChange={handleChange}
+            required
+          />
+          <input
+            type="email"
+            name="email"
+            placeholder="Email"
+            className="input input-bordered w-full bg-transparent text-white placeholder-pink-300"
+            onChange={handleChange}
+            required
+          />
+          <input
+            type="password"
+            name="password"
+            placeholder="Password"
+            className="input input-bordered w-full bg-transparent text-white placeholder-pink-300"
+            onChange={handleChange}
+            required
+          />
+          <button className="btn w-full bg-gradient-to-r from-purple-500 to-pink-500 text-white">
+            Sign Up
+          </button>
+        </form>
+        <p className="text-center text-white mt-4">
+          Already have an account?{" "}
+          <a href="/login" className="text-pink-300 underline">
+            Login
+          </a>
+        </p>
+      </div>
     </div>
   );
 };

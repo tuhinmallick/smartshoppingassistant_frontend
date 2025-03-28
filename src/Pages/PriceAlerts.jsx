@@ -1,12 +1,11 @@
 import React, { useState, useEffect } from "react";
-import { fakePriceAlerts } from "../data/fakeData"; // Import the fake price alert data
+import { fakePriceAlerts } from "../data/fakeData";
 
 const PriceAlerts = () => {
   const [alerts, setAlerts] = useState([]);
 
   useEffect(() => {
-    // Simulating fetching price alert data
-    setAlerts(fakePriceAlerts); // Use the fakePriceAlerts directly for now
+    setAlerts(fakePriceAlerts);
   }, []);
 
   return (
