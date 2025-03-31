@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
+import SavedProducts from "./SavedProducts"; // Correct the path as necessary
 
 const navLinks = [
   { name: "Dashboard", path: "/dashboard" },
@@ -64,28 +65,7 @@ const UserDashboard = () => {
         </div>
       )}
 
-      {activeTab === "Saved Products" && (
-        <div className="text-center">
-          <h2 className="text-3xl font-bold">Saved Products</h2>
-          <div className="grid grid-cols-4 gap-4 mt-4">
-            {savedProducts.map((product) => (
-              <div
-                key={product.id}
-                className="bg-gray-100 p-4 rounded-lg shadow-md"
-              >
-                <img
-                  src={product.image}
-                  alt={product.name}
-                  className="object-cover mb-4 rounded"
-                />
-                <h3 className="text-xl font-semibold">{product.name}</h3>
-                <p className="text-gray-500">{product.description}</p>
-                <p className="text-lg font-bold">{product.price}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      )}
+      {activeTab === "Saved Products" && <SavedProducts />}
 
       {activeTab === "Price Alerts" && (
         <div className="text-center">

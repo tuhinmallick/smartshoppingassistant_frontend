@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import { signupUser } from "../api/auth";
+import Button from "../ui/Button";
 
 const Signup = ({ setIsFlipped }) => {
   const [formData, setFormData] = useState({
@@ -29,7 +30,7 @@ const Signup = ({ setIsFlipped }) => {
 
   return (
     <motion.div
-      className="absolute w-full h-full flex items-center justify-center bg-gradient-to-br from-pink-500 to-purple-600 rounded-3xl shadow-xl"
+      className="absolute flex items-center justify-center bg-gradient-to-br from-pink-500 to-purple-600 rounded-3xl shadow-xl"
       initial={{ opacity: 0, rotateY: 180 }}
       animate={{ opacity: 1, rotateY: 0 }}
       transition={{ duration: 0.6 }}
@@ -62,12 +63,7 @@ const Signup = ({ setIsFlipped }) => {
             onChange={handleChange}
             required
           />
-          <button
-            type="submit"
-            className="bg-purple-700 text-white py-2 rounded-lg"
-          >
-            Sign Up
-          </button>
+          <Button type="submit" text="Sign Up" />
         </form>
         <p
           className="mt-4 text-white cursor-pointer"

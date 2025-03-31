@@ -1,25 +1,44 @@
 import React, { useState, useEffect } from "react";
-import { getFromLocalStorage } from "../data/localstorage";
+import ProductCard from "../ui/ProductCard"; // Import the reusable card
 
 const SavedProducts = () => {
-  const [products, setProducts] = useState([]);
+  const [savedProducts, setSavedProducts] = useState([]);
 
   useEffect(() => {
-    const savedProducts = getFromLocalStorage("savedProducts") || [];
-    setProducts(savedProducts);
+    // Fetch data.json from the public folder
+    const fetchSavedProducts = async () => {
+      try {
+        const response = await fetch("./src/data/data.json");
+        const data = await response.json();
+        setSavedProducts(data.users[0].savedProducts || []);
+      } catch (error) {
+        console.error("Error fetching saved products:", error);
+      }
+    };
+
+    fetchSavedProducts();
   }, []);
 
+  const handleSave = (product) => {
+    // Logic for saving the product, e.g., adding to a favorites list
+    console.log("Product saved:", product);
+  };
+
   return (
-    <div className="max-w-3xl mx-auto p-6 bg-white shadow-md rounded-xl mt-10">
-      <h2 className="text-2xl font-semibold mb-4">Saved Products</h2>
-      {products.length === 0 ? (
-        <p>No saved products.</p>
+    <div className="text-center mt-6">
+      <h2 className="text-3xl font-bold">Saved Products</h2>
+      {savedProducts.length === 0 ? (
+        <p className="text-gray-500 mt-4">No saved products.</p>
       ) : (
-        <ul className="list-disc pl-5">
-          {products.map((product, index) => (
-            <li key={index}>{product.name}</li>
+        <div className="grid grid-cols-4 gap-4 mt-4">
+          {savedProducts.map((product) => (
+            <ProductCard
+              key={product.id}
+              product={product}
+              onSave={handleSave} // Pass the save handler as a prop
+            />
           ))}
-        </ul>
+        </div>
       )}
     </div>
   );
