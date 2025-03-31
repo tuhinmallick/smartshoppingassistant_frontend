@@ -5,7 +5,6 @@ export default function SearchResults() {
   const [searchParams] = useSearchParams();
   const query = searchParams.get("q");
 
-  // Dummy data
   const initialResults = [
     {
       id: 1,
@@ -37,50 +36,70 @@ export default function SearchResults() {
     setSortBy(type);
     let sortedResults = [...results];
     if (type === "lowestPrice") {
-      sortedResults.sort((a, b) => 
-        Math.min(...a.stores.map(s => parseFloat(s.price.slice(1)))) - 
-        Math.min(...b.stores.map(s => parseFloat(s.price.slice(1))))
+      sortedResults.sort(
+        (a, b) =>
+          Math.min(...a.stores.map((s) => parseFloat(s.price.slice(1)))) -
+          Math.min(...b.stores.map((s) => parseFloat(s.price.slice(1))))
       );
     } else if (type === "bestRating") {
-      sortedResults.sort((a, b) => 
-        Math.max(...b.stores.map(s => s.rating)) - 
-        Math.max(...a.stores.map(s => s.rating))
+      sortedResults.sort(
+        (a, b) =>
+          Math.max(...b.stores.map((s) => s.rating)) -
+          Math.max(...a.stores.map((s) => s.rating))
       );
     }
     setResults(sortedResults);
   };
 
   return (
-    <div className="min-h-screen bg-white p-8 mt-16">
+    <div className="min-h-screen bg-gray-100 p-8 mt-16 w-full">
+
+
       {/* Breadcrumb Navigation */}
-      <nav className="text-sm mb-4">
-        <Link to="/" className="text-blue-600 hover:underline">Home</Link>
-        <span className="mx-2">&gt;</span>
-        <span>Search Results</span>
+      <nav className="text-sm mb-6">
+        <Link to="/" className="text-blue-600 hover:underline">
+          Home
+        </Link>
+        <span className="mx-2 text-gray-500">&gt;</span>
+        <span className="text-gray-600">Search Results</span>
       </nav>
 
-      <h2 className="text-3xl font-bold mb-4">Search Results for "{query}"</h2>
+      {/* Search Header */}
+      <h2 className="text-4xl font-bold mb-6 text-indigo-700">
+        Search Results for "<span className="text-black">{query}</span>"
+      </h2>
 
       {/* Filters & Sorting */}
-      <div className="mb-6 flex flex-wrap gap-4">
-        <div>
-          <label className="block text-sm font-medium text-gray-700">Price Range</label>
+      <div className="mb-8 flex flex-wrap gap-6 items-center">
+        {/* Price Range Filter */}
+        <div className="bg-white p-4 shadow rounded-lg">
+          <label className="block text-sm font-medium text-gray-700">
+            Price Range
+          </label>
           <input
             type="range"
             min="0"
             max="1000"
             value={priceRange[1]}
-            onChange={(e) => setPriceRange([priceRange[0], parseInt(e.target.value)])}
-            className="mt-1"
+            onChange={(e) =>
+              setPriceRange([priceRange[0], parseInt(e.target.value)])
+            }
+            className="mt-2 w-full accent-blue-500"
           />
-          <span className="ml-2">${priceRange[0]} - ${priceRange[1]}</span>
+          <span className="ml-2 text-gray-800 font-medium">
+            ${priceRange[0]} - ${priceRange[1]}
+          </span>
         </div>
-        <div>
-          <label className="block text-sm font-medium text-gray-700">Sort by</label>
+
+        {/* Sorting Dropdown */}
+        <div className="bg-white p-4 shadow rounded-lg">
+          <label className="block text-sm font-medium text-gray-700">
+            Sort by
+          </label>
           <select
             value={sortBy}
             onChange={(e) => handleSort(e.target.value)}
-            className="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md"
+            className="mt-2 block w-full pl-3 pr-10 py-2 border border-gray-300 bg-white rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500"
           >
             <option value="lowestPrice">Lowest Price</option>
             <option value="bestRating">Best Rating</option>
@@ -88,38 +107,53 @@ export default function SearchResults() {
         </div>
       </div>
 
-      {/* Results */}
-      <div className="space-y-8">
+      {/* Search Results */}
+      <div className="space-y-6">
         {results.map((product) => (
-          <div key={product.id} className="bg-gray-100 rounded-lg shadow p-6">
+          <div
+            key={product.id}
+            className="bg-white rounded-lg shadow-lg p-6 hover:shadow-2xl transition"
+          >
+            {/* Product Header */}
             <div className="flex items-center mb-4">
-              <img src={product.image} alt={product.name} className="w-20 h-20 object-cover rounded-md mr-4" />
+              <img
+                src={product.image}
+                alt={product.name}
+                className="w-24 h-24 object-cover rounded-md shadow-md mr-6"
+              />
               <div>
-                <h3 className="text-xl font-semibold">{product.name}</h3>
-                <p className="text-gray-700">{product.brand}</p>
+                <h3 className="text-2xl font-semibold text-gray-800">
+                  {product.name}
+                </h3>
+                <p className="text-gray-600">{product.brand}</p>
               </div>
             </div>
 
-            {/* Comparison Table */}
-            <table className="w-full text-left">
+            {/* Product Table */}
+            <table className="w-full border-collapse">
               <thead>
-                <tr className="bg-gray-200">
-                  <th className="p-2">Store Name</th>
-                  <th className="p-2">Price</th>
-                  <th className="p-2">Shipping Cost</th>
-                  <th className="p-2">Seller Rating</th>
-                  <th className="p-2">Action</th>
+                <tr className="bg-gray-200 text-gray-700 text-left">
+                  <th className="p-3">Store</th>
+                  <th className="p-3">Price</th>
+                  <th className="p-3">Shipping</th>
+                  <th className="p-3">Rating</th>
+                  <th className="p-3 text-center">Action</th>
                 </tr>
               </thead>
               <tbody>
                 {product.stores.map((store, index) => (
-                  <tr key={index} className="border-b">
-                    <td className="p-2">{store.name}</td>
-                    <td className="p-2 font-bold text-blue-600">{store.price}</td>
-                    <td className="p-2">{store.shipping}</td>
-                    <td className="p-2">{store.rating} / 5</td>
-                    <td className="p-2">
-                      <button className="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600 transition">
+                  <tr
+                    key={index}
+                    className="hover:bg-gray-100 border-b border-gray-200"
+                  >
+                    <td className="p-3">{store.name}</td>
+                    <td className="p-3 text-blue-600 font-bold">
+                      {store.price}
+                    </td>
+                    <td className="p-3">{store.shipping}</td>
+                    <td className="p-3">{store.rating} / 5</td>
+                    <td className="p-3 text-center">
+                      <button className="bg-green-500 text-white px-4 py-2 rounded-lg hover:bg-green-600 transition">
                         Buy Now
                       </button>
                     </td>
