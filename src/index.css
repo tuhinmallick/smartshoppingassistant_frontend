@@ -1,6 +1,11 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.perspective {
+  perspective: 1000px;
+}
+
 nav {
     position: fixed;
     width: 100%;
@@ -11,4 +16,3 @@ nav {
     z-index: 50; 
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
   }
-  

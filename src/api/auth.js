@@ -24,8 +24,12 @@ export const signupUser = async (userData) => {
   return data;
 };
 
-// Login function
 export const loginUser = async (credentials) => {
+  // Ensure name is included in the request
+  if (!credentials.name || !credentials.email || !credentials.password) {
+    throw new Error("Name, email, and password are required");
+  }
+
   const response = await fetch(`${API_URL}/login`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
@@ -33,7 +37,8 @@ export const loginUser = async (credentials) => {
   });
 
   if (!response.ok) {
-    throw new Error("Invalid email or password");
+    const errorData = await response.json(); // Capture backend error message
+    throw new Error(errorData.message || "Invalid request");
   }
 
   const data = await response.json();
