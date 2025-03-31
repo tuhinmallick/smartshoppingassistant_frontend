@@ -9,7 +9,7 @@ import Animation from "./ui/Animation"; // Replaces separate login and signup pa
 import MainLayout from "./layout/MainLayout";
 import Homepage from "./pages/Homepage";
 import UserDashboard from "./pages/UserDashboard";
-import ProfilePage from "./pages/ProfilePage";
+import UserProfile from "./pages/UserProfile";
 import SavedProducts from "./pages/SavedProducts";
 import PriceAlerts from "./pages/PriceAlerts";
 import SearchResults from "./pages/SearchResults";
@@ -59,7 +59,7 @@ function App() {
               path="/profile"
               element={
                 <PrivateRoute>
-                  <ProfilePage />
+                  <UserProfile />
                 </PrivateRoute>
               }
             />
