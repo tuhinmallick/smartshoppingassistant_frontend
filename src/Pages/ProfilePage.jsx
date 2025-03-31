@@ -15,6 +15,7 @@ const ProfilePage = () => {
           throw new Error("Unauthorized: No token found");
         }
         const profileData = await fetchProfile();
+        console.log("Fetched Profile Data:", profileData);
         setProfile(profileData);
       } catch (err) {
         setError(err.message);
@@ -39,10 +40,6 @@ const ProfilePage = () => {
           </p>
           <p>
             <strong>Email:</strong> {profile.email}
-          </p>
-          <p>
-            <strong>Joined:</strong>{" "}
-            {new Date(profile.createdAt).toLocaleDateString()}
           </p>
         </div>
       ) : (
