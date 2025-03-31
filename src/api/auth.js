@@ -1,5 +1,6 @@
 const API_URL = "http://localhost:5001/api/auth";
 
+// Signup function
 export const signupUser = async (userData) => {
   const response = await fetch(`${API_URL}/register`, {
     method: "POST",
@@ -10,9 +11,20 @@ export const signupUser = async (userData) => {
   if (!response.ok) {
     throw new Error("Signup failed");
   }
-  return response.json();
+
+  const data = await response.json();
+
+  if (data.token) {
+    localStorage.setItem("token", data.token);
+    console.log("Token stored in localStorage:", data.token);
+  } else {
+    throw new Error("No token received");
+  }
+
+  return data;
 };
 
+// Login function
 export const loginUser = async (credentials) => {
   const response = await fetch(`${API_URL}/login`, {
     method: "POST",
@@ -25,15 +37,22 @@ export const loginUser = async (credentials) => {
   }
 
   const data = await response.json();
-  localStorage.setItem("token", data.token);
-  console.log("Token stored:", data.token);
+
+  if (data.token) {
+    localStorage.setItem("token", data.token);
+  } else {
+    throw new Error("No token received");
+  }
+
   return data;
 };
 
+// Profile function
 export const fetchProfile = async () => {
   const token = localStorage.getItem("token");
-  console.log("Token retrieved:", token);
+
   if (!token) {
+    console.warn("No token found in localStorage.");
     throw new Error("Unauthorized: No token found");
   }
 
@@ -42,15 +61,15 @@ export const fetchProfile = async () => {
   });
 
   if (!response.ok) {
-    const error = await response.json();
-    console.error("Error fetching profile:", error);
-    throw new Error(error?.message || "Failed to fetch profile");
+    console.error("Error fetching profile:", response.statusText);
+    throw new Error("Failed to fetch profile");
   }
 
   return response.json();
 };
 
+// Logout function
 export const logoutUser = () => {
   localStorage.removeItem("token");
-  console.log("User logged out and token removed.");
+  console.log("User logged out. Token removed.");
 };
