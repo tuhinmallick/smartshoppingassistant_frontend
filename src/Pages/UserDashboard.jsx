@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import SavedProducts from "./SavedProducts"; // Correct the path as necessary
+import SavedProducts from "./SavedProducts";
+import PriceAlerts from "./PriceAlerts";
+import UserProfile from "./UserProfile";
 
 const navLinks = [
   { name: "Dashboard", path: "/dashboard" },
@@ -48,52 +50,11 @@ const UserDashboard = () => {
         ))}
       </div>
 
-      {activeTab === "Profile & Settings" && (
-        <div className="text-center">
-          <h2 className="text-3xl font-bold mb-4">User Profile</h2>
-          <div className="bg-gray-100 p-6 rounded-lg shadow-md">
-            <img
-              src={userProfile.profilePicture}
-              alt="Profile"
-              className="w-32 h-32 rounded-full mx-auto mb-4"
-            />
-            <h3 className="text-2xl font-semibold">{userProfile.name}</h3>
-            <p className="text-gray-600">{userProfile.email}</p>
-            <p className="text-gray-500 mt-2">{userProfile.joined}</p>
-            <p className="text-gray-500 mt-2">{userProfile.bio}</p>
-          </div>
-        </div>
-      )}
+      {activeTab === "Profile & Settings" && <UserProfile />}
 
       {activeTab === "Saved Products" && <SavedProducts />}
 
-      {activeTab === "Price Alerts" && (
-        <div className="text-center">
-          <h2 className="text-3xl font-bold mb-4">Price Alerts</h2>
-          <div className="bg-gray-100 p-6 rounded-lg shadow-md">
-            <table className="w-full table-auto">
-              <thead>
-                <tr className="border-b">
-                  <th className="py-2 px-4 text-left">Product</th>
-                  <th className="py-2 px-4 text-left">Current Price</th>
-                  <th className="py-2 px-4 text-left">Alert Price</th>
-                  <th className="py-2 px-4 text-left">Status</th>
-                </tr>
-              </thead>
-              <tbody>
-                {priceAlerts.map((alert) => (
-                  <tr key={alert.id} className="border-b">
-                    <td className="py-2 px-4">{alert.product}</td>
-                    <td className="py-2 px-4">{alert.currentPrice}</td>
-                    <td className="py-2 px-4">{alert.alertPrice}</td>
-                    <td className="py-2 px-4">{alert.status}</td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-        </div>
-      )}
+      {activeTab === "Price Alerts" && <PriceAlerts />}
     </div>
   );
 };
