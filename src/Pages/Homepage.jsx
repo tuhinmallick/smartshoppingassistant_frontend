@@ -5,20 +5,28 @@ import { Link } from "react-router-dom";
 export default function HomePage() {
   return (
     <div className="min-h-screen flex flex-col bg-gray-100">
+      {/* Hero Section */}
       <section
         className="w-full h-screen flex flex-col justify-center items-center text-center bg-cover bg-center text-white"
         style={{ backgroundImage: "url('/images/hero-bg.jpg')" }}
       >
         <div className="bg-black bg-opacity-50 p-6 rounded-lg">
-          <h1 className="text-4xl sm:text-5xl font-bold">
-            Find the Best Mobile Deals
+          <h1 className="text-5xl sm:text-6xl font-bold mb-4">
+            Discover the Best Mobile Deals
           </h1>
-          <p className="mt-2 text-lg sm:text-xl">
+          <p className="text-lg sm:text-xl mb-8">
             Compare prices from top retailers & save big!
           </p>
+          <Link
+            to="/search"
+            className="inline-block bg-blue-600 text-white px-8 py-4 rounded-full hover:bg-blue-700 transition"
+          >
+            Start Shopping
+          </Link>
         </div>
       </section>
 
+      {/* Search Bar */}
       <section className="w-full flex justify-center py-8 bg-white shadow-md">
         <div className="flex w-full max-w-2xl">
           <input
@@ -32,10 +40,11 @@ export default function HomePage() {
         </div>
       </section>
 
+      {/* Shop by Category */}
       <section className="py-12 px-4 bg-gray-100">
         <div className="max-w-6xl mx-auto">
           <h2 className="text-3xl font-bold text-center mb-8">
-            Shop by Category
+            Explore by Category
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {[
@@ -56,6 +65,7 @@ export default function HomePage() {
         </div>
       </section>
 
+      {/* Featured Deals */}
       <section className="py-12 px-4 bg-white">
         <div className="max-w-6xl mx-auto">
           <h2 className="text-3xl font-bold text-center mb-8">
@@ -113,6 +123,7 @@ export default function HomePage() {
         </div>
       </section>
 
+      {/* Shop by Brand */}
       <section className="py-8 px-4 bg-white w-full">
         <div className="max-w-5xl mx-auto text-center">
           <h2 className="text-2xl font-semibold mb-4">Shop by Brand</h2>
@@ -130,6 +141,7 @@ export default function HomePage() {
         </div>
       </section>
 
+      {/* Hottest Mobile Phones */}
       <section
         className="py-12 px-4 bg-cover bg-center text-white"
         style={{ backgroundImage: "url('/images/products-bg.jpg')" }}
