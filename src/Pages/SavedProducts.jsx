@@ -25,7 +25,7 @@ const SavedProducts = () => {
   };
 
   return (
-    <div className="text-center mt-6">
+    <div className="text-center mt-6 save-products">
       <h2 className="text-3xl font-bold">Saved Products</h2>
       {savedProducts.length === 0 ? (
         <p className="text-gray-500 mt-4">No saved products.</p>
