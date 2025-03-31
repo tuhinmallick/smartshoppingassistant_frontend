@@ -5,8 +5,7 @@ import {
   Navigate,
 } from "react-router-dom";
 import { AuthProvider, useAuth } from "./context/AuthContext";
-import Signup from "./pages/Signup";
-import Login from "./pages/Login";
+import Animation from "./ui/Animation"; // Replaces separate login and signup pages
 import MainLayout from "./layout/MainLayout";
 import Homepage from "./pages/Homepage";
 import UserDashboard from "./pages/UserDashboard";
@@ -24,7 +23,7 @@ const PrivateRoute = ({ children }) => {
     return <p>Loading...</p>;
   }
 
-  return user ? children : <Navigate to="/login" />;
+  return user ? children : <Navigate to="/animation" />; // Redirect to the new Auth page
 };
 
 function App() {
@@ -34,11 +33,19 @@ function App() {
         <Routes>
           <Route path="/" element={<MainLayout />}>
             <Route index element={<Homepage />} />
-            <Route path="/signup" element={<Signup />} />
-            <Route path="/login" element={<Login />} />
+            <Route path="/animation" element={<Animation />} />
+            {/* Redirect /login and /signup to /auth */}
+            <Route
+              path="/login"
+              element={<Navigate to="/animation" replace />}
+            />
+            <Route
+              path="/signup"
+              element={<Navigate to="/animation" replace />}
+            />
+            {/* New Login/Signup Page */}
             <Route path="search" element={<SearchResults />} />
             <Route path="product/:id" element={<ProductDetails />} />
-
             {/* Protected Routes */}
             <Route
               path="/dashboard"

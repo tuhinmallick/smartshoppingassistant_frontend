@@ -80,24 +80,14 @@ const Navbar = () => {
               <div className="absolute right-0 mt-2 w-48 bg-white border border-gray-200 rounded-lg shadow-lg">
                 <ul className="py-2">
                   {!user ? (
-                    <>
-                      <li>
-                        <Link
-                          to="/signup"
-                          className="block px-4 py-2 text-gray-700 hover:bg-gray-100"
-                        >
-                          📝 Sign Up
-                        </Link>
-                      </li>
-                      <li>
-                        <Link
-                          to="/login"
-                          className="block px-4 py-2 text-gray-700 hover:bg-gray-100"
-                        >
-                          🔑 Log In
-                        </Link>
-                      </li>
-                    </>
+                    <li>
+                      <Link
+                        to="/login"
+                        className="block px-4 py-2 text-gray-700 hover:bg-gray-100"
+                      >
+                        🔑 Log In
+                      </Link>
+                    </li>
                   ) : (
                     <>
                       <li>
