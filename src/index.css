@@ -7,12 +7,50 @@
 }
 
 nav {
-    position: fixed;
-    width: 100%;
-    top: 0;
-    left: 0;
-    height: 60px; /* Adjust as needed */
-    background-color: white;
-    z-index: 50; 
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-  }
+  position: fixed;
+  width: 100%;
+  top: 0;
+  left: 0;
+  height: 60px; /* Adjust as needed */
+  background-color: white;
+  z-index: 50;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+/*===== VARIABLES CSS =====*/
+:root {
+  --dark-color-lighten: #f2f5ff;
+  --red-card: #a62121;
+  --blue-card: #4bb7e6;
+  --btn: #141414;
+  --btn-hover: #3a3a3a;
+  --text: #fbf7f7;
+}
+
+/*===== CARD =====*/
+.card {
+  position: relative;
+  padding: 1rem;
+  box-shadow: -1px 15px 30px -12px rgb(32, 32, 32);
+  cursor: pointer;
+}
+.card:hover {
+  box-shadow: 0px 0px 30px 1px rgba(0, 255, 117, 0.3);
+}
+.product-image {
+  height: 230px;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  transition: transform 500ms ease-in-out;
+}
+.product-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+.card:hover .product-image {
+  transform: translate(-0.5rem, -0.5rem) rotate(-10deg);
+}

@@ -2,10 +2,11 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import { loginUser } from "../api/auth";
+import Button from "../ui/Button";
 
 const Login = ({ setIsFlipped }) => {
   const [formData, setFormData] = useState({
-    name: "John Doe", // Required field (can be changed by user)
+    name: "Welcome!!!",
     email: "",
     password: "",
   });
@@ -16,27 +17,30 @@ const Login = ({ setIsFlipped }) => {
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError(null);
 
-    console.log("Submitting Data:", formData); // Debugging
-
     try {
       const data = await loginUser(formData);
-      if (data.token) {
+      console.log("API Response:", data); // Debug API response
+
+      if (data && data.token) {
         localStorage.setItem("token", data.token);
         navigate("/dashboard");
+      } else {
+        setError("Invalid response from server.");
       }
     } catch (err) {
-      console.error("Error:", err.message); // Debug API response
+      console.error("Login Error:", err.message);
       setError(err.message);
     }
   };
 
   return (
     <motion.div
-      className="absolute w-full h-full flex items-center justify-center bg-gradient-to-br from-pink-500 to-purple-600 rounded-3xl shadow-xl"
+      className="absolute flex items-center justify-center bg-gradient-to-br from-pink-500 to-purple-600 rounded-3xl shadow-xl"
       initial={{ opacity: 0, rotateY: -180 }}
       animate={{ opacity: 1, rotateY: 0 }}
       transition={{ duration: 0.6 }}
@@ -63,6 +67,7 @@ const Login = ({ setIsFlipped }) => {
             onChange={handleChange}
             required
           />
+
           <input
             type="password"
             name="password"
@@ -71,12 +76,7 @@ const Login = ({ setIsFlipped }) => {
             onChange={handleChange}
             required
           />
-          <button
-            type="submit"
-            className="bg-purple-700 text-white py-2 rounded-lg"
-          >
-            Login
-          </button>
+          <Button type="submit" text="Login" />
         </form>
         <p
           className="mt-4 text-white cursor-pointer"
