@@ -8,8 +8,6 @@
   perspective: 1000px;
 }
 
-
-
 /*===== BUTTON =====*/
 .blob-btn {
   position: relative;
@@ -102,4 +100,3 @@
 .blob-btn:hover .blob-btn__blob {
   transform: translateZ(0) scale(1.4);
 }
-
