@@ -1,3 +1,4 @@
+import React from "react";
 import {
   BrowserRouter as Router,
   Routes,
@@ -15,7 +16,10 @@ import PriceAlerts from "./pages/PriceAlerts";
 import SearchResults from "./pages/SearchResults";
 import ProductDetails from "./pages/ProductDetails";
 import Wishlist from "./pages/Wishlist";
+import Chatbot from "./components/Chatbot"; // Import Chatbot component
 
+
+// PrivateRoute component to protect routes
 const PrivateRoute = ({ children }) => {
   const { user, loading } = useAuth();
 
@@ -23,7 +27,7 @@ const PrivateRoute = ({ children }) => {
     return <p>Loading...</p>;
   }
 
-  return user ? children : <Navigate to="/animation" />; // Redirect to the new Auth page
+  return user ? children : <Navigate to="/animation" />; // Redirect to the new Auth page if not logged in
 };
 
 function App() {
@@ -35,15 +39,9 @@ function App() {
             <Route index element={<Homepage />} />
             <Route path="/animation" element={<Animation />} />
             {/* Redirect /login and /signup to /auth */}
-            <Route
-              path="/login"
-              element={<Navigate to="/animation" replace />}
-            />
-            <Route
-              path="/signup"
-              element={<Navigate to="/animation" replace />}
-            />
-            {/* New Login/Signup Page */}
+            <Route path="/login" element={<Navigate to="/animation" replace />} />
+            <Route path="/signup" element={<Navigate to="/animation" replace />} />
+            {/* Search and Product Details Pages */}
             <Route path="search" element={<SearchResults />} />
             <Route path="product/:id" element={<ProductDetails />} />
             {/* Protected Routes */}
@@ -89,6 +87,8 @@ function App() {
             />
           </Route>
         </Routes>
+        {/* Chatbot is visible on all pages */}
+        <Chatbot />
       </Router>
     </AuthProvider>
   );

@@ -12,6 +12,7 @@
   "dependencies": {
     "axios": "^1.8.4",
     "daisyui": "^5.0.9",
+    "dialogflow": "^1.2.0",
     "framer-motion": "^12.6.2",
     "jwt-decode": "^4.0.0",
     "pg": "^8.14.1",

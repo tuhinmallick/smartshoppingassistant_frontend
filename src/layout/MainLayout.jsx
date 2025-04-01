@@ -3,7 +3,7 @@ import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import { Outlet } from "react-router-dom";
 import Breadcrumb from "../components/Breadcrumb";
-
+import Chatbot from "../components/Chatbot";
 const MainLayout = () => {
   return (
     <>
@@ -18,6 +18,7 @@ const MainLayout = () => {
         <Breadcrumb />
       </div>
       <Footer />
+      <Chatbot /> {/* Add Tidio Chatbot */}
     </>
   );
 };
