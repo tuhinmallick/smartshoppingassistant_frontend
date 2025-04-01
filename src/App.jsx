@@ -16,12 +16,13 @@ import PriceAlerts from "./pages/PriceAlerts";
 import SearchResults from "./pages/SearchResults";
 import ProductDetails from "./pages/ProductDetails";
 import Wishlist from "./pages/Wishlist";
-import Chatbot from "./components/Chatbot"; // Import Chatbot component
+import Chatbot from "./components/Chatbot";
 
 const PrivateRoute = ({ children }) => {
   const { user, loading } = useAuth();
-  if (loading) return <p>Loading...</p>;
-  return user ? children : <Navigate to="/userauthentication" />;
+
+  if (loading) return null; // Prevent navigation delay
+  return user ? children : <Navigate to="/userauthentication" replace />;
 };
 
 function App() {
@@ -31,64 +32,20 @@ function App() {
         <Routes>
           <Route path="/" element={<MainLayout />}>
             <Route index element={<Homepage />} />
-            <Route
-              path="/userauthentication"
-              element={<UserAuthentication />}
-            />
-            <Route
-              path="/login"
-              element={<Navigate to="/userauthentication" replace />}
-            />
-            <Route
-              path="/signup"
-              element={<Navigate to="/userauthentication" replace />}
-            />
+            <Route path="/userauthentication" element={<UserAuthentication />} />
+            <Route path="/login" element={<Navigate to="/userauthentication" replace />} />
+            <Route path="/signup" element={<Navigate to="/userauthentication" replace />} />
             <Route path="/search" element={<SearchResults />} />
             <Route path="/product/:id" element={<ProductDetails />} />
-            <Route
-              path="/dashboard"
-              element={
-                <PrivateRoute>
-                  <UserDashboard />
-                </PrivateRoute>
-              }
-            />
-            <Route
-              path="/profile"
-              element={
-                <PrivateRoute>
-                  <UserProfile />
-                </PrivateRoute>
-              }
-            />
-            <Route
-              path="/saved-products"
-              element={
-                <PrivateRoute>
-                  <SavedProducts />
-                </PrivateRoute>
-              }
-            />
-            <Route
-              path="/price-alert"
-              element={
-                <PrivateRoute>
-                  <PriceAlerts />
-                </PrivateRoute>
-              }
-            />
-            <Route
-              path="/wishlist"
-              element={
-                <PrivateRoute>
-                  <Wishlist />
-                </PrivateRoute>
-              }
-            />
+            <Route path="/dashboard" element={<PrivateRoute><UserDashboard /></PrivateRoute>} />
+            <Route path="/profile" element={<PrivateRoute><UserProfile /></PrivateRoute>} />
+            <Route path="/saved-products" element={<PrivateRoute><SavedProducts /></PrivateRoute>} />
+            <Route path="/price-alert" element={<PrivateRoute><PriceAlerts /></PrivateRoute>} />
+            <Route path="/wishlist" element={<PrivateRoute><Wishlist /></PrivateRoute>} />
+           
+            <Route path="*" element={<Chatbot />} />
           </Route>
         </Routes>
-        {/* Chatbot is visible on all pages */}
-        <Chatbot />
       </Router>
     </AuthProvider>
   );

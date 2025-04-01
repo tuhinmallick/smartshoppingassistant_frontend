@@ -17,6 +17,16 @@ const Navbar = () => {
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
+  const openChatbot = () => {
+    if (window.tidioChatApi) {
+      window.tidioChatApi.open();
+    } else {
+      console.warn("Tidio Chat API is not loaded yet. Retrying...");
+      setTimeout(openChatbot, 1000); 
+    }
+  };
+  
+
   return (
     <nav className="bg-gradient-to-r from-blue-500 p-4 flex justify-between items-center shadow-lg rounded-b-xl fixed top-0 left-0 w-full z-50">
       <div className="flex justify-between items-center w-full">
@@ -46,13 +56,13 @@ const Navbar = () => {
             ❤️
           </Link>
 
-          {/* Chat Icon */}
-          <Link
-            to="/chat"
+          {/* Chatbot Icon */}
+          <button
+            onClick={openChatbot} // Trigger chatbot open on click
             className="text-white text-xl hover:text-green-400 transition-colors duration-300"
           >
             💬
-          </Link>
+          </button>
 
           {/* User Profile Dropdown */}
           <div className="relative inline-block" ref={menuRef}>
