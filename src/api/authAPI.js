@@ -1,15 +1,17 @@
 const API_URL = "http://localhost:5001/api/auth";
+const Profile_URL = "http://localhost:5001/api/users";
 
 // Signup function
 export const signupUser = async (userData) => {
   const response = await fetch(`${API_URL}/register`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(userData),
+    body: JSON.stringify(userData), // Ensure correct JSON format
   });
 
   if (!response.ok) {
-    throw new Error("Signup failed");
+    const errorData = await response.json();
+    throw new Error(errorData.message || "Signup failed");
   }
 
   const data = await response.json();
@@ -26,8 +28,8 @@ export const signupUser = async (userData) => {
 
 export const loginUser = async (credentials) => {
   // Ensure name is included in the request
-  if (!credentials.name || !credentials.email || !credentials.password) {
-    throw new Error("Name, email, and password are required");
+  if (!credentials.email || !credentials.password) {
+    throw new Error("email and password are required");
   }
 
   const response = await fetch(`${API_URL}/login`, {
@@ -52,7 +54,7 @@ export const loginUser = async (credentials) => {
   return data;
 };
 
-// Profile function
+// Fetch Profile Function
 export const fetchProfile = async () => {
   const token = localStorage.getItem("token");
 
@@ -61,13 +63,18 @@ export const fetchProfile = async () => {
     throw new Error("Unauthorized: No token found");
   }
 
-  const response = await fetch(`${API_URL}/profile`, {
-    headers: { Authorization: `Bearer ${token}` },
+  const response = await fetch(`${Profile_URL}/profile`, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`, // Ensure token is sent properly
+    },
   });
 
   if (!response.ok) {
-    console.error("Error fetching profile:", response.statusText);
-    throw new Error("Failed to fetch profile");
+    const errorData = await response.json();
+    console.error("Error fetching profile:", errorData.message);
+    throw new Error(errorData.message || "Failed to fetch profile");
   }
 
   return response.json();
