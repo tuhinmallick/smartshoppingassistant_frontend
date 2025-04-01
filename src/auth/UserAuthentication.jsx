@@ -1,9 +1,9 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
-import Login from "../pages/Login";
-import Signup from "../pages/Signup";
+import Login from "../modal/Login";
+import Signup from "../modal/Signup";
 
-const Animation = () => {
+const UserAuthentication = () => {
   const [isFlipped, setIsFlipped] = useState(false);
 
   return (
@@ -34,4 +34,4 @@ const Animation = () => {
   );
 };
 
-export default Animation;
+export default UserAuthentication;

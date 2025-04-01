@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+
 import SavedProducts from "./SavedProducts";
 import PriceAlerts from "./PriceAlerts";
 import UserProfile from "./UserProfile";
@@ -33,7 +33,7 @@ const UserDashboard = () => {
   if (!userProfile) return <div>Loading...</div>;
 
   return (
-    <div className="max-w-6xl mx-auto p-6 bg-white shadow-md rounded-xl mt-10">
+    <div className=" mx-auto p-6 bg-white shadow-md rounded-xl mt-10">
       <div className="flex space-x-4 border-b pb-3 mb-4">
         {navLinks.map((link) => (
           <button

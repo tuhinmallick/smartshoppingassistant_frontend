@@ -20,7 +20,7 @@ const Navbar = () => {
   return (
     <nav className="bg-gradient-to-r from-blue-500 p-4 flex justify-between items-center shadow-lg rounded-b-xl fixed top-0 left-0 w-full z-50">
       <div className="flex justify-between items-center w-full">
-        {/* Link to Homepage */}
+        {/* Homepage Link */}
         <Link
           to="/"
           className="text-3xl font-bold text-white tracking-wide hover:text-yellow-300 transition"
@@ -31,50 +31,37 @@ const Navbar = () => {
         {/* Icons */}
         <div className="flex space-x-6 items-center">
           {/* Notification Icon */}
-          <a
-            href="#"
+          <Link
+            to="/notifications"
             className="text-white text-xl hover:text-yellow-400 transition-colors duration-300"
           >
-            <span role="img" aria-label="Notification">
-              🔔
-            </span>
-          </a>
+            🔔
+          </Link>
 
           {/* Wishlist Icon */}
-          <a
-            href="#"
+          <Link
+            to="/wishlist"
             className="text-white text-xl hover:text-red-400 transition-colors duration-300"
           >
-            <span role="img" aria-label="Wishlist">
-              ❤️
-            </span>
-          </a>
+            ❤️
+          </Link>
 
           {/* Chat Icon */}
-          <a
-            href="#"
+          <Link
+            to="/chat"
             className="text-white text-xl hover:text-green-400 transition-colors duration-300"
           >
-            <span role="img" aria-label="Chat">
-              💬
-            </span>
-          </a>
+            💬
+          </Link>
 
-          {/* User Icon with Dropdown */}
+          {/* User Profile Dropdown */}
           <div className="relative inline-block" ref={menuRef}>
-            <a
-              href="#"
-              onClick={(e) => {
-                e.preventDefault();
-                setMenuOpen(!menuOpen);
-              }}
+            <button
+              onClick={() => setMenuOpen(!menuOpen)}
               className="text-white text-xl hover:text-gray-400 transition-colors duration-300"
             >
-              {/* User Profile Icon */}
-              <span role="img" aria-label="Profile">
-                👤
-              </span>
-            </a>
+              👤
+            </button>
 
             {menuOpen && (
               <div className="absolute right-0 mt-2 w-48 bg-white border border-gray-200 rounded-lg shadow-lg">
@@ -82,7 +69,7 @@ const Navbar = () => {
                   {!user ? (
                     <li>
                       <Link
-                        to="/login"
+                        to="/userauthentication"
                         className="block px-4 py-2 text-gray-700 hover:bg-gray-100"
                       >
                         🔑 Log In
@@ -122,11 +109,13 @@ const Navbar = () => {
                           🔔 Price Alerts
                         </Link>
                       </li>
-                      {/* Log out option */}
                       <li>
                         <button
-                          onClick={logout}
-                          className="block px-4 py-2 text-gray-700 hover:bg-gray-100"
+                          onClick={() => {
+                            logout();
+                            setMenuOpen(false);
+                          }}
+                          className="block w-full text-left px-4 py-2 text-gray-700 hover:bg-gray-100"
                         >
                           🚪 Log Out
                         </button>

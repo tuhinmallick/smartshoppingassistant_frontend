@@ -1,8 +1,8 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
-import { loginUser } from "../api/auth";
-import Button from "../ui/Button";
+import { loginUser } from "../api/authAPI";
+import Button from "../components/ui/Button";
 
 const Login = ({ setIsFlipped }) => {
   const [formData, setFormData] = useState({
@@ -24,13 +24,20 @@ const Login = ({ setIsFlipped }) => {
 
     try {
       const data = await loginUser(formData);
-      console.log("API Response:", data); // Debug API response
+      console.log("API Response:", data);
 
       if (data && data.token) {
         localStorage.setItem("token", data.token);
-        navigate("/dashboard");
+        console.log("Token Saved:", localStorage.getItem("token"));
+
+        navigate("/dashboard"); // Normal redirect
+
+        setTimeout(() => {
+          window.location.href = "/dashboard"; // Force reload for Vite issues
+        }, 500);
       } else {
         setError("Invalid response from server.");
+        console.error("Invalid Response:", data);
       }
     } catch (err) {
       console.error("Login Error:", err.message);
