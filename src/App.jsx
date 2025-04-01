@@ -6,7 +6,7 @@ import {
   Navigate,
 } from "react-router-dom";
 import { AuthProvider, useAuth } from "./context/AuthContext";
-import Animation from "./ui/Animation"; // Replaces separate login and signup pages
+import UserAuthentication from "./auth/UserAuthentication";
 import MainLayout from "./layout/MainLayout";
 import Homepage from "./pages/Homepage";
 import UserDashboard from "./pages/UserDashboard";
@@ -18,16 +18,10 @@ import ProductDetails from "./pages/ProductDetails";
 import Wishlist from "./pages/Wishlist";
 import Chatbot from "./components/Chatbot"; // Import Chatbot component
 
-
-// PrivateRoute component to protect routes
 const PrivateRoute = ({ children }) => {
   const { user, loading } = useAuth();
-
-  if (loading) {
-    return <p>Loading...</p>;
-  }
-
-  return user ? children : <Navigate to="/animation" />; // Redirect to the new Auth page if not logged in
+  if (loading) return <p>Loading...</p>;
+  return user ? children : <Navigate to="/userauthentication" />;
 };
 
 function App() {
@@ -37,14 +31,20 @@ function App() {
         <Routes>
           <Route path="/" element={<MainLayout />}>
             <Route index element={<Homepage />} />
-            <Route path="/animation" element={<Animation />} />
-            {/* Redirect /login and /signup to /auth */}
-            <Route path="/login" element={<Navigate to="/animation" replace />} />
-            <Route path="/signup" element={<Navigate to="/animation" replace />} />
-            {/* Search and Product Details Pages */}
-            <Route path="search" element={<SearchResults />} />
-            <Route path="product/:id" element={<ProductDetails />} />
-            {/* Protected Routes */}
+            <Route
+              path="/userauthentication"
+              element={<UserAuthentication />}
+            />
+            <Route
+              path="/login"
+              element={<Navigate to="/userauthentication" replace />}
+            />
+            <Route
+              path="/signup"
+              element={<Navigate to="/userauthentication" replace />}
+            />
+            <Route path="/search" element={<SearchResults />} />
+            <Route path="/product/:id" element={<ProductDetails />} />
             <Route
               path="/dashboard"
               element={

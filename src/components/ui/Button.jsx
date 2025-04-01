@@ -1,5 +1,4 @@
 import React from "react";
-import "./Button.css";
 
 const Button = ({ text, onClick, type = "submit" }) => {
   return (
@@ -20,7 +19,6 @@ const Button = ({ text, onClick, type = "submit" }) => {
         </span>
       </button>
 
-      {/* Gooey Filter Effect */}
       <svg xmlns="http://www.w3.org/2000/svg" version="1.1" className="hidden">
         <defs>
           <filter id="goo">

@@ -1,8 +1,8 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
-import { signupUser } from "../api/auth";
-import Button from "../ui/Button";
+import { signupUser } from "../api/authAPI";
+import Button from "../components/ui/Button";
 
 const Signup = ({ setIsFlipped }) => {
   const [formData, setFormData] = useState({

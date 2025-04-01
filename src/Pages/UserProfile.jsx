@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { fetchProfile } from "../api/auth";
+import { fetchProfile } from "../api/authAPI";
 
 const ProfilePage = () => {
   const [profile, setProfile] = useState(null);
