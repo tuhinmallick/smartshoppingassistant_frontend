@@ -1,3 +1,4 @@
+import React from "react";
 import {
   BrowserRouter as Router,
   Routes,
@@ -15,10 +16,10 @@ import PriceAlerts from "./pages/PriceAlerts";
 import SearchResults from "./pages/SearchResults";
 import ProductDetails from "./pages/ProductDetails";
 import Wishlist from "./pages/Wishlist";
+import Chatbot from "./components/Chatbot"; // Import Chatbot component
 
 const PrivateRoute = ({ children }) => {
   const { user, loading } = useAuth();
-
   if (loading) return <p>Loading...</p>;
   return user ? children : <Navigate to="/userauthentication" />;
 };
@@ -44,8 +45,6 @@ function App() {
             />
             <Route path="/search" element={<SearchResults />} />
             <Route path="/product/:id" element={<ProductDetails />} />
-
-            {/* Protected Routes */}
             <Route
               path="/dashboard"
               element={
@@ -88,6 +87,8 @@ function App() {
             />
           </Route>
         </Routes>
+        {/* Chatbot is visible on all pages */}
+        <Chatbot />
       </Router>
     </AuthProvider>
   );

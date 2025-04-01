@@ -8,16 +8,7 @@
   perspective: 1000px;
 }
 
-nav {
-  position: fixed;
-  width: 100%;
-  top: 0;
-  left: 0;
-  height: 60px; /* Adjust as needed */
-  background-color: white;
-  z-index: 50;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-}
+
 
 /*===== BUTTON =====*/
 .blob-btn {
@@ -111,3 +102,4 @@ nav {
 .blob-btn:hover .blob-btn__blob {
   transform: translateZ(0) scale(1.4);
 }
+
