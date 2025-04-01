@@ -3,7 +3,7 @@ import { motion } from "framer-motion";
 
 const Footer = () => {
   return (
-    <footer className="relative bg-gradient-to-r from-teal-700 via-green-400 to-yellow-300 text-center p-8 mt-4">
+    <footer className="relative bg-gradient-to-r from-teal-500 via-purple-500 to-teal-500 text-center p-8 mt-4">
       {/* Animated Wavy SVG */}
       <div className="absolute inset-x-0 -top-10 overflow-hidden">
         <motion.svg
@@ -14,7 +14,7 @@ const Footer = () => {
           transition={{ duration: 3, repeat: Infinity }}
         >
           <path
-            fill="#F4F4F4" // Light gray for contrast
+            fill="#20B2AA" // Soft peach for contrast
             d="M0,224L60,208C120,192,240,160,360,138.7C480,117,600,107,720,128C840,149,960,203,1080,213.3C1200,224,1320,192,1380,176L1440,160L1440,0L1380,0C1320,0,1200,0,1080,0C960,0,840,0,720,0C600,0,480,0,360,0C240,0,120,0,60,0L0,0Z"
           ></path>
         </motion.svg>
@@ -47,7 +47,7 @@ const Footer = () => {
       </div>
 
       {/* Footer Text */}
-      <p className="relative mt-4 text-gray-900 font-semibold">
+      <p className="relative mt-4 text-white font-semibold">
         © {new Date().getFullYear()} Smart Shopping Assistant. All rights reserved.
       </p>
     </footer>
