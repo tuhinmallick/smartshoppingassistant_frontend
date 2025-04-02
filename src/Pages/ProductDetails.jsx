@@ -123,15 +123,17 @@ const ProductDetails = () => {
 
         {/* Buttons */}
         <div className="mt-6 flex flex-wrap gap-4">
-          <button className="px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition text-lg font-semibold">
-            Buy Now
-          </button>
-          <button className="px-6 py-3 bg-red-500 text-white rounded-lg hover:bg-red-600 transition text-lg font-semibold">
-            Add to Wishlist
-          </button>
-          <button className="px-6 py-3 bg-green-500 text-white rounded-lg hover:bg-green-600 transition text-lg font-semibold">
-            Set Price Alert
-          </button>
+        <button className="wave-button buy px-6 py-3 bg-blue-600 text-white rounded-lg transition text-lg font-semibold relative overflow-hidden">
+  <span>Buy Now</span>
+</button>
+
+<button className="wave-button wishlist px-6 py-3 bg-red-500 text-white rounded-lg transition text-lg font-semibold relative overflow-hidden">
+  <span>Add to Wishlist</span>
+</button>
+
+<button className="wave-button alert px-6 py-3 bg-green-500 text-white rounded-lg transition text-lg font-semibold relative overflow-hidden">
+  <span>Set Price Alert</span>
+</button>
         </div>
 
         {/* Price History Chart */}

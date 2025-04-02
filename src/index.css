@@ -197,3 +197,51 @@
     left: -50%;
   }
 }
+
+
+@keyframes colorMotion {
+  0% { background-position: 0% 0%; background: linear-gradient(45deg, #ff0000, #ff7300); }
+  25% { background-position: 25% 25%; background: linear-gradient(45deg, #ff7300, #ffeb00); }
+  50% { background-position: 50% 50%; background: linear-gradient(45deg, #ffeb00, #00ff00); }
+  75% { background-position: 75% 75%; background: linear-gradient(45deg, #00ff00, #0099ff); }
+  100% { background-position: 100% 100%; background: linear-gradient(45deg, #0099ff, #ff00ff); }
+}
+
+@keyframes waveMotion {
+  0% { transform: translate(-50%, 50%); }
+  50% { transform: translate(50%, -50%); }
+  100% { transform: translate(-50%, 50%); }
+}
+
+.wave-button {
+  position: relative;
+  overflow: hidden;
+  background-size: 300% 300%;
+  transition: background 0.5s ease-in-out;
+}
+
+.wave-button::before {
+  content: "";
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0));
+  opacity: 0;
+  transition: opacity 0.4s ease-in-out;
+}
+
+.wave-button:hover::before {
+  opacity: 1;
+  animation: waveMotion 2s infinite linear;
+}
+
+.wave-button:hover {
+  animation: colorMotion 5s infinite alternate ease-in-out;
+}
+
+.wave-button span {
+  position: relative;
+  z-index: 1;
+}
