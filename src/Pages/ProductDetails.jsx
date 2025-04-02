@@ -88,106 +88,133 @@ const ProductDetails = () => {
 
   if (!product) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-gradient-to-r from-blue-400 to-purple-500">
-        <div className="text-center p-6 bg-white shadow-lg rounded-lg">
-          <h2 className="text-2xl font-semibold text-red-500">Product Not Found</h2>
-          <p className="mt-2 text-gray-700">Sorry, this product does not exist.</p>
-        </div>
-      </div>
+      <div className="min-h-screen flex items-center justify-center bg-gradient-to-r from-blue-500 to-purple-600">
+  <div className="text-center p-6 bg-white shadow-lg rounded-lg">
+    <h2 className="text-3xl font-bold text-red-600" style={{ fontFamily: "'Poppins', sans-serif" }}>
+      Product Not Found
+    </h2>
+    <p className="mt-2 text-gray-700" style={{ fontFamily: "'Poppins', sans-serif" }}>
+      Sorry, this product does not exist.
+    </p>
+  </div>
+</div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-r from-teal-100 to-gray-300 p-8 mt-20">
+    <div className="min-h-screen bg-gradient-to-r from-gray-200 to-gray-400 p-8 mt-20">
+  <div className="max-w-6xl mx-auto bg-white rounded-lg shadow-2xl p-8">
+    {/* Product Info */}
+    <div className="flex flex-col md:flex-row gap-8">
+      <div className="w-full md:w-1/3">
+        <img src={product.image} alt={product.name} className="w-full h-96 object-contain rounded-lg shadow-md" />
+      </div>
+      <div className="w-full md:w-2/3">
+        <h1 className="text-5xl font-extrabold text-green-900" style={{ fontFamily: "'Poppins', sans-serif" }}>
+          {product.name}
+        </h1>
+        <p className="text-2xl text-gray-700 mt-2" style={{ fontFamily: "'Poppins', sans-serif" }}>
+          {product.brand}
+        </p>
+        <p className="text-4xl text-pink-700 font-bold mt-4">{product.price}</p>
+        <p className="mt-4 text-gray-700 text-lg" style={{ fontFamily: "'Poppins', sans-serif" }}>
+          {product.desc}
+        </p>
 
-      <div className="max-w-6xl mx-auto bg-white rounded-lg shadow-2xl p-8">
-        {/* Product Info */}
-        <div className="flex flex-col md:flex-row gap-8">
-          <div className="w-full md:w-1/3">
-            <img src={product.image} alt={product.name} className="w-full h-96 object-contain rounded-lg shadow-md" />
-          </div>
-          <div className="w-full md:w-2/3">
-            <h1 className="text-4xl font-bold text-gray-800">{product.name}</h1>
-            <p className="text-2xl text-gray-600 mt-2">{product.brand}</p>
-            <p className="text-3xl text-blue-600 font-bold mt-4">{product.price}</p>
-            <p className="mt-4 text-gray-700 text-lg">{product.desc}</p>
-
-            {/* Buttons */}
-            <div className="mt-6 flex flex-wrap gap-4">
-              <button className="px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition">Buy Now</button>
-              <button className="px-6 py-3 bg-red-500 text-white rounded-lg hover:bg-red-600 transition">Add to Wishlist</button>
-              <button className="px-6 py-3 bg-green-500 text-white rounded-lg hover:bg-green-600 transition">Set Price Alert</button>
-            </div>
-
-            {/* Price History Chart */}
-            <div className="mt-8">
-              <h3 className="text-2xl font-bold mb-4 text-gray-800">Price History</h3>
-              <ResponsiveContainer width="100%" height={300}>
-                <LineChart data={product.priceHistory} margin={{ top: 5, right: 30, left: 20, bottom: 5 }}>
-                  <CartesianGrid strokeDasharray="3 3" />
-                  <XAxis dataKey="date" />
-                  <YAxis />
-                  <Tooltip />
-                  <Legend />
-                  <Line type="monotone" dataKey="price" stroke="#ff7300" activeDot={{ r: 8 }} />
-                </LineChart>
-              </ResponsiveContainer>
-            </div>
-          </div>
+        {/* Buttons */}
+        <div className="mt-6 flex flex-wrap gap-4">
+          <button className="px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition text-lg font-semibold">
+            Buy Now
+          </button>
+          <button className="px-6 py-3 bg-red-500 text-white rounded-lg hover:bg-red-600 transition text-lg font-semibold">
+            Add to Wishlist
+          </button>
+          <button className="px-6 py-3 bg-green-500 text-white rounded-lg hover:bg-green-600 transition text-lg font-semibold">
+            Set Price Alert
+          </button>
         </div>
 
-        {/* Available Sellers */}
+        {/* Price History Chart */}
         <div className="mt-8">
-          <h3 className="text-2xl font-bold mb-4 text-gray-800">Available Sellers</h3>
-          <table className="w-full border-collapse bg-white shadow-md rounded-lg overflow-hidden">
-            <thead className="bg-gray-200">
-              <tr>
-                <th className="p-3 text-left">Seller</th>
-                <th className="p-3 text-left">Price</th>
-                <th className="p-3 text-left">Shipping</th>
-                <th className="p-3 text-left">Rating</th>
-                <th className="p-3 text-left">Action</th>
-              </tr>
-            </thead>
-            <tbody>
-              {product.sellers.map((seller, index) => (
-                <tr key={index} className="border-b hover:bg-gray-100 transition">
-                  <td className="p-3">{seller.name}</td>
-                  <td className="p-3 font-bold">{seller.price}</td>
-                  <td className="p-3">{seller.shipping}</td>
-                  <td className="p-3 text-yellow-500">
-                    {"★".repeat(Math.round(seller.rating))}{"☆".repeat(5 - Math.round(seller.rating))}
-                  </td>
-                  <td className="p-3">
-                    <button className="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600 transition">
-                      Buy from {seller.name}
-                    </button>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-
-        {/* Customer Reviews */}
-        <div className="mt-8">
-          <h3 className="text-2xl font-bold mb-4 text-gray-800">Customer Reviews</h3>
-          <div className="space-y-4">
-            {product.reviews.map((review, index) => (
-              <div key={index} className="bg-gray-50 p-4 rounded-lg shadow">
-                <div className="flex items-center gap-2 mb-2">
-                  <span className="font-bold text-gray-800">{review.user}</span>
-                  <div className="text-yellow-500">
-                    {"★".repeat(review.rating)}{"☆".repeat(5 - review.rating)}
-                  </div>
-                </div>
-                <p className="text-gray-600">{review.comment}</p>
-              </div>
-            ))}
-          </div>
+          <h3 className="text-3xl font-bold mb-4 text-blue-900" style={{ fontFamily: "'Poppins', sans-serif" }}>
+            Price History
+          </h3>
+          <ResponsiveContainer width="100%" height={300}>
+            <LineChart data={product.priceHistory} margin={{ top: 5, right: 30, left: 20, bottom: 5 }}>
+              <CartesianGrid strokeDasharray="3 3" />
+              <XAxis dataKey="date" stroke="#333" />
+          <YAxis stroke="#333" />
+          <Tooltip contentStyle={{ backgroundColor: "#fff", borderRadius: "8px", border: "1px solid #ccc" }} />
+          <Legend wrapperStyle={{ fontSize: "14px", fontWeight: "bold" }} />
+          <Line type="monotone" dataKey="price" stroke="url(#colorPrice)" strokeWidth={3} activeDot={{ r: 8 }} />
+          <defs>
+            <linearGradient id="colorPrice" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="5%" stopColor="#ff7300" stopOpacity={0.8} />
+              <stop offset="95%" stopColor="#ff7300" stopOpacity={0.2} />
+            </linearGradient>
+          </defs>
+        </LineChart>
+      </ResponsiveContainer>
         </div>
       </div>
     </div>
+
+    {/* Available Sellers */}
+    <div className="mt-8">
+      <h3 className="text-3xl font-bold mb-4 text-red-900" style={{ fontFamily: "'Poppins', sans-serif" }}>
+        Available Sellers
+      </h3>
+      <table className="w-full border-collapse bg-white shadow-md rounded-lg overflow-hidden">
+        <thead className="bg-gray-300">
+          <tr>
+            <th className="p-3 text-left">Seller</th>
+            <th className="p-3 text-left">Price</th>
+            <th className="p-3 text-left">Shipping</th>
+            <th className="p-3 text-left">Rating</th>
+            <th className="p-3 text-left">Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          {product.sellers.map((seller, index) => (
+            <tr key={index} className="border-b hover:bg-gray-100 transition">
+              <td className="p-3">{seller.name}</td>
+              <td className="p-3 font-bold">{seller.price}</td>
+              <td className="p-3">{seller.shipping}</td>
+              <td className="p-3 text-yellow-500">
+                {"★".repeat(Math.round(seller.rating))}{"☆".repeat(5 - Math.round(seller.rating))}
+              </td>
+              <td className="p-3">
+                <button className="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600 transition">
+                  Buy from {seller.name}
+                </button>
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+
+    {/* Customer Reviews */}
+    <div className="mt-8">
+      <h3 className="text-3xl font-bold mb-4 text-teal-900" style={{ fontFamily: "'Poppins', sans-serif" }}>
+        Customer Reviews
+      </h3>
+      <div className="space-y-4">
+        {product.reviews.map((review, index) => (
+          <div key={index} className="bg-gray-50 p-4 rounded-lg shadow">
+            <div className="flex items-center gap-2 mb-2">
+              <span className="font-bold text-gray-800">{review.user}</span>
+              <div className="text-yellow-500">
+                {"★".repeat(review.rating)}{"☆".repeat(5 - review.rating)}
+              </div>
+            </div>
+            <p className="text-gray-600">{review.comment}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </div>
+</div>
   );
 };
 
