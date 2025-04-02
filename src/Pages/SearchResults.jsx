@@ -155,9 +155,24 @@ export default function SearchResults() {
         <td className="p-3">{store.rating} / 5</td>
         <td className="p-3 text-center">
         <div className="wavy-background">
-  <button className="bg-green-500 text-white px-4 py-2 rounded-lg transition">
-    Buy Now
-  </button>
+        <button className="relative overflow-hidden text-white px-6 py-3 rounded-lg transition-all duration-300 before:absolute before:inset-0 before:bg-gradient-to-r before:from-green-400 before:via-green-500 before:to-green-600 before:animate-wavy hover:before:animate-wavy">
+  <span className="relative z-10">Buy Now</span>
+
+  <style jsx>{`
+    @keyframes wavy {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    .before\\:animate-wavy::before {
+      content: "";
+      background-size: 300% 300%;
+      animation: wavy 3s ease-in-out infinite;
+    }
+  `}</style>
+</button>
+
 </div>
 
         </td>
