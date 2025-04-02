@@ -1,12 +1,10 @@
-const API_URL = "http://localhost:5001/api/auth";
-const Profile_URL = "http://localhost:5001/api/users";
-
+const API_URL = process.env.REACT_APP_BASE_URL;
 // Signup function
 export const signupUser = async (userData) => {
   const response = await fetch(`${API_URL}/register`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(userData), // Ensure correct JSON format
+    body: JSON.stringify(userData),
   });
 
   if (!response.ok) {
@@ -27,7 +25,6 @@ export const signupUser = async (userData) => {
 };
 
 export const loginUser = async (credentials) => {
-  // Ensure name is included in the request
   if (!credentials.email || !credentials.password) {
     throw new Error("email and password are required");
   }
@@ -39,7 +36,7 @@ export const loginUser = async (credentials) => {
   });
 
   if (!response.ok) {
-    const errorData = await response.json(); // Capture backend error message
+    const errorData = await response.json();
     throw new Error(errorData.message || "Invalid request");
   }
 
@@ -67,7 +64,7 @@ export const fetchProfile = async () => {
     method: "GET",
     headers: {
       "Content-Type": "application/json",
-      Authorization: `Bearer ${token}`, // Ensure token is sent properly
+      Authorization: `Bearer ${token}`,
     },
   });
 

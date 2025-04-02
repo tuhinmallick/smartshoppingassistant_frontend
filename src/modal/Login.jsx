@@ -29,10 +29,10 @@ const Login = ({ setIsFlipped }) => {
         localStorage.setItem("token", data.token);
         console.log("Token Saved:", localStorage.getItem("token"));
 
-        navigate("/dashboard"); // Normal redirect
+        navigate("/dashboard");
 
         setTimeout(() => {
-          window.location.href = "/dashboard"; // Force reload for Vite issues
+          window.location.href = "/dashboard";
         }, 500);
       } else {
         setError("Invalid response from server.");
@@ -46,20 +46,24 @@ const Login = ({ setIsFlipped }) => {
 
   return (
     <motion.div
-      className="absolute flex items-center justify-center bg-gradient-to-br from-pink-500 to-purple-600 rounded-3xl shadow-xl"
+      className="flex flex-col items-center justify-center w-full bg-[#2c2c2c] p-6 shadow-xl rounded-lg"
       initial={{ opacity: 0, rotateY: -180 }}
       animate={{ opacity: 1, rotateY: 0 }}
       transition={{ duration: 0.6 }}
     >
-      <div className="bg-white/20 p-6 rounded-2xl w-80 text-center shadow-lg backdrop-blur-md">
-        <h2 className="text-xl font-bold text-white mb-4">Login</h2>
-        {error && <p className="text-red-500 text-sm">{error}</p>}
+      <div className="w-full text-center ">
+        <h2 className="text-4xl font-extrabold text-white mb-4">Login</h2>
+        {error && (
+          <p className="text-red-500 font-semibold px-2 py-4 text-left">
+            {error}
+          </p>
+        )}
         <form onSubmit={handleSubmit} className="flex flex-col">
           <input
             type="email"
             name="email"
             placeholder="Enter Email"
-            className="mb-3 p-2 rounded-md bg-white/30 text-white placeholder-white outline-none"
+            className="mb-3 p-2 bg-[#f7f1e4] text-sm font-bold text-[#464646] placeholder-[#464646] outline-none"
             onChange={handleChange}
             required
           />
@@ -68,17 +72,17 @@ const Login = ({ setIsFlipped }) => {
             type="password"
             name="password"
             placeholder="Enter Password"
-            className="mb-3 p-2 rounded-md bg-white/30 text-white placeholder-white outline-none"
+            className="mb-3 p-2 bg-[#f7f1e4] text-sm font-bold text-[#464646] placeholder-[#464646] outline-none"
             onChange={handleChange}
             required
           />
-          <Button type="submit" text="Login" />
+          <Button type="submit" text="Sign In" />
         </form>
-        <p
-          className="mt-4 text-white cursor-pointer"
-          onClick={() => setIsFlipped(true)}
-        >
-          Don't have an account? Sign up
+        <p className="mt-4 cursor-pointer" onClick={() => setIsFlipped(true)}>
+          <span className="text-[#f7f1e4] font-semibold">
+            Don't have an account ?
+          </span>
+          <span className="text-[#fc372d] font-extrabold"> Register</span>
         </p>
       </div>
     </motion.div>

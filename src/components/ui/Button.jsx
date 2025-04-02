@@ -1,14 +1,19 @@
 import React from "react";
+import { ArrowRight } from "lucide-react";
 
-const Button = ({ text, onClick, type = "submit" }) => {
+const Button = ({ text, onClick, type = "submit", icon = null }) => {
   return (
     <div className="flex justify-center items-center mt-4">
       <button
-        className="blob-btn text-red-600 font-bold"
+        className="blob-btn text-[#fc372d] font-extrabold flex items-center gap-2"
         onClick={onClick}
         type={type}
       >
         <span className="relative z-10">{text}</span>
+
+        {/* Render Icon if provided */}
+        {icon && <span className="relative z-10">{icon}</span>}
+
         <span className="blob-btn__inner">
           <span className="blob-btn__blobs">
             <span className="blob-btn__blob"></span>

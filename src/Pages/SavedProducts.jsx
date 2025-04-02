@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import ProductCard from "../components/ui/ProductCard";
+
 const SavedProducts = () => {
   const [savedProducts, setSavedProducts] = useState([]);
 
@@ -17,27 +18,25 @@ const SavedProducts = () => {
     fetchSavedProducts();
   }, []);
 
-  const handleSave = (product) => {
-    console.log("Product saved:", product);
-  };
-
   return (
-    <div className="save-product text-center mt-6">
-      <h2 className="text-3xl font-bold">Saved Products</h2>
+    <section className="text-center pt-4">
+      <h2 className="text-3xl font-extrabold uppercase text-[#fc372d] mb-2">
+        Saved Products
+      </h2>
+      <p className="text-[#464646] font-semibold mb-6">
+        📌 You asked for it, we delivered. Here are your saved picks!
+      </p>
+
       {savedProducts.length === 0 ? (
-        <p className="text-gray-500 mt-4">No saved products.</p>
+        <p className="text-[#464646] mt-4 text-center">No saved products.</p>
       ) : (
-        <div className="grid grid-cols-4 gap-6 mt-4 transition-all duration-300 hover:shadow-black">
+        <div className="grid grid-cols-3 gap-6">
           {savedProducts.map((product) => (
-            <ProductCard
-              key={product.id}
-              product={product}
-              onSave={handleSave}
-            />
+            <ProductCard key={product.id} product={product} />
           ))}
         </div>
       )}
-    </div>
+    </section>
   );
 };
 

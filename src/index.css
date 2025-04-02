@@ -1,11 +1,20 @@
-@import url("https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Chaney&display=swap");
 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
+/* In your global CSS file */
+
 .perspective {
   perspective: 1000px;
+}
+
+.backface-hidden {
+  backface-visibility: hidden;
+  position: absolute;
+  width: 100%;
+  height: 100%;
 }
 
 /*===== BUTTON =====*/
@@ -14,11 +23,11 @@
   padding: 10px 20px;
   text-align: center;
   font-size: 16px;
-  font-weight: bold;
+
   text-transform: uppercase;
-  color: #0505a9;
+  color: #fc372d;
   background: transparent;
-  border: none;
+  border: 1px solid #464646;
   cursor: pointer;
   transition: color 0.5s;
 }
@@ -30,7 +39,7 @@
   top: 0;
   width: 100%;
   height: 100%;
-  border: 2px solid #0505a9;
+  border: 2px solid #fc372d;
 }
 
 .blob-btn:after {
@@ -44,7 +53,7 @@
 }
 
 .blob-btn:hover {
-  color: #ffffff;
+  color: #f7f1e4;
 }
 
 .blob-btn:hover:after {
@@ -59,7 +68,7 @@
   width: 100%;
   height: 100%;
   overflow: hidden;
-  background: #ffffff;
+  background: #f7f1e4;
 }
 
 .blob-btn__blobs {
@@ -74,7 +83,7 @@
   top: 2px;
   width: 25%;
   height: 100%;
-  background: #0505a9;
+  background: #fc372d;
   border-radius: 100%;
   transform: translate3d(0, 150%, 0) scale(1.4);
   transition: transform 0.45s;
