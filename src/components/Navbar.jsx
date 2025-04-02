@@ -1,11 +1,24 @@
 import { useState, useRef, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
+import UserAuthentication from "../auth/UserAuthentication";
+import { motion, AnimatePresence } from "framer-motion";
 
 const Navbar = () => {
   const { user, logout } = useAuth();
   const [menuOpen, setMenuOpen] = useState(false);
+  const [isAuthModalOpen, setAuthModalOpen] = useState(false);
   const menuRef = useRef(null);
+  const location = useLocation();
+
+  const isHomePage = location.pathname === "/";
+
+  useEffect(() => {
+    document.body.style.overflow = isAuthModalOpen ? "hidden" : "auto";
+    return () => {
+      document.body.style.overflow = "auto";
+    };
+  }, [isAuthModalOpen]);
 
   useEffect(() => {
     const handleClickOutside = (event) => {
@@ -17,128 +30,181 @@ const Navbar = () => {
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
-  const openChatbot = () => {
-    if (window.tidioChatApi) {
-      window.tidioChatApi.open();
-    } else {
-      console.warn("Tidio Chat API is not loaded yet. Retrying...");
-      setTimeout(openChatbot, 1000); 
-    }
+  const menuVariants = {
+    open: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.2,
+        when: "beforeChildren",
+      },
+    },
+    closed: {
+      opacity: 0,
+      transition: {
+        staggerChildren: 0.2,
+        when: "afterChildren",
+      },
+    },
   };
-  
+
+  const menuItemVariants = {
+    open: {
+      opacity: 1,
+      y: 0,
+      transition: { duration: 0.3 },
+    },
+    closed: {
+      opacity: 0,
+      y: -20,
+      transition: { duration: 0.3 },
+    },
+  };
 
   return (
-    <nav className="bg-gradient-to-r from-blue-500 p-4 flex justify-between items-center shadow-lg rounded-b-xl fixed top-0 left-0 w-full z-50">
-      <div className="flex justify-between items-center w-full">
-        {/* Homepage Link */}
-        <Link
-          to="/"
-          className="text-3xl font-bold text-white tracking-wide hover:text-yellow-300 transition"
-        >
-          Smart Shopping Assistant
-        </Link>
-
-        {/* Icons */}
-        <div className="flex space-x-6 items-center">
-          {/* Notification Icon */}
+    <>
+      <nav
+        className={`bg-[#fc372d] p-4 flex justify-between items-center shadow-lg rounded-b-xl left-0 w-full z-50 ${
+          isHomePage ? "fixed top-0" : "relative"
+        }`}
+      >
+        <div className="flex justify-between items-center w-full">
           <Link
-            to="/notifications"
-            className="text-white text-xl hover:text-yellow-400 transition-colors duration-300"
+            to="/"
+            className="text-3xl font-bold text-[#ffff] tracking-wide hover:text-yellow-300 transition"
           >
-            🔔
+            Smart Shopping Assistant
           </Link>
 
-          {/* Wishlist Icon */}
-          <Link
-            to="/wishlist"
-            className="text-white text-xl hover:text-red-400 transition-colors duration-300"
-          >
-            ❤️
-          </Link>
-
-          {/* Chatbot Icon */}
-          <button
-            onClick={openChatbot} // Trigger chatbot open on click
-            className="text-white text-xl hover:text-green-400 transition-colors duration-300"
-          >
-            💬
-          </button>
-
-          {/* User Profile Dropdown */}
-          <div className="relative inline-block" ref={menuRef}>
-            <button
-              onClick={() => setMenuOpen(!menuOpen)}
-              className="text-white text-xl hover:text-gray-400 transition-colors duration-300"
+          <div className="flex text-[#2c2c2c] space-x-6 items-center">
+            <Link
+              to="/notifications"
+              className="text-xl hover:text-yellow-400 transition-colors duration-300"
             >
-              👤
+              🔔
+            </Link>
+
+            <Link
+              to="/wishlist"
+              className="text-xl hover:text-red-400 transition-colors duration-300"
+            >
+              ❤️
+            </Link>
+
+            <button
+              onClick={() => console.log("Open chatbot")}
+              className="text-xl hover:text-green-400 transition-colors duration-300"
+            >
+              💬
             </button>
 
-            {menuOpen && (
-              <div className="absolute right-0 mt-2 w-48 bg-white border border-gray-200 rounded-lg shadow-lg">
-                <ul className="py-2">
-                  {!user ? (
-                    <li>
-                      <Link
-                        to="/userauthentication"
-                        className="block px-4 py-2 text-gray-700 hover:bg-gray-100"
-                      >
-                        🔑 Log In
-                      </Link>
-                    </li>
-                  ) : (
-                    <>
-                      <li>
-                        <Link
-                          to="/dashboard"
-                          className="block px-4 py-2 text-gray-700 hover:bg-gray-100"
-                        >
-                          🏠 Dashboard
-                        </Link>
-                      </li>
-                      <li>
-                        <Link
-                          to="/profile"
-                          className="block px-4 py-2 text-gray-700 hover:bg-gray-100"
-                        >
-                          👤 Profile
-                        </Link>
-                      </li>
-                      <li>
-                        <Link
-                          to="/saved-products"
-                          className="block px-4 py-2 text-gray-700 hover:bg-gray-100"
-                        >
-                          💾 Saved Products
-                        </Link>
-                      </li>
-                      <li>
-                        <Link
-                          to="/price-alert"
-                          className="block px-4 py-2 text-gray-700 hover:bg-gray-100"
-                        >
-                          🔔 Price Alerts
-                        </Link>
-                      </li>
-                      <li>
-                        <button
-                          onClick={() => {
-                            logout();
-                            setMenuOpen(false);
-                          }}
-                          className="block w-full text-left px-4 py-2 text-gray-700 hover:bg-gray-100"
-                        >
-                          🚪 Log Out
-                        </button>
-                      </li>
-                    </>
-                  )}
-                </ul>
-              </div>
-            )}
+            <div className="relative inline-block" ref={menuRef}>
+              <button
+                onClick={() => setMenuOpen(!menuOpen)}
+                className="text-xl hover:text-gray-400 transition-colors duration-300"
+              >
+                👤
+              </button>
+
+              <AnimatePresence>
+                {menuOpen && (
+                  <motion.div
+                    initial={{ opacity: 0, scale: 0.9, y: -10 }}
+                    animate={{ opacity: 1, scale: 1, y: 0 }}
+                    exit={{ opacity: 0, scale: 0.9, y: -10 }}
+                    transition={{ duration: 0.2 }}
+                    className="absolute right-0 w-48 text-[#2c2c2c] shadow-black shadow-lg overflow-hidden"
+                  >
+                    <motion.ul
+                      variants={menuVariants}
+                      initial="closed"
+                      animate={menuOpen ? "open" : "closed"}
+                    >
+                      {!user ? (
+                        <motion.li variants={menuItemVariants}>
+                          <button
+                            onClick={() => {
+                              setAuthModalOpen(true);
+                              setMenuOpen(false);
+                            }}
+                            className="block px-4 py-2 w-full text-left shadow-black shadow-lg hover:bg-[#fc372d] bg-[#f7f1e4] transition-all duration-300"
+                          >
+                            🔑 Log In
+                          </button>
+                        </motion.li>
+                      ) : (
+                        <>
+                          <motion.li variants={menuItemVariants}>
+                            <Link
+                              to="/dashboard"
+                              onClick={() => setMenuOpen(false)}
+                              className="block px-4 py-2 hover:bg-[#fc372d] shadow-black shadow-lg bg-[#f7f1e4] transition-all duration-300"
+                            >
+                              🏠 Dashboard
+                            </Link>
+                          </motion.li>
+                          <motion.li variants={menuItemVariants}>
+                            <Link
+                              to="/profile"
+                              onClick={() => setMenuOpen(false)}
+                              className="block px-4 py-2 hover:bg-[#fc372d] shadow-black shadow-lg bg-[#f7f1e4] transition-all duration-300"
+                            >
+                              👤 Profile
+                            </Link>
+                          </motion.li>
+                          <motion.li variants={menuItemVariants}>
+                            <Link
+                              to="/saved-products"
+                              onClick={() => setMenuOpen(false)}
+                              className="block px-4 py-2 hover:bg-[#fc372d] shadow-black shadow-lg bg-[#f7f1e4] transition-all duration-300"
+                            >
+                              💾 Saved Products
+                            </Link>
+                          </motion.li>
+                          <motion.li variants={menuItemVariants}>
+                            <Link
+                              to="/price-alert"
+                              onClick={() => setMenuOpen(false)}
+                              className="block px-4 py-2 hover:bg-[#fc372d] shadow-black shadow-lg bg-[#f7f1e4] transition-all duration-300"
+                            >
+                              🔔 Price Alerts
+                            </Link>
+                          </motion.li>
+                          <motion.li variants={menuItemVariants}>
+                            <button
+                              onClick={() => {
+                                logout();
+                                setMenuOpen(false);
+                              }}
+                              className="block w-full text-left px-4 py-2 hover:bg-[#fc372d] shadow-black shadow-lg bg-[#f7f1e4] transition-all duration-300"
+                            >
+                              🚪 Log Out
+                            </button>
+                          </motion.li>
+                        </>
+                      )}
+                    </motion.ul>
+                  </motion.div>
+                )}
+              </AnimatePresence>
+            </div>
           </div>
         </div>
-      </div>
-    </nav>
+      </nav>
+
+      {isAuthModalOpen && (
+        <div className="fixed inset-0 bg-black bg-opacity-75 flex justify-center items-center z-50">
+          <div className="p-6 rounded-lg shadow-lg">
+            <button
+              className="bg-[#fc372d] text-[#ffff] py-1 px-2 text-sm rounded-xl font-bold"
+              onClick={() => setAuthModalOpen(false)}
+            >
+              X
+            </button>
+            <UserAuthentication />
+          </div>
+        </div>
+      )}
+    </>
   );
 };
 

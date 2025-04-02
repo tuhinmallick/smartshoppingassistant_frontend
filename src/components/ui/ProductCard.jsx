@@ -1,44 +1,45 @@
 import React from "react";
-import { motion } from "framer-motion";
+import { ArrowRight } from "lucide-react";
+import Button from "./Button";
 
-const ProductCard = ({ product, isRecommended }) => {
+const ProductCard = ({ product, onSave }) => {
   return (
-    <motion.div
-      className={`relative bg-white p-6 rounded-2xl shadow-lg w-72 text-center border-2 ${
-        isRecommended ? "border-green-600 scale-105" : "border-gray-400"
-      } transition-all duration-300 hover:shadow-black`}
-      whileHover={{ scale: 1.05 }}
+    <div
+      className={`relative border-2 text-center p-6 border-[#2C2C2C] shadow-black bg-white w-auto 
+              shadow-xl hover:scale-105 transition-all duration-300 ease-in-out `}
     >
-      {/* Recommended Badge */}
-      {isRecommended && (
-        <span className="bg-orange-500 text-white text-xs px-2 py-1 rounded-full absolute -top-3 left-1/2 transform -translate-x-1/2">
-          RECOMMENDED
-        </span>
-      )}
+      {/* Product Details */}
+      <h3 className="text-xl font-extrabold text-[#464646]">{product.name}</h3>
 
       {/* Product Image */}
-      <div className="h-[230px] w-full flex justify-center items-center overflow-hidden transition-transform duration-500 ease-in-out group-hover:-translate-x-2 group-hover:-translate-y-2 group-hover:-rotate-6">
+      <div className="flex justify-center mt-4">
         <img
           src={product.image}
           alt={product.name}
-          className="w-full h-full object-contain"
-          draggable="false"
+          className="w-28 h-28 object-contain rounded-md shadow-sm"
         />
       </div>
 
-      {/* Product Info */}
-      <h6 className="text-lg font-extrabold text-gray-700 mt-2">
-        {product.name}
-      </h6>
-      <p className="text-4xl text-green-600 font-mono mt-1">{product.price}</p>
+      <div className="flex items-start justify-center text-md font-bold gap-2 mt-2">
+        <label className="text-[#464646] uppercase">Price:</label>
+        <p className="text-[#fc372d] leading-tight">{product.price}</p>
+      </div>
+
       {product.oldPrice && (
-        <p className="text-2xl text-red-600 font-mono mt-1 line-through">
+        <p className="text-2xl text-[#fc372d] font-mono mt-1 line-through">
           {product.oldPrice}
         </p>
       )}
+      <p className="text-sm font-bold text-[#464646] mt-2">
+        {product.description}
+      </p>
 
-      <p className="text-sm text-gray-600 mt-2">{product.description}</p>
-    </motion.div>
+      <Button
+        text="To Offer"
+        onClick={() => alert("Redirecting to offer")}
+        icon={<ArrowRight className="w-5 h-5" />}
+      />
+    </div>
   );
 };
 

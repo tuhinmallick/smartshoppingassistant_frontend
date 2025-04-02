@@ -7,27 +7,34 @@ const UserAuthentication = () => {
   const [isFlipped, setIsFlipped] = useState(false);
 
   return (
-    <div className="relative w-96 h-96 mx-auto mt-20 perspective">
+    <div className="w-96 h-[90vh] mx-auto flex items-center justify-center">
       <motion.div
-        className="w-full h-full relative"
+        className="relative w-full h-full"
         animate={{ rotateY: isFlipped ? 180 : 0 }}
         transition={{ duration: 0.6 }}
-        style={{ transformStyle: "preserve-3d" }}
+        style={{ transformStyle: "preserve-3d", width: "100%", height: "100%" }}
       >
+        {/* Login Form (No Scroll) */}
         <div
-          className="absolute w-full h-full backface-hidden"
+          className="absolute w-full h-full"
           style={{ backfaceVisibility: "hidden" }}
         >
           <Login setIsFlipped={setIsFlipped} />
         </div>
+
+        {/* Signup Form with Scroll */}
         <div
-          className="absolute w-full h-full backface-hidden"
+          className="absolute w-full h-full"
           style={{
             transform: "rotateY(180deg)",
             backfaceVisibility: "hidden",
+            display: "flex",
+            flexDirection: "column",
           }}
         >
-          <Signup setIsFlipped={setIsFlipped} />
+          <div className="h-full max-h-[80vh] overflow-y-auto p-4 bg-[#2c2c2c] rounded-lg shadow-lg">
+            <Signup setIsFlipped={setIsFlipped} />
+          </div>
         </div>
       </motion.div>
     </div>

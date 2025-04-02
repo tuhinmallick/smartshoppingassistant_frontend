@@ -28,7 +28,7 @@ const Signup = ({ setIsFlipped }) => {
     e.preventDefault();
     setError(null);
 
-    console.log("Sending Data:", JSON.stringify(formData, null, 2)); // Log request data
+    console.log("Sending Data:", JSON.stringify(formData, null, 2));
 
     try {
       const data = await signupUser(formData);
@@ -36,7 +36,12 @@ const Signup = ({ setIsFlipped }) => {
 
       if (data && data.token) {
         localStorage.setItem("token", data.token);
-        navigate("/login");
+
+        // 🔹 Show success message
+        alert("Signup successful! Please log in.");
+
+        // 🔹 Flip to login form (assuming `setIsFlipped` is available)
+        setIsFlipped(false);
       } else {
         setError("Invalid response from server.");
       }
@@ -48,20 +53,24 @@ const Signup = ({ setIsFlipped }) => {
 
   return (
     <motion.div
-      className="absolute flex items-center justify-center bg-gradient-to-br from-pink-500 to-purple-600 rounded-3xl shadow-xl"
+      className="flex flex-col items-center justify-center w-full bg-[#2c2c2c] p-6 shadow-xl rounded-lg"
       initial={{ opacity: 0, rotateY: 180 }}
       animate={{ opacity: 1, rotateY: 0 }}
       transition={{ duration: 0.6 }}
     >
-      <div className="bg-white/20 p-6 rounded-2xl w-80 text-center shadow-lg backdrop-blur-md">
-        <h2 className="text-xl font-bold text-white mb-4">Sign Up</h2>
-        {error && <p className="text-red-500 text-sm">{error}</p>}
+      <div className="w-full text-center ">
+        <h2 className="text-4xl font-extrabold text-white mb-4">Sign Up</h2>
+        {error && (
+          <p className="text-red-500 font-semibold px-2 py-4 text-left">
+            {error}
+          </p>
+        )}
         <form onSubmit={handleSubmit} className="flex flex-col">
           <input
             type="text"
             name="name"
             placeholder="First Name"
-            className="mb-3 p-2 rounded-md bg-white/30 text-white placeholder-white outline-none"
+            className="mb-3 p-2 bg-[#f7f1e4] text-sm font-bold text-[#464646] placeholder-[#464646] outline-none"
             onChange={handleChange}
             required
           />
@@ -69,7 +78,7 @@ const Signup = ({ setIsFlipped }) => {
             type="text"
             name="surname"
             placeholder="Last Name"
-            className="mb-3 p-2 rounded-md bg-white/30 text-white placeholder-white outline-none"
+            className="mb-3 p-2 bg-[#f7f1e4] text-sm font-bold text-[#464646] placeholder-[#464646] outline-none"
             onChange={handleChange}
             required
           />
@@ -77,7 +86,7 @@ const Signup = ({ setIsFlipped }) => {
             type="email"
             name="email"
             placeholder="Email"
-            className="mb-3 p-2 rounded-md bg-white/30 text-white placeholder-white outline-none"
+            className="mb-3 p-2 bg-[#f7f1e4] text-sm font-bold text-[#464646] placeholder-[#464646] outline-none"
             onChange={handleChange}
             required
           />
@@ -85,7 +94,7 @@ const Signup = ({ setIsFlipped }) => {
             type="password"
             name="password"
             placeholder="Password"
-            className="mb-3 p-2 rounded-md bg-white/30 text-white placeholder-white outline-none"
+            className="mb-3 p-2 bg-[#f7f1e4] text-sm font-bold text-[#464646] placeholder-[#464646] outline-none"
             onChange={handleChange}
             required
           />
@@ -93,7 +102,7 @@ const Signup = ({ setIsFlipped }) => {
             type="text"
             name="street"
             placeholder="Street"
-            className="mb-3 p-2 rounded-md bg-white/30 text-white placeholder-white outline-none"
+            className="mb-3 p-2 bg-[#f7f1e4] text-sm font-bold text-[#464646] placeholder-[#464646] outline-none"
             onChange={handleChange}
             required
           />
@@ -101,7 +110,7 @@ const Signup = ({ setIsFlipped }) => {
             type="text"
             name="city"
             placeholder="City"
-            className="mb-3 p-2 rounded-md bg-white/30 text-white placeholder-white outline-none"
+            className="mb-3 p-2 bg-[#f7f1e4] text-sm font-bold text-[#464646] placeholder-[#464646] outline-none"
             onChange={handleChange}
             required
           />
@@ -109,7 +118,7 @@ const Signup = ({ setIsFlipped }) => {
             type="text"
             name="zipcode"
             placeholder="Zipcode"
-            className="mb-3 p-2 rounded-md bg-white/30 text-white placeholder-white outline-none"
+            className="mb-3 p-2 bg-[#f7f1e4] text-sm font-bold text-[#464646] placeholder-[#464646] outline-none"
             onChange={handleChange}
             required
           />
@@ -117,14 +126,14 @@ const Signup = ({ setIsFlipped }) => {
             type="text"
             name="about"
             placeholder="About"
-            className="mb-3 p-2 rounded-md bg-white/30 text-white placeholder-white outline-none"
+            className="mb-3 p-2 bg-[#f7f1e4] text-sm font-bold text-[#464646] placeholder-[#464646] outline-none"
             onChange={handleChange}
           />
           <input
             type="text"
             name="phone"
             placeholder="Phone"
-            className="mb-3 p-2 rounded-md bg-white/30 text-white placeholder-white outline-none"
+            className="mb-3 p-2 bg-[#f7f1e4] text-sm font-bold text-[#464646] placeholder-[#464646] outline-none"
             onChange={handleChange}
             required
           />
@@ -135,7 +144,10 @@ const Signup = ({ setIsFlipped }) => {
           className="mt-4 text-white cursor-pointer"
           onClick={() => setIsFlipped(false)}
         >
-          Already have an account? Login
+          <span className="text-[#f7f1e4] font-semibold">
+            Already have an account ?
+          </span>
+          <span className="text-[#fc372d] font-extrabold"> Sign In</span>
         </p>
       </div>
     </motion.div>

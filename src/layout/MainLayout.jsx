@@ -8,12 +8,10 @@ const MainLayout = () => {
   return (
     <>
       <Navbar />
-
       {/* Main Content Area */}
-      <main className="flex flex-col items-center justify-center min-h-screen">
+      <main className="flex flex-col items-center justify-center min-h-screen bg-[#f7f1e4]">
         <Outlet />
       </main>
-
       <div className="bg-transparent p-4">
         <Breadcrumb />
       </div>
