@@ -100,3 +100,100 @@
 .blob-btn:hover .blob-btn__blob {
   transform: translateZ(0) scale(1.4);
 }
+.wavy-background {
+  position: relative;
+  overflow: hidden;
+  display: inline-block;
+  border-radius: 8px;
+}
+
+.wavy-background::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 200%;
+  height: 100%;
+  background: linear-gradient(90deg, rgba(75, 0, 130, 0.7), rgba(0, 0, 128, 0.7), rgba(0, 100, 0, 0.7));
+  transform: skewX(-30deg);
+  transition: left 0.5s ease-in-out, opacity 0.3s ease-in-out;
+  opacity: 0;
+  z-index: 0;
+}
+
+.wavy-background:hover::before {
+  left: 0;
+  opacity: 1;
+  animation: wave-motion 2s ease-in-out forwards;
+}
+
+@keyframes wave-motion {
+  0% {
+    transform: translateX(-100%) skewX(-30deg);
+  }
+  50% {
+    transform: translateX(100%) skewX(-30deg);
+  }
+  100% {
+    transform: translateX(-100%) skewX(-30deg);
+  }
+}
+
+.wavy-background button {
+  position: relative;
+  z-index: 1;
+  background: #38a169;
+  border: none;
+  padding: 12px 24px;
+  font-size: 16px;
+  font-weight: bold;
+  color: black;
+  cursor: pointer;
+  border-radius: 8px;
+  transition: transform 0.2s ease-in-out;
+}
+
+.wavy-background button:hover {
+  transform: scale(1.05);
+  background-color: #2f855a;
+}
+.wavy-button {
+  position: relative;
+  overflow: hidden;
+  background-color: #38a169; /* Green background */
+}
+
+.wavy-button::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: linear-gradient(45deg, rgba(75, 0, 130, 0.7), rgba(0, 0, 128, 0.7), rgba(0, 100, 0, 0.7)); /* Dark Purple, Navy Blue, Dark Green */
+  transition: all 0.3s ease-in-out;
+  opacity: 0; /* Make it invisible initially */
+}
+
+.wavy-button:hover::before {
+  opacity: 1; /* Make it visible when hovered */
+  animation: wave-motion 3s infinite ease-in-out;
+}
+
+@keyframes wave-motion {
+  0% {
+    transform: rotate(0deg);
+    top: -50%;
+    left: -50%;
+  }
+  50% {
+    transform: rotate(180deg);
+    top: 50%;
+    left: 50%;
+  }
+  100% {
+    transform: rotate(360deg);
+    top: -50%;
+    left: -50%;
+  }
+}

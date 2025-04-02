@@ -164,7 +164,7 @@ const ProductDetails = () => {
       <h3 className="text-3xl font-bold mb-4 text-red-900" style={{ fontFamily: "'Poppins', sans-serif" }}>
         Available Sellers
       </h3>
-      <table className="w-full border-collapse bg-white shadow-md rounded-lg overflow-hidden">
+      <table className="w-full border-collapse bg-teal-100 shadow-md rounded-lg overflow-hidden">
         <thead className="bg-gray-300">
           <tr>
             <th className="p-3 text-left">Seller</th>
@@ -184,9 +184,9 @@ const ProductDetails = () => {
                 {"★".repeat(Math.round(seller.rating))}{"☆".repeat(5 - Math.round(seller.rating))}
               </td>
               <td className="p-3">
-                <button className="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600 transition">
-                  Buy from {seller.name}
-                </button>
+              <button className="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600 transition wavy-button">
+  Buy from {seller.name}
+</button>
               </td>
             </tr>
           ))}
@@ -201,7 +201,7 @@ const ProductDetails = () => {
       </h3>
       <div className="space-y-4">
         {product.reviews.map((review, index) => (
-          <div key={index} className="bg-gray-50 p-4 rounded-lg shadow">
+          <div key={index} className="bg-blue-100 p-4 rounded-lg shadow">
             <div className="flex items-center gap-2 mb-2">
               <span className="font-bold text-gray-800">{review.user}</span>
               <div className="text-yellow-500">
