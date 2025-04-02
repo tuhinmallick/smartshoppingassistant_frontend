@@ -7,9 +7,16 @@ import Button from "../components/ui/Button";
 const Signup = ({ setIsFlipped }) => {
   const [formData, setFormData] = useState({
     name: "",
+    surname: "",
     email: "",
     password: "",
+    street: "",
+    city: "",
+    zipcode: "",
+    about: "",
+    phone: "",
   });
+
   const [error, setError] = useState(null);
   const navigate = useNavigate();
 
@@ -20,10 +27,21 @@ const Signup = ({ setIsFlipped }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError(null);
+
+    console.log("Sending Data:", JSON.stringify(formData, null, 2)); // Log request data
+
     try {
-      await signupUser(formData);
-      navigate("/login");
+      const data = await signupUser(formData);
+      console.log("API Response:", data);
+
+      if (data && data.token) {
+        localStorage.setItem("token", data.token);
+        navigate("/login");
+      } else {
+        setError("Invalid response from server.");
+      }
     } catch (err) {
+      console.error("Signup Error:", err.message);
       setError(err.message);
     }
   };
@@ -42,7 +60,15 @@ const Signup = ({ setIsFlipped }) => {
           <input
             type="text"
             name="name"
-            placeholder="Enter Full Name"
+            placeholder="First Name"
+            className="mb-3 p-2 rounded-md bg-white/30 text-white placeholder-white outline-none"
+            onChange={handleChange}
+            required
+          />
+          <input
+            type="text"
+            name="surname"
+            placeholder="Last Name"
             className="mb-3 p-2 rounded-md bg-white/30 text-white placeholder-white outline-none"
             onChange={handleChange}
             required
@@ -50,7 +76,7 @@ const Signup = ({ setIsFlipped }) => {
           <input
             type="email"
             name="email"
-            placeholder="Enter Email"
+            placeholder="Email"
             className="mb-3 p-2 rounded-md bg-white/30 text-white placeholder-white outline-none"
             onChange={handleChange}
             required
@@ -58,11 +84,51 @@ const Signup = ({ setIsFlipped }) => {
           <input
             type="password"
             name="password"
-            placeholder="Enter Password"
+            placeholder="Password"
             className="mb-3 p-2 rounded-md bg-white/30 text-white placeholder-white outline-none"
             onChange={handleChange}
             required
           />
+          <input
+            type="text"
+            name="street"
+            placeholder="Street"
+            className="mb-3 p-2 rounded-md bg-white/30 text-white placeholder-white outline-none"
+            onChange={handleChange}
+            required
+          />
+          <input
+            type="text"
+            name="city"
+            placeholder="City"
+            className="mb-3 p-2 rounded-md bg-white/30 text-white placeholder-white outline-none"
+            onChange={handleChange}
+            required
+          />
+          <input
+            type="text"
+            name="zipcode"
+            placeholder="Zipcode"
+            className="mb-3 p-2 rounded-md bg-white/30 text-white placeholder-white outline-none"
+            onChange={handleChange}
+            required
+          />
+          <input
+            type="text"
+            name="about"
+            placeholder="About"
+            className="mb-3 p-2 rounded-md bg-white/30 text-white placeholder-white outline-none"
+            onChange={handleChange}
+          />
+          <input
+            type="text"
+            name="phone"
+            placeholder="Phone"
+            className="mb-3 p-2 rounded-md bg-white/30 text-white placeholder-white outline-none"
+            onChange={handleChange}
+            required
+          />
+
           <Button type="submit" text="Sign Up" />
         </form>
         <p

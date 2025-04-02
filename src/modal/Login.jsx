@@ -6,7 +6,6 @@ import Button from "../components/ui/Button";
 
 const Login = ({ setIsFlipped }) => {
   const [formData, setFormData] = useState({
-    name: "Welcome!!!",
     email: "",
     password: "",
   });
@@ -56,16 +55,6 @@ const Login = ({ setIsFlipped }) => {
         <h2 className="text-xl font-bold text-white mb-4">Login</h2>
         {error && <p className="text-red-500 text-sm">{error}</p>}
         <form onSubmit={handleSubmit} className="flex flex-col">
-          <input
-            type="text"
-            name="name"
-            value={formData.name}
-            placeholder="Enter Full Name"
-            className="mb-3 p-2 rounded-md bg-white/30 text-white placeholder-white outline-none"
-            onChange={handleChange}
-            required
-          />
-
           <input
             type="email"
             name="email"
