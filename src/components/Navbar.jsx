@@ -112,7 +112,7 @@ const Navbar = () => {
                     animate={{ opacity: 1, scale: 1, y: 0 }}
                     exit={{ opacity: 0, scale: 0.9, y: -10 }}
                     transition={{ duration: 0.2 }}
-                    className="absolute right-0 w-48 text-[#464646] hover:text-[#ffff] font-bold uppercase shadow-black shadow-lg overflow-hidden"
+                    className="absolute right-0 w-48 text-[#464646] font-bold uppercase shadow-black shadow-lg overflow-hidden"
                   >
                     <motion.ul
                       variants={menuVariants}
@@ -126,7 +126,7 @@ const Navbar = () => {
                               setAuthModalOpen(true);
                               setMenuOpen(false);
                             }}
-                            className="block px-4 py-2 w-full text-left shadow-black shadow-lg hover:bg-[#fc372d] bg-[#f7f1e4] transition-all duration-300"
+                            className="block px-4 py-2 w-full text-left  hover:text-[#ffff] shadow-black shadow-lg hover:bg-[#fc372d] bg-[#f7f1e4] transition-all duration-300"
                           >
                             🔑 Log In
                           </button>
@@ -137,7 +137,7 @@ const Navbar = () => {
                             <Link
                               to="/dashboard"
                               onClick={() => setMenuOpen(false)}
-                              className="block px-4 py-2 hover:bg-[#fc372d] shadow-black shadow-lg bg-[#f7f1e4] transition-all duration-300"
+                              className="block px-4 py-2 hover:bg-[#fc372d]  hover:text-[#ffff] shadow-black shadow-lg bg-[#f7f1e4] transition-all duration-300"
                             >
                               🏠 Dashboard
                             </Link>
@@ -146,7 +146,7 @@ const Navbar = () => {
                             <Link
                               to="/profile"
                               onClick={() => setMenuOpen(false)}
-                              className="block px-4 py-2 hover:bg-[#fc372d] shadow-black shadow-lg bg-[#f7f1e4] transition-all duration-300"
+                              className="block px-4 py-2 hover:bg-[#fc372d]  hover:text-[#ffff] shadow-black shadow-lg bg-[#f7f1e4] transition-all duration-300"
                             >
                               👤 Profile
                             </Link>
@@ -155,7 +155,7 @@ const Navbar = () => {
                             <Link
                               to="/saved-products"
                               onClick={() => setMenuOpen(false)}
-                              className="block px-4 py-2 hover:bg-[#fc372d] shadow-black shadow-lg bg-[#f7f1e4] transition-all duration-300"
+                              className="block px-4 py-2 hover:bg-[#fc372d]  hover:text-[#ffff] shadow-black shadow-lg bg-[#f7f1e4] transition-all duration-300"
                             >
                               💾 Saved Products
                             </Link>
@@ -164,7 +164,7 @@ const Navbar = () => {
                             <Link
                               to="/price-alert"
                               onClick={() => setMenuOpen(false)}
-                              className="block px-4 py-2 hover:bg-[#fc372d] shadow-black shadow-lg bg-[#f7f1e4] transition-all duration-300"
+                              className="block px-4 py-2 hover:bg-[#fc372d]  hover:text-[#ffff] shadow-black shadow-lg bg-[#f7f1e4] transition-all duration-300"
                             >
                               🔔 Price Alerts
                             </Link>
@@ -175,7 +175,7 @@ const Navbar = () => {
                                 logout();
                                 setMenuOpen(false);
                               }}
-                              className="block w-full text-left px-4 py-2 hover:bg-[#fc372d] shadow-black shadow-lg bg-[#f7f1e4] transition-all duration-300"
+                              className="block w-full text-left px-4 py-2  hover:text-[#ffff] hover:bg-[#fc372d] shadow-black shadow-lg bg-[#f7f1e4] transition-all duration-300"
                             >
                               🚪 Log Out
                             </button>

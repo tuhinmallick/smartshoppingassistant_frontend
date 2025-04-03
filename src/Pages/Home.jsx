@@ -1,8 +1,7 @@
 import React from "react";
-import Sidebar from "../components/Sidebar";
 import { Link } from "react-router-dom";
 
-const Homepage = () => {
+const Home = () => {
   return (
     <div className="min-h-screen flex flex-col bg-gray-100">
       {/* Hero Section */}
@@ -10,7 +9,7 @@ const Homepage = () => {
         className="w-full h-screen flex flex-col md:flex-row items-center justify-center bg-cover bg-center relative px-6 md:px-20"
         style={{
           backgroundImage: "url('/assets/image.png')",
-          backgroundColor: "#FFFFFF ",
+          backgroundColor: "#FFFFFF",
           backgroundBlendMode: "overlay",
         }}
       >
@@ -47,12 +46,13 @@ const Homepage = () => {
         {/* Right Content (Image) */}
         <div className="relative z-10 w-full md:w-1/2 flex justify-center mt-8 md:mt-0">
           <img
-            src="/public/image.png"
+            src="/assets/image.png" // Ensure this path is correct
             alt="Mobile Deals"
             className="max-w-xs md:max-w-md rounded-lg shadow-xl"
           />
         </div>
       </section>
+
       {/* Search Bar */}
       <section className="w-full flex justify-center py-8 bg-white shadow-md">
         <div className="flex w-full max-w-2xl">
@@ -270,4 +270,5 @@ const Homepage = () => {
     </div>
   );
 };
-export default Homepage;
+
+export default Home;
