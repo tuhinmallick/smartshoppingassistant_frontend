@@ -112,7 +112,7 @@ const Navbar = () => {
                     animate={{ opacity: 1, scale: 1, y: 0 }}
                     exit={{ opacity: 0, scale: 0.9, y: -10 }}
                     transition={{ duration: 0.2 }}
-                    className="absolute right-0 w-48 text-[#2c2c2c] shadow-black shadow-lg overflow-hidden"
+                    className="absolute right-0 w-48 text-[#464646] hover:text-[#ffff] font-bold uppercase shadow-black shadow-lg overflow-hidden"
                   >
                     <motion.ul
                       variants={menuVariants}
