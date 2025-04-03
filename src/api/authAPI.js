@@ -27,6 +27,7 @@ export const signupUser = async (userData) => {
   return data;
 };
 
+// Login function
 export const loginUser = async (credentials) => {
   if (!credentials.email || !credentials.password) {
     throw new Error("email and password are required");

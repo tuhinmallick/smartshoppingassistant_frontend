@@ -30,7 +30,7 @@ const SavedProducts = () => {
       {savedProducts.length === 0 ? (
         <p className="text-[#464646] mt-4 text-center">No saved products.</p>
       ) : (
-        <div className="grid grid-cols-3 gap-6">
+        <div className="grid sm:grid-cols-1 md:grid-cols-3 lg:grid-cols-4 md:gap-6 justify-center">
           {savedProducts.map((product) => (
             <ProductCard key={product.id} product={product} />
           ))}
