@@ -10,13 +10,12 @@ const Homepage = () => {
         className="w-full h-screen flex flex-col md:flex-row items-center justify-center bg-cover bg-center relative px-6 md:px-20"
         style={{
           backgroundImage: "url('/assets/image.png')",
-          backgroundColor: "#ffffff ",
+          backgroundColor: "#FFFFFF ",
           backgroundBlendMode: "overlay",
         }}
       >
         {/* Dark Overlay for Better Readability */}
         <div className="absolute inset-0 bg-black bg-opacity-50"></div>
-
         {/* Left Content (Text) */}
         <div className="relative z-10 w-full md:w-1/2 text-center md:text-left text-white">
           <h1
@@ -45,7 +44,6 @@ const Homepage = () => {
             Start Shopping
           </Link>
         </div>
-
         {/* Right Content (Image) */}
         <div className="relative z-10 w-full md:w-1/2 flex justify-center mt-8 md:mt-0">
           <img
@@ -55,7 +53,6 @@ const Homepage = () => {
           />
         </div>
       </section>
-
       {/* Search Bar */}
       <section className="w-full flex justify-center py-8 bg-white shadow-md">
         <div className="flex w-full max-w-2xl">
