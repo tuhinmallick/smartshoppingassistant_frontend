@@ -1,3 +1,256 @@
+@import url("https://fonts.googleapis.com/css2?family=Chaney&display=swap");
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* In your global CSS file */
+
+.perspective {
+  perspective: 1000px;
+}
+
+.backface-hidden {
+  backface-visibility: hidden;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+}
+
+/*===== BUTTON =====*/
+.blob-btn {
+  position: relative;
+  padding: 10px 20px;
+  text-align: center;
+  font-size: 16px;
+
+  text-transform: uppercase;
+  color: #fc372d;
+  background: transparent;
+  border: 1px solid #464646;
+  cursor: pointer;
+  transition: color 0.5s;
+}
+
+.blob-btn:before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  border: 2px solid #fc372d;
+}
+
+.blob-btn:after {
+  content: "";
+  position: absolute;
+  left: 5px;
+  top: 5px;
+  width: 100%;
+  height: 100%;
+  transition: all 0.3s 0.2s;
+}
+
+.blob-btn:hover {
+  color: #f7f1e4;
+}
+
+.blob-btn:hover:after {
+  left: 0;
+  top: 0;
+}
+
+.blob-btn__inner {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background: #f7f1e4;
+}
+
+.blob-btn__blobs {
+  position: relative;
+  display: block;
+  height: 100%;
+  filter: url("#goo");
+}
+
+.blob-btn__blob {
+  position: absolute;
+  top: 2px;
+  width: 25%;
+  height: 100%;
+  background: #fc372d;
+  border-radius: 100%;
+  transform: translate3d(0, 150%, 0) scale(1.4);
+  transition: transform 0.45s;
+}
+
+.blob-btn__blob:nth-child(1) {
+  left: 0;
+  transition-delay: 0s;
+}
+.blob-btn__blob:nth-child(2) {
+  left: 25%;
+  transition-delay: 0.08s;
+}
+.blob-btn__blob:nth-child(3) {
+  left: 50%;
+  transition-delay: 0.16s;
+}
+.blob-btn__blob:nth-child(4) {
+  left: 75%;
+  transition-delay: 0.24s;
+}
+
+.blob-btn:hover .blob-btn__blob {
+  transform: translateZ(0) scale(1.4);
+}
+.wavy-background {
+  position: relative;
+  overflow: hidden;
+  display: inline-block;
+  border-radius: 8px;
+}
+
+.wavy-background::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 200%;
+  height: 100%;
+  background: linear-gradient(90deg, rgba(75, 0, 130, 0.7), rgba(0, 0, 128, 0.7), rgba(0, 100, 0, 0.7));
+  transform: skewX(-30deg);
+  transition: left 0.5s ease-in-out, opacity 0.3s ease-in-out;
+  opacity: 0;
+  z-index: 0;
+}
+
+.wavy-background:hover::before {
+  left: 0;
+  opacity: 1;
+  animation: wave-motion 2s ease-in-out forwards;
+}
+
+@keyframes wave-motion {
+  0% {
+    transform: translateX(-100%) skewX(-30deg);
+  }
+  50% {
+    transform: translateX(100%) skewX(-30deg);
+  }
+  100% {
+    transform: translateX(-100%) skewX(-30deg);
+  }
+}
+
+.wavy-background button {
+  position: relative;
+  z-index: 1;
+  background: #38a169;
+  border: none;
+  padding: 12px 24px;
+  font-size: 16px;
+  font-weight: bold;
+  color: black;
+  cursor: pointer;
+  border-radius: 8px;
+  transition: transform 0.2s ease-in-out;
+}
+
+.wavy-background button:hover {
+  transform: scale(1.05);
+  background-color: #2f855a;
+}
+.wavy-button {
+  position: relative;
+  overflow: hidden;
+  background-color: #38a169; /* Green background */
+}
+
+.wavy-button::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: linear-gradient(45deg, rgba(75, 0, 130, 0.7), rgba(0, 0, 128, 0.7), rgba(0, 100, 0, 0.7)); /* Dark Purple, Navy Blue, Dark Green */
+  transition: all 0.3s ease-in-out;
+  opacity: 0; /* Make it invisible initially */
+}
+
+.wavy-button:hover::before {
+  opacity: 1; /* Make it visible when hovered */
+  animation: wave-motion 3s infinite ease-in-out;
+}
+
+@keyframes wave-motion {
+  0% {
+    transform: rotate(0deg);
+    top: -50%;
+    left: -50%;
+  }
+  50% {
+    transform: rotate(180deg);
+    top: 50%;
+    left: 50%;
+  }
+  100% {
+    transform: rotate(360deg);
+    top: -50%;
+    left: -50%;
+  }
+}
+
+
+@keyframes colorMotion {
+  0% { background-position: 0% 0%; background: linear-gradient(45deg, #ff0000, #ff7300); }
+  25% { background-position: 25% 25%; background: linear-gradient(45deg, #ff7300, #ffeb00); }
+  50% { background-position: 50% 50%; background: linear-gradient(45deg, #ffeb00, #00ff00); }
+  75% { background-position: 75% 75%; background: linear-gradient(45deg, #00ff00, #0099ff); }
+  100% { background-position: 100% 100%; background: linear-gradient(45deg, #0099ff, #ff00ff); }
+}
+
+@keyframes waveMotion {
+  0% { transform: translate(-50%, 50%); }
+  50% { transform: translate(50%, -50%); }
+  100% { transform: translate(-50%, 50%); }
+}
+
+.wave-button {
+  position: relative;
+  overflow: hidden;
+  background-size: 300% 300%;
+  transition: background 0.5s ease-in-out;
+}
+
+.wave-button::before {
+  content: "";
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0));
+  opacity: 0;
+  transition: opacity 0.4s ease-in-out;
+}
+
+.wave-button:hover::before {
+  opacity: 1;
+  animation: waveMotion 2s infinite linear;
+}
+
+.wave-button:hover {
+  animation: colorMotion 5s infinite alternate ease-in-out;
+}
+
+.wave-button span {
+  position: relative;
+  z-index: 1;
+}

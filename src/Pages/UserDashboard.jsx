@@ -1,45 +1,44 @@
-import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import React, { useState } from "react";
+// Import your actual components
+import UserProfile from "./UserProfile"; // Adjust the path as needed
+import SavedProducts from "./SavedProducts"; // Adjust the path as needed
+import PriceAlerts from "./PriceAlerts"; // Adjust the path as needed
 
 const navLinks = [
-  { name: "Dashboard", path: "/dashboard" },
-  { name: "Profile & Settings", path: "/profile" },
-  { name: "Saved Products", path: "/saved-products" },
-  { name: "Price Alerts", path: "/price-alerts" },
+  { name: "Dashboard", component: "🏠 Welcome to your Dashboard!" },
+  { name: "Profile & Settings", component: <UserProfile /> },
+  { name: "Saved Products", component: <SavedProducts /> },
+  { name: "Price Alerts", component: <PriceAlerts /> },
 ];
 
 const UserDashboard = () => {
   const [activeTab, setActiveTab] = useState("Dashboard");
-  const [userProfile, setUserProfile] = useState(null);
-  const [priceAlerts, setPriceAlerts] = useState([]);
-  const [savedProducts, setSavedProducts] = useState([]);
+  const [flipping, setFlipping] = useState(false);
 
-  useEffect(() => {
-    fetch("./src/data/data.json")
-      .then((response) => response.json())
-      .then((data) => {
-        if (data.users && data.users.length > 0) {
-          setUserProfile(data.users[0]);
-          setSavedProducts(data.users[0].savedProducts);
-        }
-        setPriceAlerts(data.priceAlerts);
-      })
-      .catch((error) => console.error("Error fetching data:", error));
-  }, []);
-
-  if (!userProfile) return <div>Loading...</div>;
+  const handleTabChange = (tabName) => {
+    if (tabName !== activeTab) {
+      setFlipping(true);
+      setTimeout(() => {
+        setActiveTab(tabName);
+        setFlipping(false);
+      }, 600);
+    }
+  };
 
   return (
-    <div className="max-w-6xl mx-auto p-6 bg-white shadow-md rounded-xl mt-10">
-      <div className="flex space-x-4 border-b pb-3 mb-4">
-        {navLinks.map((link) => (
+    <div className="mx-auto p-6 bg-[#fef6e4] shadow-xl shadow-gray-400 mt-6">
+      {/* Navigation Tabs */}
+      <div className="flex pb-3 mb-4">
+        {navLinks.map((link, index) => (
           <button
             key={link.name}
-            onClick={() => setActiveTab(link.name)}
-            className={`block px-4 py-2 font-semibold ${
+            onClick={() => handleTabChange(link.name)}
+            className={`block px-4 py-2 font-extrabold uppercase transition-all duration-300 ${
               activeTab === link.name
-                ? "bg-gray-200 text-orange-500"
-                : "text-gray-600 hover:bg-gray-200"
+                ? "bg-[#2c2c2c] text-[#fff]"
+                : `text-[#464646] hover:text-[#fff] hover:bg-[#fc372d] ${
+                    index !== 0 ? "border-[#2c2c2c] border-l-2" : ""
+                  }`
             }`}
           >
             {link.name}
@@ -47,73 +46,29 @@ const UserDashboard = () => {
         ))}
       </div>
 
-      {activeTab === "Profile & Settings" && (
-        <div className="text-center">
-          <h2 className="text-3xl font-bold mb-4">User Profile</h2>
-          <div className="bg-gray-100 p-6 rounded-lg shadow-md">
-            <img
-              src={userProfile.profilePicture}
-              alt="Profile"
-              className="w-32 h-32 rounded-full mx-auto mb-4"
-            />
-            <h3 className="text-2xl font-semibold">{userProfile.name}</h3>
-            <p className="text-gray-600">{userProfile.email}</p>
-            <p className="text-gray-500 mt-2">{userProfile.joined}</p>
-            <p className="text-gray-500 mt-2">{userProfile.bio}</p>
+      {/* Conditional Rendering of Components with Smooth Fade Transition */}
+      <div className="relative">
+        {activeTab === "Dashboard" && (
+          <div className="transition-opacity duration-500 ease-in-out opacity-100">
+            {navLinks[0].component}
           </div>
-        </div>
-      )}
-
-      {activeTab === "Saved Products" && (
-        <div className="text-center">
-          <h2 className="text-3xl font-bold">Saved Products</h2>
-          <div className="grid grid-cols-4 gap-4 mt-4">
-            {savedProducts.map((product) => (
-              <div
-                key={product.id}
-                className="bg-gray-100 p-4 rounded-lg shadow-md"
-              >
-                <img
-                  src={product.image}
-                  alt={product.name}
-                  className="object-cover mb-4 rounded"
-                />
-                <h3 className="text-xl font-semibold">{product.name}</h3>
-                <p className="text-gray-500">{product.description}</p>
-                <p className="text-lg font-bold">{product.price}</p>
-              </div>
-            ))}
+        )}
+        {activeTab === "Profile & Settings" && (
+          <div className="transition-opacity duration-500 ease-in-out opacity-100">
+            {navLinks[1].component}
           </div>
-        </div>
-      )}
-
-      {activeTab === "Price Alerts" && (
-        <div className="text-center">
-          <h2 className="text-3xl font-bold mb-4">Price Alerts</h2>
-          <div className="bg-gray-100 p-6 rounded-lg shadow-md">
-            <table className="w-full table-auto">
-              <thead>
-                <tr className="border-b">
-                  <th className="py-2 px-4 text-left">Product</th>
-                  <th className="py-2 px-4 text-left">Current Price</th>
-                  <th className="py-2 px-4 text-left">Alert Price</th>
-                  <th className="py-2 px-4 text-left">Status</th>
-                </tr>
-              </thead>
-              <tbody>
-                {priceAlerts.map((alert) => (
-                  <tr key={alert.id} className="border-b">
-                    <td className="py-2 px-4">{alert.product}</td>
-                    <td className="py-2 px-4">{alert.currentPrice}</td>
-                    <td className="py-2 px-4">{alert.alertPrice}</td>
-                    <td className="py-2 px-4">{alert.status}</td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
+        )}
+        {activeTab === "Saved Products" && (
+          <div className="transition-opacity duration-500 ease-in-out opacity-100">
+            {navLinks[2].component}
           </div>
-        </div>
-      )}
+        )}
+        {activeTab === "Price Alerts" && (
+          <div className="transition-opacity duration-500 ease-in-out opacity-100">
+            {navLinks[3].component}
+          </div>
+        )}
+      </div>
     </div>
   );
 };
