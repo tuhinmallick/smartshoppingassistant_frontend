@@ -5,7 +5,7 @@ import {
   Route,
   Navigate,
 } from "react-router-dom";
-import { AuthProvider, useAuth } from "./context/AuthContext"; // Import the AuthProvider and useAuth hook
+import { AuthProvider, useAuth } from "./context/AuthContext";
 import UserAuthentication from "./auth/UserAuthentication";
 import MainLayout from "./layout/MainLayout";
 import Home from "./Pages/Home.jsx";
@@ -16,15 +16,11 @@ import PriceAlerts from "./Pages/PriceAlerts.jsx";
 import SearchResults from "./Pages/SearchResults.jsx";
 import ProductDetails from "./Pages/ProductDetails.jsx";
 import Wishlist from "./Pages/Wishlist.jsx";
-import Chatbot from "./components/Chatbot";
 
-// PrivateRoute to protect routes that require authentication
 const PrivateRoute = ({ children }) => {
   const { user, loading } = useAuth();
 
-  if (loading) return null; // Return nothing while loading to avoid navigation issues
-
-  // If user is authenticated, render the child component, otherwise redirect to login
+  if (loading) return null;
   return user ? children : <Navigate to="/userauthentication" replace />;
 };
 
@@ -33,26 +29,23 @@ function App() {
     <AuthProvider>
       <Router>
         <Routes>
-          {/* Main layout that wraps around the content */}
           <Route path="/" element={<MainLayout />}>
-            <Route index element={<Home />} /> {/* Home page */}
+            <Route index element={<Home />} />
             <Route
               path="/userauthentication"
-              element={<UserAuthentication />} // User Authentication page
+              element={<UserAuthentication />}
             />
             <Route
               path="/login"
-              element={<Navigate to="/userauthentication" replace />} // Redirect to auth page
+              element={<Navigate to="/userauthentication" replace />}
             />
             <Route
               path="/signup"
-              element={<Navigate to="/userauthentication" replace />} // Redirect to auth page
+              element={<Navigate to="/userauthentication" replace />}
             />
-            <Route path="/search" element={<SearchResults />} />{" "}
-            {/* Search Results */}
-            <Route path="/product/:id" element={<ProductDetails />} />{" "}
-            {/* Product Details */}
-            {/* Private Routes */}
+            <Route path="/search" element={<SearchResults />} />
+            <Route path="/product/:id" element={<ProductDetails />} />
+
             <Route
               path="/dashboard"
               element={
@@ -93,8 +86,7 @@ function App() {
                 </PrivateRoute>
               }
             />
-            {/* Catch-all route for Chatbot */}
-            <Route path="*" element={<Chatbot />} />
+            <Route path="*" element={<Navigate to="/" />} />
           </Route>
         </Routes>
       </Router>

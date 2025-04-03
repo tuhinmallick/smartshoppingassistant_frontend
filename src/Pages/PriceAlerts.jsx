@@ -62,7 +62,7 @@ const PriceAlerts = () => {
         🔔 Track price alerts here.
       </p>
 
-      <div className="grid grid-cols-4 gap-6 justify-center">
+      <div className="grid sm:grid-cols-1 md:grid-cols-3 lg:grid-cols-4 md:gap-6 justify-center">
         {alerts.map((alert) => {
           let priceStr = alert.alertPrice
             ?.toString()
@@ -77,7 +77,7 @@ const PriceAlerts = () => {
           return (
             <div
               key={alert.id}
-              className={`relative border-2 text-center p-6 bg-white w-auto shadow-lg 
+              className={`relative border-2 text-center my-4 p-6 bg-white w-auto shadow-lg 
               hover:shadow-2xl hover:shadow-black transition-all duration-300 ease-in-out ${
                 price === lowestPrice
                   ? "border-[#2C2C2C] shadow-2xl shadow-black"
@@ -95,7 +95,6 @@ const PriceAlerts = () => {
                 <p className="text-white text-xl">{alert.alertPrice}</p>
               </div>
 
-              {/* Recommended Badge if this is the lowest price */}
               {price === lowestPrice && (
                 <span className="bg-[#fc372d] text-white text-xs px-2 py-1 absolute top-0 left-0">
                   RECOMMENDED

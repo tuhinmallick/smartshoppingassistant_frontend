@@ -1,8 +1,7 @@
 import React, { useState } from "react";
-// Import your actual components
-import UserProfile from "./UserProfile"; // Adjust the path as needed
-import SavedProducts from "./SavedProducts"; // Adjust the path as needed
-import PriceAlerts from "./PriceAlerts"; // Adjust the path as needed
+import UserProfile from "./UserProfile";
+import SavedProducts from "./SavedProducts";
+import PriceAlerts from "./PriceAlerts";
 
 const navLinks = [
   { name: "Dashboard", component: "🏠 Welcome to your Dashboard!" },
@@ -26,18 +25,18 @@ const UserDashboard = () => {
   };
 
   return (
-    <div className="mx-auto p-6 bg-[#fef6e4] shadow-xl shadow-gray-400 mt-6">
+    <div className="mx-auto p-6 bg-[#fef6e4] shadow-xl shadow-gray-400 md:my-6">
       {/* Navigation Tabs */}
-      <div className="flex pb-3 mb-4">
+      <div className="flex flex-wrap sm:flex-nowrap pb-3 mb-4">
         {navLinks.map((link, index) => (
           <button
             key={link.name}
             onClick={() => handleTabChange(link.name)}
-            className={`block px-4 py-2 font-extrabold uppercase transition-all duration-300 ${
+            className={`w-full md:w-auto block px-4 py-2 font-extrabold uppercase transition-all duration-300 ${
               activeTab === link.name
                 ? "bg-[#2c2c2c] text-[#fff]"
                 : `text-[#464646] hover:text-[#fff] hover:bg-[#fc372d] ${
-                    index !== 0 ? "border-[#2c2c2c] border-l-2" : ""
+                    index !== 0 ? "md:border-l-2 border-[#2c2c2c]" : ""
                   }`
             }`}
           >
@@ -46,7 +45,6 @@ const UserDashboard = () => {
         ))}
       </div>
 
-      {/* Conditional Rendering of Components with Smooth Fade Transition */}
       <div className="relative">
         {activeTab === "Dashboard" && (
           <div className="transition-opacity duration-500 ease-in-out opacity-100">

@@ -37,10 +37,8 @@ const Signup = ({ setIsFlipped }) => {
       if (data && data.token) {
         localStorage.setItem("token", data.token);
 
-        // 🔹 Show success message
         alert("Signup successful! Please log in.");
 
-        // 🔹 Flip to login form (assuming `setIsFlipped` is available)
         setIsFlipped(false);
       } else {
         setError("Invalid response from server.");

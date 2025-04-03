@@ -37,31 +37,31 @@ const UserProfile = () => {
       <div className="w-full max-w-md bg-[#464646] shadow-slate-500 shadow-lg p-6">
         {profile ? (
           <>
-            {/* Profile Image and Details Side by Side */}
-            <div className="flex items-center space-x-6 py-4">
+            <div className="md:flex items-center space-x-6 py-4">
               {/* Left: Profile Image */}
               <img
                 src={profile?.avatar || "./src/assets/profile.png"}
                 alt="User Avatar"
-                className="w-24 h-24 rounded-full"
+                className="w-24 h-24 rounded-full mx-auto md:mx-0" // Centered on small screens, left-aligned on larger screens
               />
 
               {/* Right: User Details */}
-              <div className="flex flex-col ">
+              <div className="md:flex md:flex-col md:items-start mt-4 md:mt-0 text-center md:text-left">
                 <h3 className="text-2xl font-extrabold uppercase text-white">
                   {profile.name} {profile.surname}
                 </h3>
+
                 {/* Contact Information with Icons */}
                 <div className="text-white text-sm font-bold mt-4">
-                  <div className="flex items-center space-x-2">
+                  <div className="flex items-center justify-center md:justify-start space-x-2">
                     <FaEnvelope className="text-[#fc372d]" />
                     <p>{profile.email}</p>
                   </div>
-                  <div className="flex items-center space-x-2 mt-2">
+                  <div className="flex items-center justify-center md:justify-start space-x-2 mt-2">
                     <FaPhone className="text-[#fc372d]" />
                     <p>{profile.phone}</p>
                   </div>
-                  <div className="flex items-center space-x-2 mt-2">
+                  <div className="flex items-center justify-center md:justify-start space-x-2 mt-2">
                     <FaMapMarkerAlt className="text-[#fc372d]" />
                     <p>
                       {profile.street}, {profile.city}, {profile.zipcode}
@@ -74,7 +74,7 @@ const UserProfile = () => {
             <p className="font-bold text-sm p-4">
               <span className="text-[#fc372d]">About Me:</span>
               <br />
-              <span className="text-[#FFFF] text-center">
+              <span className="text-[#FFFF] md:text-left">
                 "{profile.about}"
               </span>
             </p>
