@@ -8,14 +8,14 @@ import {
 import { AuthProvider, useAuth } from "./context/AuthContext"; // Import the AuthProvider and useAuth hook
 import UserAuthentication from "./auth/UserAuthentication";
 import MainLayout from "./layout/MainLayout";
-import Home from "./pages/Home";
-import UserDashboard from "./pages/UserDashboard";
-import UserProfile from "./pages/UserProfile";
-import SavedProducts from "./pages/SavedProducts";
-import PriceAlerts from "./pages/PriceAlerts";
-import SearchResults from "./pages/SearchResults";
-import ProductDetails from "./pages/ProductDetails";
-import Wishlist from "./pages/Wishlist";
+import Home from "./Pages/Home.jsx";
+import UserDashboard from "./Pages/UserDashboard.jsx";
+import UserProfile from "./Pages/UserProfile.jsx";
+import SavedProducts from "./Pages/SavedProducts.jsx";
+import PriceAlerts from "./Pages/PriceAlerts.jsx";
+import SearchResults from "./Pages/SearchResults.jsx";
+import ProductDetails from "./Pages/ProductDetails.jsx";
+import Wishlist from "./Pages/Wishlist.jsx";
 import Chatbot from "./components/Chatbot";
 
 // PrivateRoute to protect routes that require authentication
