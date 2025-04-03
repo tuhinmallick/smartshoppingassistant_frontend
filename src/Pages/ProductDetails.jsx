@@ -55,9 +55,6 @@ const ProductDetails = () => {
         { user: "Alice", rating: 5, comment: "Great phone!" },
         { user: "Bob", rating: 4, comment: "Good performance" },
       ],
-      similarProducts: [
-        { id: 1, name: "iPhone 13", price: "$799", image: "/images/iphone13.jpg" },
-      ]
     },
     3: {
       name: "Google Pixel 7",
@@ -78,12 +75,49 @@ const ProductDetails = () => {
         { user: "Charlie", rating: 5, comment: "Amazing camera!" },
         { user: "Diana", rating: 4, comment: "Smooth experience" },
       ],
-      similarProducts: [
-        { id: 1, name: "iPhone 13", price: "$799", image: "/images/iphone13.jpg" },
-      ]
+    },
+    4: {
+      name: "OnePlus 11",
+      brand: "OnePlus",
+      price: "$699",
+      desc: "Flagship phone with Snapdragon 8 Gen 2 & Hasselblad camera.",
+      image: "/images/oneplus11.jpg",
+      priceHistory: [
+        { date: "2025-01-01", price: 750 },
+        { date: "2025-02-01", price: 725 },
+        { date: "2025-03-01", price: 699 },
+      ],
+      sellers: [
+        { name: "OnePlus Store", price: "$699", shipping: "Free", rating: 4.9 },
+        { name: "Tech Hub", price: "$719", shipping: "$5", rating: 4.6 },
+      ],
+      reviews: [
+        { user: "Ethan", rating: 5, comment: "Super smooth and fast!" },
+        { user: "Olivia", rating: 4, comment: "Love the camera!" },
+      ],
+    },
+    5: {
+      name: "OnePlus Buds Pro 2",
+      brand: "OnePlus",
+      price: "$149",
+      desc: "Premium wireless earbuds with ANC & superior sound.",
+      image: "/images/oneplusbuds.jpg",
+      priceHistory: [
+        { date: "2025-01-01", price: 159 },
+        { date: "2025-02-01", price: 155 },
+        { date: "2025-03-01", price: 149 },
+      ],
+      sellers: [
+        { name: "OnePlus Store", price: "$149", shipping: "Free", rating: 4.7 },
+        { name: "GadgetWorld", price: "$155", shipping: "$5", rating: 4.5 },
+      ],
+      reviews: [
+        { user: "Sophia", rating: 5, comment: "Amazing sound quality!" },
+        { user: "Liam", rating: 4, comment: "Comfortable for long use." },
+      ],
     },
   };
-
+  
   const product = products[id];
 
   if (!product) {

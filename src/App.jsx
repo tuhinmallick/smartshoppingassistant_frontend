@@ -17,6 +17,7 @@ import SearchResults from "./Pages/SearchResults.jsx";
 import ProductDetails from "./Pages/ProductDetails.jsx";
 import Wishlist from "./Pages/Wishlist.jsx";
 import Chatbot from "./components/Chatbot";
+import BrandDetails from "./Pages/BrandDetails.jsx"; // Ensure this path is correct
 
 // PrivateRoute to protect routes that require authentication
 const PrivateRoute = ({ children }) => {
@@ -48,10 +49,9 @@ function App() {
               path="/signup"
               element={<Navigate to="/userauthentication" replace />} // Redirect to auth page
             />
-            <Route path="/search" element={<SearchResults />} />{" "}
-            {/* Search Results */}
-            <Route path="/product/:id" element={<ProductDetails />} />{" "}
-            {/* Product Details */}
+            <Route path="/search" element={<SearchResults />} /> {/* Search Results */}
+            <Route path="/product/:id" element={<ProductDetails />} /> {/* Product Details */}
+            <Route path="/brand/:brand" element={<BrandDetails />} /> {/* Brand Details */}
             {/* Private Routes */}
             <Route
               path="/dashboard"
