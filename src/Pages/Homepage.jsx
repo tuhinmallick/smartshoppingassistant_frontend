@@ -5,39 +5,54 @@ import { Link } from "react-router-dom";
 const Homepage = () => {
   return (
     <div className="min-h-screen flex flex-col bg-gray-100">
-      {/* Hero Section */}
-      <section
-        className="w-full h-screen flex flex-col justify-center items-center text-center bg-cover bg-center text-white"
-        style={{
-          backgroundImage: "url('./assets/image.jpg')",
-          backgroundColor: "#ADD8E6", // Light Blue background color
-          backgroundBlendMode: "overlay", // Blend the image and background color
-        }}
-      >
-        <div className="bg-black bg-opacity-50 p-6 rounded-lg">
-          <h1
-            className="text-5xl sm:text-6xl font-bold mb-4"
-            style={{
-              color: "#FFD700",
-              fontFamily: '"Satoshi Variable", sans-serif',
-            }}
-          >
-            Discover the Best Mobile Deals
-          </h1>
-          <p
-            className="text-lg sm:text-xl mb-8"
-            style={{ fontFamily: '"Satoshi Variable", sans-serif' }}
-          >
-            Compare prices from top retailers & save big!
-          </p>
-          <Link
-            to="/search"
-            className="inline-block bg-blue-600 text-white px-8 py-4 rounded-full hover:bg-blue-700 transition"
-          >
-            Start Shopping
-          </Link>
-        </div>
-      </section>
+{/* Hero Section */}
+<section
+  className="w-full h-screen flex flex-col md:flex-row items-center justify-center bg-cover bg-center relative px-6 md:px-20"
+  style={{
+    backgroundImage: "url('/assets/image.png')",
+    backgroundColor: "#FFFFFF ",
+    backgroundBlendMode: "overlay",
+  }}
+>
+  {/* Dark Overlay for Better Readability */}
+  <div className="absolute inset-0 bg-black bg-opacity-50"></div>
+  {/* Left Content (Text) */}
+  <div className="relative z-10 w-full md:w-1/2 text-center md:text-left text-white">
+    <h1
+      className="text-4xl sm:text-6xl font-bold mb-6"
+      style={{
+        color: "#FFD700",
+        fontFamily: '"Satoshi Variable", sans-serif',
+        textShadow: "2px 2px 10px rgba(0, 0, 0, 0.5)",
+      }}
+    >
+      Discover the Best Mobile Deals
+    </h1>
+    <p
+      className="text-lg sm:text-xl mb-8"
+      style={{
+        fontFamily: '"Satoshi Variable", sans-serif',
+        textShadow: "1px 1px 6px rgba(0, 0, 0, 0.5)",
+      }}
+    >
+      Compare prices from top retailers & save big!
+    </p>
+    <Link
+      to="/search"
+      className="inline-block bg-gradient-to-r from-blue-500 to-blue-700 text-white px-8 py-4 rounded-full transition-transform transform hover:scale-105 hover:shadow-lg"
+    >
+      Start Shopping
+    </Link>
+  </div>
+  {/* Right Content (Image) */}
+  <div className="relative z-10 w-full md:w-1/2 flex justify-center mt-8 md:mt-0">
+    <img
+      src="/public/image.png"
+      alt="Mobile Deals"
+      className="max-w-xs md:max-w-md rounded-lg shadow-xl"
+    />
+  </div>
+</section>
 
       {/* Search Bar */}
       <section className="w-full flex justify-center py-8 bg-white shadow-md">
