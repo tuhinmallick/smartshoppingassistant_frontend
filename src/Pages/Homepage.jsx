@@ -2,37 +2,42 @@ import React from "react";
 import Sidebar from "../components/Sidebar";
 import { Link } from "react-router-dom";
 
-export default function HomePage() {
+const Homepage = () => {
   return (
     <div className="min-h-screen flex flex-col bg-gray-100">
       {/* Hero Section */}
       <section
-  className="w-full h-screen flex flex-col justify-center items-center text-center bg-cover bg-center text-white"
-  style={{
-    backgroundImage: "url('./assets/image.jpg')",
-    backgroundColor: "#ADD8E6", // Light Blue background color
-    backgroundBlendMode: "overlay", // Blend the image and background color
-  }}
->
-  <div className="bg-black bg-opacity-50 p-6 rounded-lg">
-    <h1
-      className="text-5xl sm:text-6xl font-bold mb-4"
-      style={{ color: "#FFD700", fontFamily: '"Satoshi Variable", sans-serif' }}
-    >
-      Discover the Best Mobile Deals
-    </h1>
-    <p className="text-lg sm:text-xl mb-8" style={{ fontFamily: '"Satoshi Variable", sans-serif' }}>
-      Compare prices from top retailers & save big!
-    </p>
-    <Link
-      to="/search"
-      className="inline-block bg-blue-600 text-white px-8 py-4 rounded-full hover:bg-blue-700 transition"
-    >
-      Start Shopping
-    </Link>
-  </div>
-</section>
-
+        className="w-full h-screen flex flex-col justify-center items-center text-center bg-cover bg-center text-white"
+        style={{
+          backgroundImage: "url('./assets/image.jpg')",
+          backgroundColor: "#ADD8E6", // Light Blue background color
+          backgroundBlendMode: "overlay", // Blend the image and background color
+        }}
+      >
+        <div className="bg-black bg-opacity-50 p-6 rounded-lg">
+          <h1
+            className="text-5xl sm:text-6xl font-bold mb-4"
+            style={{
+              color: "#FFD700",
+              fontFamily: '"Satoshi Variable", sans-serif',
+            }}
+          >
+            Discover the Best Mobile Deals
+          </h1>
+          <p
+            className="text-lg sm:text-xl mb-8"
+            style={{ fontFamily: '"Satoshi Variable", sans-serif' }}
+          >
+            Compare prices from top retailers & save big!
+          </p>
+          <Link
+            to="/search"
+            className="inline-block bg-blue-600 text-white px-8 py-4 rounded-full hover:bg-blue-700 transition"
+          >
+            Start Shopping
+          </Link>
+        </div>
+      </section>
 
       {/* Search Bar */}
       <section className="w-full flex justify-center py-8 bg-white shadow-md">
@@ -79,105 +84,115 @@ export default function HomePage() {
 
       {/* Featured Deals */}
       <section className="py-12 px-4 bg-white">
-  <div className="max-w-6xl mx-auto">
-    <h2
-      className="text-3xl font-bold text-center mb-8"
-      style={{ color: "#800080", fontFamily: '"Satoshi Variable", sans-serif' }}
-    >
-      Featured Deals
-    </h2>
-    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-      {[
-        {
-          id: 1,
-          name: "Apple iPhone 13",
-          desc: "Save 20% on this powerful A15 Bionic chip device.",
-          image: "/images/iphone13.jpg",
-          discount: "20%",
-        },
-        {
-          id: 2,
-          name: "Samsung Galaxy S22",
-          desc: "Get a free accessory bundle with this purchase.",
-          image: "/images/galaxy-s22.jpg",
-          discount: "Free Bundle",
-        },
-        {
-          id: 3,
-          name: "Google Pixel 7",
-          desc: "Limited time offer: Buy one get one 50% off.",
-          image: "/images/pixel7.jpg",
-          discount: "BOGO 50%",
-        },
-      ].map((deal) => (
-        <div
-          key={deal.id}
-          className="p-6 rounded-lg shadow-lg text-black hover:scale-105 transition"
-          style={{
-            background: "linear-gradient(to right, #f0f8ff, #e6e6fa)",
-          }}
-        >
-          <img
-            src={deal.image}
-            alt={deal.name}
-            className="w-full h-40 object-cover rounded-lg mb-4"
-          />
-          <h3
-            className="text-xl font-semibold"
-            style={{ color: "#4B0082", fontFamily: '"Satoshi Variable", sans-serif' }}
+        <div className="max-w-6xl mx-auto">
+          <h2
+            className="text-3xl font-bold text-center mb-8"
+            style={{
+              color: "#800080",
+              fontFamily: '"Satoshi Variable", sans-serif',
+            }}
           >
-            {deal.name}
-          </h3>
-          <p
-            className="text-sm"
-            style={{ color: "#696969", fontFamily: '"Satoshi Variable", sans-serif' }}
-          >
-            {deal.desc}
-          </p>
-          <div className="flex justify-between">
-            <span
-              className="text-lg font-bold"
-              style={{ color: "#FF4500", fontFamily: '"Satoshi Variable", sans-serif' }}
-            >
-              {deal.discount}
-            </span>
-            <Link
-              to={`/product/${deal.id}`}
-              className="mt-3 inline-block bg-blue-500 text-white px-5 py-2 rounded-md hover:bg-blue-600 transition"
-            >
-              View Details
-            </Link>
+            Featured Deals
+          </h2>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            {[
+              {
+                id: 1,
+                name: "Apple iPhone 13",
+                desc: "Save 20% on this powerful A15 Bionic chip device.",
+                image: "/images/iphone13.jpg",
+                discount: "20%",
+              },
+              {
+                id: 2,
+                name: "Samsung Galaxy S22",
+                desc: "Get a free accessory bundle with this purchase.",
+                image: "/images/galaxy-s22.jpg",
+                discount: "Free Bundle",
+              },
+              {
+                id: 3,
+                name: "Google Pixel 7",
+                desc: "Limited time offer: Buy one get one 50% off.",
+                image: "/images/pixel7.jpg",
+                discount: "BOGO 50%",
+              },
+            ].map((deal) => (
+              <div
+                key={deal.id}
+                className="p-6 rounded-lg shadow-lg text-black hover:scale-105 transition"
+                style={{
+                  background: "linear-gradient(to right, #f0f8ff, #e6e6fa)",
+                }}
+              >
+                <img
+                  src={deal.image}
+                  alt={deal.name}
+                  className="w-full h-40 object-cover rounded-lg mb-4"
+                />
+                <h3
+                  className="text-xl font-semibold"
+                  style={{
+                    color: "#4B0082",
+                    fontFamily: '"Satoshi Variable", sans-serif',
+                  }}
+                >
+                  {deal.name}
+                </h3>
+                <p
+                  className="text-sm"
+                  style={{
+                    color: "#696969",
+                    fontFamily: '"Satoshi Variable", sans-serif',
+                  }}
+                >
+                  {deal.desc}
+                </p>
+                <div className="flex justify-between">
+                  <span
+                    className="text-lg font-bold"
+                    style={{
+                      color: "#FF4500",
+                      fontFamily: '"Satoshi Variable", sans-serif',
+                    }}
+                  >
+                    {deal.discount}
+                  </span>
+                  <Link
+                    to={`/product/${deal.id}`}
+                    className="mt-3 inline-block bg-blue-500 text-white px-5 py-2 rounded-md hover:bg-blue-600 transition"
+                  >
+                    View Details
+                  </Link>
+                </div>
+              </div>
+            ))}
           </div>
         </div>
-      ))}
-    </div>
-  </div>
-</section>
-
+      </section>
 
       {/* Shop by Brand */}
-<section className="py-8 px-4 bg-white w-full">
-  <div className="max-w-5xl mx-auto text-center">
-    <h2
-      className="text-2xl font-semibold mb-4"
-      style={{ color: "#9932CC" }} // Dark orchid for shop by brand title
-    >
-      Shop by Brand
-    </h2>
-    <div className="flex flex-wrap justify-center gap-6">
-      {["Apple", "Samsung", "Google", "OnePlus"].map((brand, index) => (
-        <Link
-          key={index}
-          to={`/search?q=${brand.toLowerCase()}`}
-          className="px-6 py-3 bg-gradient-to-r from-blue-500 to-purple-500 text-white rounded-lg shadow-md hover:scale-105 hover:bg-gradient-to-r hover:from-purple-500 hover:to-blue-500 transition-transform duration-300 ease-in-out"
-        >
-          {brand}
-        </Link>
-      ))}
-    </div>
-  </div>
-</section>
-
+      <section className="py-8 px-4 bg-white w-full">
+        <div className="max-w-5xl mx-auto text-center">
+          <h2
+            className="text-2xl font-semibold mb-4"
+            style={{ color: "#9932CC" }} // Dark orchid for shop by brand title
+          >
+            Shop by Brand
+          </h2>
+          <div className="flex flex-wrap justify-center gap-6">
+            {["Apple", "Samsung", "Google", "OnePlus"].map((brand, index) => (
+              <Link
+                key={index}
+                to={`/search?q=${brand.toLowerCase()}`}
+                className="px-6 py-3 bg-gradient-to-r from-blue-500 to-purple-500 text-white rounded-lg shadow-md hover:scale-105 hover:bg-gradient-to-r hover:from-purple-500 hover:to-blue-500 transition-transform duration-300 ease-in-out"
+              >
+                {brand}
+              </Link>
+            ))}
+          </div>
+        </div>
+      </section>
 
       {/* Hottest Mobile Phones */}
       <section
@@ -185,8 +200,13 @@ export default function HomePage() {
         style={{ backgroundImage: "url('/images/products-bg.jpg')" }}
       >
         <div className="max-w-6xl mx-auto">
-          <h2 className="text-3xl font-bold text-center mb-8"
-          style={{ fontFamily: '"Satoshi Variable", sans-serif', color: "#008080" }}>
+          <h2
+            className="text-3xl font-bold text-center mb-8"
+            style={{
+              fontFamily: '"Satoshi Variable", sans-serif',
+              color: "#008080",
+            }}
+          >
             Hottest Mobile Phones
           </h2>
 
@@ -213,7 +233,7 @@ export default function HomePage() {
             ].map((product) => (
               <div
                 key={product.id}
-               className="p-6 rounded-lg shadow-lg text-black hover:scale-105 transition bg-gradient-to-r from-blue-200 via-blue-300 to-teal-400"
+                className="p-6 rounded-lg shadow-lg text-black hover:scale-105 transition bg-gradient-to-r from-blue-200 via-blue-300 to-teal-400"
               >
                 <img
                   src={product.image}
@@ -235,4 +255,5 @@ export default function HomePage() {
       </section>
     </div>
   );
-}
+};
+export default Homepage;
