@@ -16,7 +16,7 @@ import PriceAlerts from "./Pages/PriceAlerts.jsx";
 import SearchResults from "./Pages/SearchResults.jsx";
 import ProductDetails from "./Pages/ProductDetails.jsx";
 import Wishlist from "./Pages/Wishlist.jsx";
-import BrandDetails from "./Pages/BrandDetails.jsx"; t
+import BrandDetails from "./Pages/BrandDetails.jsx";
 
 const PrivateRoute = ({ children }) => {
   const { user, loading } = useAuth();
