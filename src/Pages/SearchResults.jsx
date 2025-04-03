@@ -1,33 +1,60 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useSearchParams, Link } from "react-router-dom";
+
+const productsData = [
+  {
+    id: 1,
+    name: "iPhone 13",
+    brand: "Apple",
+    image: "/images/iphone13.jpg",
+    stores: [
+      { name: "Store A", price: "$799", shipping: "$10", rating: 4.5 },
+      { name: "Store B", price: "$789", shipping: "Free", rating: 4.2 },
+      { name: "Store C", price: "$805", shipping: "$5", rating: 4.3 },
+    ],
+  },
+  {
+    id: 2,
+    name: "Samsung Galaxy S22",
+    brand: "Samsung",
+    image: "/images/galaxys22.jpg",
+    stores: [
+      { name: "Store A", price: "$899", shipping: "$15", rating: 4.3 },
+      { name: "Store B", price: "$879", shipping: "$5", rating: 4.7 },
+      { name: "Store C", price: "$890", shipping: "Free", rating: 4.6 },
+    ],
+  },
+  {
+    id: 3,
+    name: "Google Pixel 7",
+    brand: "Google",
+    image: "/images/pixel7.jpg",
+    stores: [
+      { name: "Store A", price: "$699", shipping: "$10", rating: 4.6 },
+      { name: "Store B", price: "$689", shipping: "Free", rating: 4.4 },
+      { name: "Store C", price: "$695", shipping: "$5", rating: 4.5 },
+    ],
+  },
+
+  // Add more products as needed
+];
+
 export default function SearchResults() {
   const [searchParams] = useSearchParams();
   const query = searchParams.get("q");
-  const initialResults = [
-    {
-      id: 1,
-      name: "iPhone 13",
-      brand: "Apple",
-      image: "/images/iphone13.jpg",
-      stores: [
-        { name: "Store A", price: "$799", shipping: "$10", rating: 4.5 },
-        { name: "Store B", price: "$789", shipping: "Free", rating: 4.2 },
-      ],
-    },
-    {
-      id: 2,
-      name: "Samsung Galaxy S22",
-      brand: "Samsung",
-      image: "/images/galaxys22.jpg",
-      stores: [
-        { name: "Store A", price: "$899", shipping: "$15", rating: 4.3 },
-        { name: "Store C", price: "$879", shipping: "$5", rating: 4.7 },
-      ],
-    },
-  ];
-  const [results, setResults] = useState(initialResults);
+  const [results, setResults] = useState([]);
   const [priceRange, setPriceRange] = useState([0, 1000]);
   const [sortBy, setSortBy] = useState("lowestPrice");
+
+  useEffect(() => {
+    // Filter products based on the query
+    const filteredResults = productsData.filter(product =>
+      product.name.toLowerCase().includes(query.toLowerCase()) ||
+      product.brand.toLowerCase().includes(query.toLowerCase())
+    );
+    setResults(filteredResults);
+  }, [query]);
+
   const handleSort = (type) => {
     setSortBy(type);
     let sortedResults = [...results];
@@ -46,6 +73,7 @@ export default function SearchResults() {
     }
     setResults(sortedResults);
   };
+
   return (
     <div className="min-h-screen bg-gray-100 p-8 mt-16 w-full">
       {/* Breadcrumb Navigation */}
@@ -119,51 +147,51 @@ export default function SearchResults() {
             </div>
             {/* Product Table */}
             <table
-  className="w-full border-collapse"
-  style={{ backgroundColor: '#E6E6FA' /* Beige color */ }}
->
-  <thead>
-    <tr className="bg-orange-100 gradient-text text-left">
-      <th className="p-3">Store</th>
-      <th className="p-3">Price</th>
-      <th className="p-3">Shipping</th>
-      <th className="p-3">Rating</th>
-      <th className="p-3 text-center">Action</th>
-    </tr>
-  </thead>
-  <tbody>
-    {product.stores.map((store, index) => (
-      <tr
-        key={index}
-        className="hover:bg-gray-100 border-b border-gray-200"
-      >
-        <td className="p-3">{store.name}</td>
-        <td className="p-3 text-blue-600 font-bold">{store.price}</td>
-        <td className="p-3">{store.shipping}</td>
-        <td className="p-3">{store.rating} / 5</td>
-        <td className="p-3 text-center">
-        <div className="wavy-background">
-        <button className="relative overflow-hidden text-white px-6 py-3 rounded-lg transition-all duration-300 before:absolute before:inset-0 before:bg-gradient-to-r before:from-green-400 before:via-green-500 before:to-green-600 before:animate-wavy hover:before:animate-wavy">
-  <span className="relative z-10">Buy Now</span>
-  <style jsx>{`
-    @keyframes wavy {
-      0% { background-position: 0% 50%; }
-      50% { background-position: 100% 50%; }
-      100% { background-position: 0% 50%; }
-    }
-    .before\\:animate-wavy::before {
-      content: "";
-      background-size: 300% 300%;
-      animation: wavy 3s ease-in-out infinite;
-    }
-  `}</style>
-</button>
-</div>
-        </td>
-      </tr>
-    ))}
-  </tbody>
-</table>
+              className="w-full border-collapse"
+              style={{ backgroundColor: '#E6E6FA' /* Beige color */ }}
+            >
+              <thead>
+                <tr className="bg-orange-100 gradient-text text-left">
+                  <th className="p-3">Store</th>
+                  <th className="p-3">Price</th>
+                  <th className="p-3">Shipping</th>
+                  <th className="p-3">Rating</th>
+                  <th className="p-3 text-center">Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                {product.stores.map((store, index) => (
+                  <tr
+                    key={index}
+                    className="hover:bg-gray-100 border-b border-gray-200"
+                  >
+                    <td className="p-3">{store.name}</td>
+                    <td className="p-3 text-blue-600 font-bold">{store.price}</td>
+                    <td className="p-3">{store.shipping}</td>
+                    <td className="p-3">{store.rating} / 5</td>
+                    <td className="p-3 text-center">
+                      <div className="wavy-background">
+                        <button className="relative overflow-hidden text-white px-6 py-3 rounded-lg transition-all duration-300 before:absolute before:inset-0 before:bg-gradient-to-r before:from-green-400 before:via-green-500 before:to-green-600 before:animate-wavy hover:before:animate-wavy">
+                          <span className="relative z-10">Buy Now</span>
+                          <style jsx>{`
+                            @keyframes wavy {
+                              0% { background-position: 0% 50%; }
+                              50% { background-position: 100% 50%; }
+                              100% { background-position: 0% 50%; }
+                            }
+                            .before\\:animate-wavy::before {
+                              content: "";
+                              background-size: 300% 300%;
+                              animation: wavy 3s ease-in-out infinite;
+                            }
+                          `}</style>
+                        </button>
+                      </div>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
           </div>
         ))}
       </div>
