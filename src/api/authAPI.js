@@ -32,7 +32,7 @@ export const loginUser = async (credentials) => {
     throw new Error("email and password are required");
   }
 
-  const response = await fetch(`${API_URL}/users/login`, {
+  const response = await fetch(`${API_URL}/auth/login`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(credentials),
@@ -63,7 +63,7 @@ export const fetchProfile = async () => {
     throw new Error("Unauthorized: No token found");
   }
 
-  const response = await fetch(`${API_URL}/profile`, {
+  const response = await fetch(`${API_URL}/users/profile`, {
     method: "GET",
     headers: {
       "Content-Type": "application/json",
