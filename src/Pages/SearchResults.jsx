@@ -1,10 +1,8 @@
 import React, { useState } from "react";
 import { useSearchParams, Link } from "react-router-dom";
-
 export default function SearchResults() {
   const [searchParams] = useSearchParams();
   const query = searchParams.get("q");
-
   const initialResults = [
     {
       id: 1,
@@ -27,11 +25,9 @@ export default function SearchResults() {
       ],
     },
   ];
-
   const [results, setResults] = useState(initialResults);
   const [priceRange, setPriceRange] = useState([0, 1000]);
   const [sortBy, setSortBy] = useState("lowestPrice");
-
   const handleSort = (type) => {
     setSortBy(type);
     let sortedResults = [...results];
@@ -50,11 +46,8 @@ export default function SearchResults() {
     }
     setResults(sortedResults);
   };
-
   return (
     <div className="min-h-screen bg-gray-100 p-8 mt-16 w-full">
-
-
       {/* Breadcrumb Navigation */}
       <nav className="text-m mb-6">
         <Link to="/" className="text-blue-500 hover:underline">
@@ -63,12 +56,10 @@ export default function SearchResults() {
         <span className="mx-2 text-gray-500">&gt;</span>
         <span className="text-gray-700">Search Results</span>
       </nav>
-
       {/* Search Header */}
       <h2 className="text-4xl font-bold mb-6 text-indigo-700">
         Search Results for "<span className="text-black">{query}</span>"
       </h2>
-
       {/* Filters & Sorting */}
       <div className="mb-8 flex flex-wrap gap-6 items-center">
         {/* Price Range Filter */}
@@ -90,7 +81,6 @@ export default function SearchResults() {
             ${priceRange[0]} - ${priceRange[1]}
           </span>
         </div>
-
         {/* Sorting Dropdown */}
         <div className="bg-orange-100 p-4 shadow rounded-lg">
           <label className="block text-xl font-medium text-green-900">
@@ -106,7 +96,6 @@ export default function SearchResults() {
           </select>
         </div>
       </div>
-
       {/* Search Results */}
       <div className="space-y-6">
         {results.map((product) => (
@@ -128,7 +117,6 @@ export default function SearchResults() {
                 <p style={{ color: '#6A0DAD' }} className="text-pink-900">{product.brand}</p>
               </div>
             </div>
-
             {/* Product Table */}
             <table
   className="w-full border-collapse"
@@ -157,14 +145,12 @@ export default function SearchResults() {
         <div className="wavy-background">
         <button className="relative overflow-hidden text-white px-6 py-3 rounded-lg transition-all duration-300 before:absolute before:inset-0 before:bg-gradient-to-r before:from-green-400 before:via-green-500 before:to-green-600 before:animate-wavy hover:before:animate-wavy">
   <span className="relative z-10">Buy Now</span>
-
   <style jsx>{`
     @keyframes wavy {
       0% { background-position: 0% 50%; }
       50% { background-position: 100% 50%; }
       100% { background-position: 0% 50%; }
     }
-
     .before\\:animate-wavy::before {
       content: "";
       background-size: 300% 300%;
@@ -172,15 +158,12 @@ export default function SearchResults() {
     }
   `}</style>
 </button>
-
 </div>
-
         </td>
       </tr>
     ))}
   </tbody>
 </table>
-
           </div>
         ))}
       </div>
