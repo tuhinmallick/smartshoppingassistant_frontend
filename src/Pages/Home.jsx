@@ -1,7 +1,17 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React, { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 
 const Home = () => {
+  const [searchQuery, setSearchQuery] = useState("");
+  const navigate = useNavigate();
+
+  const handleSearch = (e) => {
+    e.preventDefault();
+    if (searchQuery.trim() !== "") {
+      navigate(`/search?q=${encodeURIComponent(searchQuery)}`);
+    }
+  };
+
   return (
     <div className="min-h-screen flex flex-col bg-gray-100">
       {/* Hero Section */}
@@ -55,16 +65,21 @@ const Home = () => {
 
       {/* Search Bar */}
       <section className="w-full flex justify-center py-8 bg-white shadow-md">
-        <div className="flex w-full max-w-2xl">
+        <form className="flex w-full max-w-2xl" onSubmit={handleSearch}>
           <input
             type="text"
             placeholder="Search for phones, brands..."
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
             className="w-full p-4 border border-gray-300 rounded-l-full focus:ring-2 focus:ring-blue-500 text-lg"
           />
-          <button className="bg-blue-600 text-white px-6 py-4 rounded-r-full hover:bg-blue-700 transition">
+          <button
+            type="submit"
+            className="bg-blue-600 text-white px-6 py-4 rounded-r-full hover:bg-blue-700 transition"
+          >
             🔍
           </button>
-        </div>
+        </form>
       </section>
 
       {/* Shop by Category */}
@@ -198,7 +213,7 @@ const Home = () => {
             {["Apple", "Samsung", "Google", "OnePlus"].map((brand, index) => (
               <Link
                 key={index}
-                to={`/search?q=${brand.toLowerCase()}`}
+                to={`/brand/${brand.toLowerCase()}`}
                 className="px-6 py-3 bg-gradient-to-r from-blue-500 to-purple-500 text-white rounded-lg shadow-md hover:scale-105 hover:bg-gradient-to-r hover:from-purple-500 hover:to-blue-500 transition-transform duration-300 ease-in-out"
               >
                 {brand}

@@ -63,7 +63,7 @@ const Navbar = () => {
   return (
     <>
       <nav
-        className={`bg-[#fc372d] p-4 flex justify-between items-center shadow-lg rounded-b-xl left-0 w-full z-50 ${
+        className={`bg-[#fc372d] p-4 flex justify-between items-center shadow-lg left-0 w-full z-50 ${
           isHomePage ? "fixed top-0" : "relative"
         }`}
       >
@@ -126,7 +126,7 @@ const Navbar = () => {
                               setAuthModalOpen(true);
                               setMenuOpen(false);
                             }}
-                            className="block px-4 py-2 w-full text-left  hover:text-[#ffff] shadow-black shadow-lg hover:bg-[#fc372d] bg-[#f7f1e4] transition-all duration-300"
+                            className="block px-4 py-2 w-full text-left uppercase font-bold hover:text-[#ffff] shadow-black shadow-lg hover:bg-[#fc372d] bg-[#f7f1e4] transition-all duration-300"
                           >
                             🔑 Log In
                           </button>
@@ -175,7 +175,7 @@ const Navbar = () => {
                                 logout();
                                 setMenuOpen(false);
                               }}
-                              className="block w-full text-left px-4 py-2  hover:text-[#ffff] hover:bg-[#fc372d] shadow-black shadow-lg bg-[#f7f1e4] transition-all duration-300"
+                              className="block w-full text-left px-4 py-2 uppercase hover:text-[#ffff] hover:bg-[#fc372d] shadow-black shadow-lg bg-[#f7f1e4] transition-all duration-300"
                             >
                               🚪 Log Out
                             </button>

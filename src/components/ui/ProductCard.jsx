@@ -5,7 +5,7 @@ import Button from "./Button";
 const ProductCard = ({ product, onSave }) => {
   return (
     <div
-      className={`relative border-2 text-center p-6 border-[#2C2C2C] shadow-black bg-white w-auto 
+      className={`relative border-2 text-center my-4 p-6 border-[#2C2C2C] shadow-black bg-white w-auto 
               shadow-xl hover:scale-105 transition-all duration-300 ease-in-out `}
     >
       {/* Product Details */}

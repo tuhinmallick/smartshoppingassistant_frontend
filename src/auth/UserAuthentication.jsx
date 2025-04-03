@@ -14,7 +14,7 @@ const UserAuthentication = () => {
         transition={{ duration: 0.6 }}
         style={{ transformStyle: "preserve-3d", width: "100%", height: "100%" }}
       >
-        {/* Login Form (No Scroll) */}
+        {/* Login Form */}
         <div
           className="absolute w-full h-full"
           style={{ backfaceVisibility: "hidden" }}
@@ -22,7 +22,7 @@ const UserAuthentication = () => {
           <Login setIsFlipped={setIsFlipped} />
         </div>
 
-        {/* Signup Form with Scroll */}
+        {/* Signup Form */}
         <div
           className="absolute w-full h-full"
           style={{

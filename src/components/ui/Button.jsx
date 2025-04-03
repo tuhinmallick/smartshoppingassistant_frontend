@@ -11,7 +11,6 @@ const Button = ({ text, onClick, type = "submit", icon = null }) => {
       >
         <span className="relative z-10">{text}</span>
 
-        {/* Render Icon if provided */}
         {icon && <span className="relative z-10">{icon}</span>}
 
         <span className="blob-btn__inner">
