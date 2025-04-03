@@ -1,7 +1,10 @@
-const API_URL = process.env.REACT_APP_BASE_URL;
+const API_URL =
+  import.meta.env.VITE_API_URL ||
+  "https://smartshoppingassistant-backend.onrender.com/api";
+
 // Signup function
 export const signupUser = async (userData) => {
-  const response = await fetch(`${API_URL}/register`, {
+  const response = await fetch(`${API_URL}/auth/register`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(userData),
@@ -29,7 +32,7 @@ export const loginUser = async (credentials) => {
     throw new Error("email and password are required");
   }
 
-  const response = await fetch(`${API_URL}/login`, {
+  const response = await fetch(`${API_URL}/auth/login`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(credentials),
@@ -60,7 +63,7 @@ export const fetchProfile = async () => {
     throw new Error("Unauthorized: No token found");
   }
 
-  const response = await fetch(`${Profile_URL}/profile`, {
+  const response = await fetch(`${API_URL}/users/profile`, {
     method: "GET",
     headers: {
       "Content-Type": "application/json",
