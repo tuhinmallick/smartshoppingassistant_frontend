@@ -55,12 +55,12 @@ const Footer = () => {
 
               {/* Floating Elements */}
               <img
-                src="/src/assets/shopping.png"
+                src="./src/assets/shopping.png"
                 className="footer-app__shopping absolute bottom-[30%] left-[7%] w-[10%] animate-float"
                 alt="Shopping"
               />
               <img
-                src="/src/assets/computer.jpg"
+                src="./src/assets/computer.jpg"
                 className="footer-app__bags absolute top-[-5%] left-[10%] w-[25%] animate-float"
                 alt="Bags"
               />
@@ -70,7 +70,7 @@ const Footer = () => {
                 alt="Moon"
               />
               <img
-                src="/src/assets/bag.jpg"
+                src="./src/assets/bag.jpg"
                 className="footer-app__price absolute bottom-[22%] right-[5%] w-[12%] animate-float"
                 alt="Price"
               />

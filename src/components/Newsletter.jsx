@@ -19,10 +19,10 @@ const Newsletter = () => {
             </div>
             <div className="newsletter-section__trophy absolute top-[5%] left-[0%] w-[30.2258065%] animate-[float_4.5s_ease-in-out_infinite]">
               <img
-                src="/src/assets/cart.jpg"
+                src="./src/assets/cart.jpg"
                 width="204"
                 height="213"
-                alt="Trophy"
+                alt="Cart Trolly"
               />
             </div>
 
