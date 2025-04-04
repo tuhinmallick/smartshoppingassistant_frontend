@@ -9,6 +9,7 @@ const DealsGrid = () => {
       description: "Save 20% on this powerful A15 Bionic chip device.",
       image: "/src/assets/Iphone14.jpg",
       discount: "20%",
+      price: "$599",
     },
     {
       id: 2,
@@ -16,6 +17,7 @@ const DealsGrid = () => {
       description: "Get a free accessory bundle with this purchase.",
       image: "/src/assets/samsung22.jpg",
       discount: "Free Bundle",
+      price: "$599",
     },
     {
       id: 3,
@@ -23,6 +25,7 @@ const DealsGrid = () => {
       description: "Limited time offer: Buy one get one 50% off.",
       image: "/src/assets/google-phone.png",
       discount: "BOGO 50%",
+      price: "$599",
     },
   ];
 
