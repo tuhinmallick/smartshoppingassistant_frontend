@@ -5,9 +5,16 @@ import Button from "./Button";
 const ProductCard = ({ product, onSave }) => {
   return (
     <div
-      className={`relative border-2 text-center my-4 p-6 border-[#2C2C2C] shadow-black bg-white w-auto 
-              shadow-xl hover:scale-105 transition-all duration-300 ease-in-out `}
+      className="relative border-2 text-center my-4 p-6 border-[#2C2C2C] shadow-black bg-white w-auto 
+              shadow-xl hover:scale-105 transition-all duration-300 ease-in-out"
     >
+      {/* Discount Badge */}
+      {product.discount && (
+        <div className="absolute top-0 left-0 bg-[#fc372d] text-white font-bold text-sm px-3 py-1 rounded-br-lg">
+          {product.discount}
+        </div>
+      )}
+
       {/* Product Details */}
       <h3 className="text-xl font-extrabold text-[#464646]">{product.name}</h3>
 
@@ -20,9 +27,9 @@ const ProductCard = ({ product, onSave }) => {
         />
       </div>
 
-      <div className="flex items-start justify-center text-md font-bold gap-2 mt-2">
+      <div className="flex justify-center text-xl font-bold gap-2 mt-2">
         <label className="text-[#464646] uppercase">Price:</label>
-        <p className="text-[#fc372d] leading-tight">{product.price}</p>
+        <p className="text-green-600">{product.price}</p>
       </div>
 
       {product.oldPrice && (
@@ -30,6 +37,7 @@ const ProductCard = ({ product, onSave }) => {
           {product.oldPrice}
         </p>
       )}
+
       <p className="text-sm font-bold text-[#464646] mt-2">
         {product.description}
       </p>

@@ -44,9 +44,12 @@ function App() {
               path="/signup"
               element={<Navigate to="/userauthentication" replace />}
             />
-            <Route path="/search" element={<SearchResults />} /> {/* Search Results */}
-            <Route path="/product/:id" element={<ProductDetails />} /> {/* Product Details */}
-            <Route path="/brand/:brand" element={<BrandDetails />} /> {/* Brand Details */}
+            <Route path="/search" element={<SearchResults />} />{" "}
+            {/* Search Results */}
+            <Route path="/product/:id" element={<ProductDetails />} />{" "}
+            {/* Product Details */}
+            <Route path="/brand/:brand" element={<BrandDetails />} />{" "}
+            {/* Brand Details */}
             {/* Private Routes */}
             <Route
               path="/dashboard"

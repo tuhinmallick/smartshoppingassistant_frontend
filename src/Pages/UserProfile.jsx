@@ -28,10 +28,10 @@ const UserProfile = () => {
 
   return (
     <section className="flex flex-col items-center pt-4">
-      <h2 className="text-3xl font-extrabold uppercase text-[#fc372d] mb-2">
+      <h2 className="text-5xl font-extrabold uppercase text-[#fc372d] mb-2">
         User Profile
       </h2>
-      <p className="text-[#464646] font-semibold mb-6">
+      <p className="text-[#464646] font-semibold text-xl mb-6">
         ⚙️ Manage your profile settings here.
       </p>
       <div className="w-full max-w-md bg-[#464646] shadow-slate-500 shadow-lg p-6">
@@ -40,7 +40,7 @@ const UserProfile = () => {
             <div className="md:flex items-center space-x-6 py-4">
               {/* Left: Profile Image */}
               <img
-                src={profile?.avatar || "./src/assets/profile.png"}
+                src={profile?.avatar || "/src/assets/profile.png"}
                 alt="User Avatar"
                 className="w-24 h-24 rounded-full mx-auto md:mx-0" // Centered on small screens, left-aligned on larger screens
               />
@@ -52,7 +52,7 @@ const UserProfile = () => {
                 </h3>
 
                 {/* Contact Information with Icons */}
-                <div className="text-white text-sm font-bold mt-4">
+                <div className="text-white text-md font-semibold mt-4">
                   <div className="flex items-center justify-center md:justify-start space-x-2">
                     <FaEnvelope className="text-[#fc372d]" />
                     <p>{profile.email}</p>
@@ -71,10 +71,10 @@ const UserProfile = () => {
               </div>
             </div>
 
-            <p className="font-bold text-sm p-4">
-              <span className="text-[#fc372d]">About Me:</span>
+            <p className="p-4 text-md">
+              <span className="text-[#fc372d] font-bold">About Me:</span>
               <br />
-              <span className="text-[#FFFF] md:text-left">
+              <span className="text-[#FFFF] font-semibold md:text-left">
                 "{profile.about}"
               </span>
             </p>
