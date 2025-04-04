@@ -25,7 +25,7 @@ const HeroSection = () => {
         <div className="relative w-full h-full flex justify-center">
           {/* Main Hero Image */}
           <img
-            src="/src/assets/herosection.png"
+            src="./src/assets/herosection.png"
             alt="Hero"
             className="w-full max-w-md transform transition-all duration-500 hover:scale-105"
           />
@@ -56,8 +56,8 @@ const HeroSection = () => {
             style={{ animation: "float 4s ease-in-out infinite" }}
           >
             <img
-              src="/src/assets/Price_Comparison.png"
-              alt="Bike"
+              src="./src/assets/Price_Comparison.png"
+              alt="Price Comparision"
               className="w-full max-w-lg md:max-w-xl"
             />
           </div>

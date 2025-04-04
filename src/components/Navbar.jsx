@@ -71,7 +71,7 @@ const Navbar = () => {
             className="flex items-center text-3xl font-bold text-[#ffff] tracking-wide hover:text-yellow-300 transition"
           >
             <img
-              src="/src/assets/logo.png"
+              src="./src/assets/logo.png"
               alt="Smart Shopping "
               className="w-auto h-24"
             />
