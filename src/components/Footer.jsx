@@ -1,56 +1,158 @@
-import { FaFacebook, FaTwitter, FaGoogle } from "react-icons/fa";
-import { motion } from "framer-motion";
+import React, { useEffect } from "react";
 
 const Footer = () => {
+  useEffect(() => {
+    // Flip Arnold Image on Mouse Move
+    const handleMouseMove = (e) => {
+      const x = e.clientX;
+      const arnoldImage = document.querySelector(".footer-app__arnold");
+      if (arnoldImage) {
+        if (x < window.innerWidth / 2) {
+          arnoldImage.classList.add("flip");
+        } else {
+          arnoldImage.classList.remove("flip");
+        }
+      }
+    };
+
+    document.addEventListener("mousemove", handleMouseMove);
+    return () => document.removeEventListener("mousemove", handleMouseMove);
+  }, []);
+
   return (
-    <footer className="relative bg-gradient-to-r from-teal-500 via-purple-500 to-teal-500 text-center p-8 mt-4">
-      {/* Animated Wavy SVG */}
-      <div className="absolute inset-x-0 -top-10 overflow-hidden">
-        <motion.svg
-          xmlns="http://www.w3.org/2000/svg"
-          viewBox="0 0 1440 320"
-          className="w-full"
-          animate={{ y: [0, 10, 0] }} // Vertical motion
-          transition={{ duration: 3, repeat: Infinity }}
-        >
-          <path
-            fill="#20B2AA" // Soft peach for contrast
-            d="M0,224L60,208C120,192,240,160,360,138.7C480,117,600,107,720,128C840,149,960,203,1080,213.3C1200,224,1320,192,1380,176L1440,160L1440,0L1380,0C1320,0,1200,0,1080,0C960,0,840,0,720,0C600,0,480,0,360,0C240,0,120,0,60,0L0,0Z"
-          ></path>
-        </motion.svg>
+    <>
+      {/* Shopify Footer Section */}
+      <div
+        id="shopify-section-sections--21283168813352__footer-app"
+        className="shopify-section shopify-section-group-footer-group"
+      >
+        <div id="app" className="footer-app px-10 md:px-20 mb-[-80px]">
+          <div className="footer-app__container text-center max-w-[1200px] mx-auto">
+            {/* Title */}
+            <div className="footer-app__title text-xl py-8 uppercase font-extrabold text-[#FC372D]">
+              <h2>
+                Compare Prices Instantly! 🚀 <br />
+                <span className="text-6xl font-extrabold">
+                  Shop Smarter, Save Bigger
+                </span>
+              </h2>
+            </div>
+
+            {/* Call to Action */}
+            <div className="theme-block my-4">
+              <a className="bg-[#2c2c2c] text-[#fff] hover:bg-[#fc372d] font-extrabold py-4 px-6 text-lg uppercase">
+                learn more
+              </a>
+            </div>
+
+            {/* Image Section */}
+            <div className="footer-app__image z-10 relative mx-auto mt-10">
+              <img
+                src="//arnoldspumpclub.com/cdn/shop/t/4/assets/pump-app-phone.png?v=14004366077603502521724268563"
+                className="w-full"
+                alt="App Phone"
+              />
+
+              {/* Floating Elements */}
+              <img
+                src="/src/assets/shopping.png"
+                className="footer-app__shopping absolute bottom-[30%] left-[7%] w-[10%] animate-float"
+                alt="Shopping"
+              />
+              <img
+                src="/src/assets/computer.jpg"
+                className="footer-app__bags absolute top-[-5%] left-[10%] w-[25%] animate-float"
+                alt="Bags"
+              />
+              <img
+                src="//arnoldspumpclub.com/cdn/shop/t/4/assets/pump-app-moon.png?v=88087178589212267601724268562"
+                className="footer-app__moon absolute top-[-3%] right-[20%] w-[30%] animate-float"
+                alt="Moon"
+              />
+              <img
+                src="/src/assets/bag.jpg"
+                className="footer-app__price absolute bottom-[22%] right-[5%] w-[12%] animate-float"
+                alt="Price"
+              />
+              <img
+                src="//arnoldspumpclub.com/cdn/shop/t/4/assets/pump-app-arnold.png?v=157079851756673686591724268562"
+                className="footer-app__arnold absolute top-0 left-0 w-full"
+                alt="Arnold"
+              />
+            </div>
+          </div>
+        </div>
       </div>
 
-      {/* Animated Social Media Buttons */}
-      <div className="relative flex justify-center space-x-4 mt-10">
-        <motion.button
-          className="flex items-center bg-blue-600 text-white px-4 py-2 rounded-lg shadow-md hover:bg-blue-700 transition"
-          whileHover={{ scale: 1.1 }} // Scale effect on hover
-        >
-          <FaFacebook className="mr-2" /> Facebook
-        </motion.button>
-        <motion.button
-          className="flex items-center bg-sky-500 text-white px-4 py-2 rounded-lg shadow-md hover:bg-sky-600 transition"
-          whileHover={{ scale: 1.1 }} // Scale effect on hover
-        >
-          <FaTwitter className="mr-2" /> Twitter
-        </motion.button>
-        <motion.button
-          className="flex items-center text-white px-4 py-2 rounded-lg shadow-md transition"
-          style={{
-            background:
-              "linear-gradient(90deg, #FF4500 20%, #FFD700 40%, #32CD32 60%, #6A5ACD 80%)", // Vibrant gradient for Google+
-          }}
-          whileHover={{ scale: 1.1 }} // Scale effect on hover
-        >
-          <FaGoogle className="mr-2" /> Google+
-        </motion.button>
-      </div>
+      {/* Main Footer */}
+      <footer className="relative bg-[#fa3c2c] py-16 flex flex-col px-8 text-white">
+        {/* Centered Phone Image */}
+        <h2 className="text-white text-2xl uppercase font-extrabold">
+          Looking to get in shape
+        </h2>
+        <h2 className="text-white text-8xl uppercase font-extrabold">
+          while saving money?
+        </h2>
 
-      {/* Footer Text */}
-      <p className="relative mt-4 text-white font-semibold">
-        © {new Date().getFullYear()} Smart Shopping Assistant. All rights reserved.
-      </p>
-    </footer>
+        {/* Footer Bottom */}
+        <div className="text-center mt-10 text-xs opacity-75">
+          <div className="flex flex-col md:flex-row justify-between pb-10 items-center">
+            {/* Left Section - Social Icons */}
+            <div className="flex space-x-4 text-4xl">
+              <a href="#" className="flex items-center">
+                📷
+              </a>
+              <a href="#" className="flex items-center">
+                ▶️
+              </a>
+              <a href="#" className="flex items-center">
+                🐦
+              </a>
+              <a href="#" className="flex items-center">
+                🎵
+              </a>
+            </div>
+
+            {/* Right Section - Footer Links */}
+            <div className="flex space-x-6 font-extrabold text-md uppercase">
+              <a href="#" className="underline">
+                Podcast
+              </a>
+              <a href="#" className="underline">
+                Newsletter
+              </a>
+              <a href="#" className="underline">
+                Shop
+              </a>
+              <a href="#" className="underline">
+                Privacy
+              </a>
+              <a href="#" className="underline">
+                Terms
+              </a>
+            </div>
+          </div>
+          <span className="font-extrabold text-md">
+            SmartShoppers © 2025 All Rights Reserved
+          </span>
+        </div>
+      </footer>
+
+      {/* Styles & Animations */}
+      <style>{`
+        .animate-float {
+          animation: float 4s ease-in-out infinite;
+        }
+        .footer-app__arnold.flip {
+          transform: scaleX(-1);
+        }
+        @keyframes float {
+          0% { transform: translateY(0px); }
+          50% { transform: translateY(-10px); }
+          100% { transform: translateY(0px); }
+        }
+      `}</style>
+    </>
   );
 };
 

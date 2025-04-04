@@ -7,7 +7,7 @@ export default function Wishlist() {
       name: "iPhone 13",
       brand: "Apple",
       price: "$799",
-      image: "/images/iphone13.jpg",
+      image: "/src/assets/Iphone14.jpg",
       priceHistory: [
         { date: "2024-01-01", price: 850 },
         { date: "2024-02-01", price: 820 },
@@ -19,7 +19,7 @@ export default function Wishlist() {
       name: "Samsung Galaxy S22",
       brand: "Samsung",
       price: "$899",
-      image: "/images/galaxy-s22.jpg",
+      image: "/src/assets/samsung22.jpg",
       priceHistory: [
         { date: "2024-01-01", price: 950 },
         { date: "2024-02-01", price: 920 },
@@ -48,10 +48,7 @@ export default function Wishlist() {
       ) : (
         <div className="mt-4 grid grid-cols-1 sm:grid-cols-2 gap-4">
           {wishlist.map((product) => (
-            <div
-              key={product.id}
-              className="p-4 bg-gray-100 rounded-lg shadow"
-            >
+            <div key={product.id} className="p-4 bg-gray-100 rounded-lg shadow">
               <img
                 src={product.image}
                 alt={product.name}

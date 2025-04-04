@@ -6,7 +6,7 @@ const productsData = [
     id: 1,
     name: "iPhone 13",
     brand: "Apple",
-    image: "/images/iphone13.jpg",
+    image: "/src/assets/Iphone14.jpg",
     stores: [
       { name: "Store A", price: "$799", shipping: "$10", rating: 4.5 },
       { name: "Store B", price: "$789", shipping: "Free", rating: 4.2 },
@@ -17,7 +17,7 @@ const productsData = [
     id: 2,
     name: "Samsung Galaxy S22",
     brand: "Samsung",
-    image: "/images/galaxys22.jpg",
+    image: "/src/assets/samsung22.jpg",
     stores: [
       { name: "Store A", price: "$899", shipping: "$15", rating: 4.3 },
       { name: "Store B", price: "$879", shipping: "$5", rating: 4.7 },
@@ -28,7 +28,7 @@ const productsData = [
     id: 3,
     name: "Google Pixel 7",
     brand: "Google",
-    image: "/images/pixel7.jpg",
+    image: "/src/assets/google-phone.png",
     stores: [
       { name: "Store A", price: "$699", shipping: "$10", rating: 4.6 },
       { name: "Store B", price: "$689", shipping: "Free", rating: 4.4 },
@@ -48,9 +48,10 @@ export default function SearchResults() {
 
   useEffect(() => {
     // Filter products based on the query
-    const filteredResults = productsData.filter(product =>
-      product.name.toLowerCase().includes(query.toLowerCase()) ||
-      product.brand.toLowerCase().includes(query.toLowerCase())
+    const filteredResults = productsData.filter(
+      (product) =>
+        product.name.toLowerCase().includes(query.toLowerCase()) ||
+        product.brand.toLowerCase().includes(query.toLowerCase())
     );
     setResults(filteredResults);
   }, [query]);
@@ -142,13 +143,15 @@ export default function SearchResults() {
                 <h3 className="text-2xl font-semibold text-red-800">
                   {product.name}
                 </h3>
-                <p style={{ color: '#6A0DAD' }} className="text-pink-900">{product.brand}</p>
+                <p style={{ color: "#6A0DAD" }} className="text-pink-900">
+                  {product.brand}
+                </p>
               </div>
             </div>
             {/* Product Table */}
             <table
               className="w-full border-collapse"
-              style={{ backgroundColor: '#E6E6FA' /* Beige color */ }}
+              style={{ backgroundColor: "#E6E6FA" /* Beige color */ }}
             >
               <thead>
                 <tr className="bg-orange-100 gradient-text text-left">
@@ -166,7 +169,9 @@ export default function SearchResults() {
                     className="hover:bg-gray-100 border-b border-gray-200"
                   >
                     <td className="p-3">{store.name}</td>
-                    <td className="p-3 text-blue-600 font-bold">{store.price}</td>
+                    <td className="p-3 text-blue-600 font-bold">
+                      {store.price}
+                    </td>
                     <td className="p-3">{store.shipping}</td>
                     <td className="p-3">{store.rating} / 5</td>
                     <td className="p-3 text-center">
@@ -175,9 +180,15 @@ export default function SearchResults() {
                           <span className="relative z-10">Buy Now</span>
                           <style jsx>{`
                             @keyframes wavy {
-                              0% { background-position: 0% 50%; }
-                              50% { background-position: 100% 50%; }
-                              100% { background-position: 0% 50%; }
+                              0% {
+                                background-position: 0% 50%;
+                              }
+                              50% {
+                                background-position: 100% 50%;
+                              }
+                              100% {
+                                background-position: 0% 50%;
+                              }
                             }
                             .before\\:animate-wavy::before {
                               content: "";

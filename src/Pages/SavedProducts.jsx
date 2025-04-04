@@ -20,10 +20,10 @@ const SavedProducts = () => {
 
   return (
     <section className="text-center pt-4">
-      <h2 className="text-3xl font-extrabold uppercase text-[#fc372d] mb-2">
+      <h2 className="text-5xl font-extrabold uppercase text-[#fc372d] mb-2">
         Saved Products
       </h2>
-      <p className="text-[#464646] font-semibold mb-6">
+      <p className="text-[#464646] text-xl font-semibold mb-6">
         📌 You asked for it, we delivered. Here are your saved picks!
       </p>
 

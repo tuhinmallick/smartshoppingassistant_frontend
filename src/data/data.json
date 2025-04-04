@@ -4,27 +4,27 @@
       "id": 1,
       "name": "John Doe",
       "email": "john@example.com",
-      "profilePicture": "./src/assets/profile.png",
+      "profilePicture": "/src/assets/profile.png",
       "bio": "Tech enthusiast and gadget lover.",
       "savedProducts": [
         {
           "id": 1,
           "name": "iPhone 15",
-          "image": "./src/assets/Iphone14.jpg",
+          "image": "/src/assets/Iphone14.jpg",
           "description": "Latest iPhone",
           "price": "$999"
         },
         {
           "id": 2,
           "name": "Samsung Galaxy S23",
-          "image": "./src/assets/samsung22.jpg",
+          "image": "/src/assets/samsung22.jpg",
           "description": "Flagship phone",
           "price": "$899"
         },
         {
           "id": 3,
           "name": "Google Pixel 8",
-          "image": "./src/assets/Iphone14.jpg",
+          "image": "/src/assets/Iphone14.jpg",
           "description": "Flagship phone",
           "price": "$899"
         }
