@@ -55,10 +55,10 @@ const PriceAlerts = () => {
 
   return (
     <section className="text-center pt-4">
-      <h2 className="text-3xl font-extrabold uppercase text-[#fc372d] mb-2">
+      <h2 className="text-5xl font-extrabold uppercase text-[#fc372d] mb-2">
         Pricing Alerts
       </h2>
-      <p className="text-[#464646] font-semibold mb-6">
+      <p className="text-[#464646] font-semibold text-xl mb-6">
         🔔 Track price alerts here.
       </p>
 
@@ -88,8 +88,9 @@ const PriceAlerts = () => {
               <div
                 className="absolute top-[-10px] right-0 flex justify-center h-16 items-center min-w-max px-4 py-1 text-white font-bold text-lg bg-no-repeat"
                 style={{
-                  backgroundImage: "url('/src/assets/alert.png')",
+                  backgroundImage: "url('./src/assets/alert.png')",
                   backgroundSize: "100% 100%",
+                  backgroundRepeat: "no-repeat",
                 }}
               >
                 <p className="text-white text-xl">{alert.alertPrice}</p>

@@ -16,7 +16,7 @@ import PriceAlerts from "./Pages/PriceAlerts.jsx";
 import SearchResults from "./Pages/SearchResults.jsx";
 import ProductDetails from "./Pages/ProductDetails.jsx";
 import Wishlist from "./Pages/Wishlist.jsx";
-import BrandDetails from "./Pages/BrandDetails.jsx"; t
+import BrandDetails from "./Pages/BrandDetails.jsx";
 
 const PrivateRoute = ({ children }) => {
   const { user, loading } = useAuth();
@@ -44,9 +44,12 @@ function App() {
               path="/signup"
               element={<Navigate to="/userauthentication" replace />}
             />
-            <Route path="/search" element={<SearchResults />} /> {/* Search Results */}
-            <Route path="/product/:id" element={<ProductDetails />} /> {/* Product Details */}
-            <Route path="/brand/:brand" element={<BrandDetails />} /> {/* Brand Details */}
+            <Route path="/search" element={<SearchResults />} />{" "}
+            {/* Search Results */}
+            <Route path="/product/:id" element={<ProductDetails />} />{" "}
+            {/* Product Details */}
+            <Route path="/brand/:brand" element={<BrandDetails />} />{" "}
+            {/* Brand Details */}
             {/* Private Routes */}
             <Route
               path="/dashboard"

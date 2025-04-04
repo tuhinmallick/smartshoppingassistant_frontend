@@ -63,36 +63,38 @@ const Navbar = () => {
   return (
     <>
       <nav
-        className={`bg-[#fc372d] p-4 flex justify-between items-center shadow-lg left-0 w-full z-50 ${
-          isHomePage ? "fixed top-0" : "relative"
-        }`}
+        className={`bg-[#f7f1e4] p-4 flex justify-between items-center left-0 w-full z-50 relative`}
       >
         <div className="flex justify-between items-center w-full">
           <Link
             to="/"
-            className="text-3xl font-bold text-[#ffff] tracking-wide hover:text-yellow-300 transition"
+            className="flex items-center text-3xl font-bold text-[#ffff] tracking-wide hover:text-yellow-300 transition"
           >
-            Smart Shopping Assistant
+            <img
+              src="/src/assets/logo.png"
+              alt="Smart Shopping "
+              className="w-auto h-24"
+            />
           </Link>
 
           <div className="flex text-[#2c2c2c] space-x-6 items-center">
             <Link
               to="/notifications"
-              className="text-xl hover:text-yellow-400 transition-colors duration-300"
+              className="text-4xl hover:text-yellow-400 transition-colors duration-300"
             >
               🔔
             </Link>
 
             <Link
               to="/wishlist"
-              className="text-xl hover:text-red-400 transition-colors duration-300"
+              className="text-4xl hover:text-red-400 transition-colors duration-300"
             >
               ❤️
             </Link>
 
             <button
               onClick={() => console.log("Open chatbot")}
-              className="text-xl hover:text-green-400 transition-colors duration-300"
+              className="text-4xl hover:text-green-400 transition-colors duration-300"
             >
               💬
             </button>
@@ -100,7 +102,7 @@ const Navbar = () => {
             <div className="relative inline-block" ref={menuRef}>
               <button
                 onClick={() => setMenuOpen(!menuOpen)}
-                className="text-xl hover:text-gray-400 transition-colors duration-300"
+                className="text-4xl hover:text-gray-400 transition-colors duration-300"
               >
                 👤
               </button>
@@ -112,7 +114,7 @@ const Navbar = () => {
                     animate={{ opacity: 1, scale: 1, y: 0 }}
                     exit={{ opacity: 0, scale: 0.9, y: -10 }}
                     transition={{ duration: 0.2 }}
-                    className="absolute right-0 w-48 text-[#464646] font-bold uppercase shadow-black shadow-lg overflow-hidden"
+                    className="absolute right-0 w-52 text-md text-[#464646] font-bold uppercase shadow-black shadow-lg overflow-hidden"
                   >
                     <motion.ul
                       variants={menuVariants}
