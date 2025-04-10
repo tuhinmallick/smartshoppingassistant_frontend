@@ -9,9 +9,18 @@ const UserProfile = () => {
   const [error, setError] = useState(null);
 
   useEffect(() => {
+    // Retrieve token from localStorage and check if user is logged in
+    const token = localStorage.getItem("token");
+    if (!token) {
+      // If no token, handle the user not being authenticated (e.g., redirect to login)
+      window.location.href = "/login"; // Redirect to login page
+      return;
+    }
+
     const loadProfile = async () => {
       try {
-        const profileData = await fetchProfile();
+        // Fetch profile data using the stored token
+        const profileData = await fetchProfile(token); // Assuming the token is needed for this request
         setProfile(profileData);
       } catch (err) {
         setError(err.message);
@@ -22,6 +31,12 @@ const UserProfile = () => {
 
     loadProfile();
   }, []);
+
+  // Logout handler to remove the token from localStorage and redirect
+  const handleLogout = () => {
+    localStorage.removeItem("token"); // Remove token on logout
+    window.location.href = "/login"; // Redirect to login page
+  };
 
   if (loading) return <p>Loading profile...</p>;
   if (error) return <p style={{ color: "red" }}>{error}</p>;
@@ -40,7 +55,7 @@ const UserProfile = () => {
             <div className="md:flex items-center space-x-6 py-4">
               {/* Left: Profile Image */}
               <img
-                src={profile?.avatar || "/src/assets/profile.png"}
+                src={profile?.avatar || "./src/assets/profile.png"}
                 alt="User Avatar"
                 className="w-24 h-24 rounded-full mx-auto md:mx-0" // Centered on small screens, left-aligned on larger screens
               />
@@ -82,10 +97,7 @@ const UserProfile = () => {
             {/* Sign-Out Button */}
             <Button
               text="Sign out"
-              onClick={() => {
-                logout();
-                setMenuOpen(false);
-              }}
+              onClick={handleLogout} // Handle logout
             />
           </>
         ) : (
