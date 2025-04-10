@@ -2,14 +2,14 @@ import React, { useState, useEffect } from "react";
 import ProductCard from "../components/ui/ProductCard";
 
 const SavedProducts = () => {
-  const [savedProducts, setSavedProducts] = useState([]);
+  const [savedProducts, setSavedProducts] = useState([]); // Corrected initial state
 
   useEffect(() => {
     const fetchSavedProducts = async () => {
       try {
         const response = await fetch("./src/data/data.json");
         const data = await response.json();
-        setSavedProducts(data.users[0].savedProducts || []);
+        setSavedProducts(data.users[0].savedProducts || []); // Setting fetched products
       } catch (error) {
         console.error("Error fetching saved products:", error);
       }
@@ -17,6 +17,13 @@ const SavedProducts = () => {
 
     fetchSavedProducts();
   }, []);
+
+  const handleRemoveProduct = (productId) => {
+    setSavedProducts(
+      (prevProducts) =>
+        prevProducts.filter((product) => product.id !== productId) // Remove product by id
+    );
+  };
 
   return (
     <section className="text-center pt-4">
@@ -32,7 +39,11 @@ const SavedProducts = () => {
       ) : (
         <div className="grid sm:grid-cols-1 md:grid-cols-3 lg:grid-cols-4 md:gap-6 justify-center">
           {savedProducts.map((product) => (
-            <ProductCard key={product.id} product={product} />
+            <ProductCard
+              key={product.id}
+              product={product}
+              onSave={handleRemoveProduct} // Pass the remove function
+            />
           ))}
         </div>
       )}

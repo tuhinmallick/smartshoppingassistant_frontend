@@ -1,5 +1,5 @@
 import React from "react";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, Trash } from "lucide-react"; // Add Trash icon for the remove button
 import Button from "./Button";
 
 const ProductCard = ({ product, onSave }) => {
@@ -42,11 +42,21 @@ const ProductCard = ({ product, onSave }) => {
         {product.description}
       </p>
 
+      {/* Button for "To Offer" */}
       <Button
         text="To Offer"
         onClick={() => alert("Redirecting to offer")}
         icon={<ArrowRight className="w-5 h-5" />}
       />
+
+      {/* Remove Button */}
+      <button
+        onClick={() => onSave(product.id)} // Pass product ID to the onSave handler
+        className="absolute top-2 right-2 text-red-500 hover:text-red-700 transition-colors duration-300"
+        aria-label="Remove from Saved"
+      >
+        <Trash className="w-6 h-6" />
+      </button>
     </div>
   );
 };

@@ -1,6 +1,4 @@
-const API_URL =
-  import.meta.env.VITE_API_URL ||
-  "https://smartshoppingassistant-backend.onrender.com/api";
+const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5001/api";
 
 // Signup function
 export const signupUser = async (userData) => {
@@ -85,4 +83,70 @@ export const fetchProfile = async () => {
 export const logoutUser = () => {
   localStorage.removeItem("token");
   console.log("User logged out. Token removed.");
+};
+
+// ✅ FIXED: Fetch all products
+export const fetchAllProducts = async () => {
+  const token = localStorage.getItem("token");
+
+  if (!token) {
+    console.warn("No token found in localStorage.");
+    throw new Error("Unauthorized: No token found");
+  }
+
+  try {
+    const response = await fetch(`${API_URL}/products`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    });
+
+    if (!response.ok) {
+      throw new Error("Failed to fetch products");
+    }
+
+    return await response.json();
+  } catch (error) {
+    console.error("Error fetching all products:", error);
+    throw error;
+  }
+};
+
+// ✅ FIXED: Fetch product data by name
+export const fetchLiveProductData = async (name) => {
+  const token = localStorage.getItem("token");
+
+  if (!name || name === "undefined") {
+    console.warn("fetchLiveProductData called with invalid name");
+    return null;
+  }
+
+  const url = new URL(`${API_URL}/liveData`);
+  url.searchParams.append("name", name);
+
+  const headers = {
+    "Content-Type": "application/json",
+  };
+
+  if (token) {
+    headers.Authorization = `Bearer ${token}`;
+  }
+
+  try {
+    const response = await fetch(url.toString(), {
+      method: "GET",
+      headers,
+    });
+
+    if (!response.ok) {
+      throw new Error("Failed to fetch live product data");
+    }
+
+    return await response.json();
+  } catch (error) {
+    console.error("Error fetching live product data:", error);
+    throw error;
+  }
 };

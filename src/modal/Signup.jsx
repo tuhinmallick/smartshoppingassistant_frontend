@@ -1,8 +1,8 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import { signupUser } from "../api/authAPI";
 import Button from "../components/ui/Button";
+import SuccessErrorMessage from "../components/ui/SuccessErrorMessage";
 
 const Signup = ({ setIsFlipped }) => {
   const [formData, setFormData] = useState({
@@ -17,35 +17,31 @@ const Signup = ({ setIsFlipped }) => {
     phone: "",
   });
 
-  const [error, setError] = useState(null);
-  const navigate = useNavigate();
+  const [showMessage, setShowMessage] = useState(null);
 
-  const handleChange = (e) => {
+  const handleChange = (e) =>
     setFormData({ ...formData, [e.target.name]: e.target.value });
-  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setError(null);
-
-    console.log("Sending Data:", JSON.stringify(formData, null, 2));
+    setShowMessage(null);
 
     try {
       const data = await signupUser(formData);
-      console.log("API Response:", data);
+      if (data?.token) {
+        setShowMessage({
+          type: "success",
+          message: "Your request has been submitted.",
+        });
 
-      if (data && data.token) {
-        localStorage.setItem("token", data.token);
-
-        alert("Signup successful! Please log in.");
-
-        setIsFlipped(false);
+        setTimeout(() => {
+          setIsFlipped(false); // Go to login
+        }, 2000);
       } else {
-        setError("Invalid response from server.");
+        throw new Error("Invalid response from server.");
       }
     } catch (err) {
-      console.error("Signup Error:", err.message);
-      setError(err.message);
+      setShowMessage({ type: "error", message: err.message });
     }
   };
 
@@ -56,86 +52,44 @@ const Signup = ({ setIsFlipped }) => {
       animate={{ opacity: 1, rotateY: 0 }}
       transition={{ duration: 0.6 }}
     >
-      <div className="w-full text-center ">
-        <h2 className="text-4xl font-extrabold text-white mb-4">Sign Up</h2>
-        {error && (
-          <p className="text-red-500 font-semibold px-2 py-4 text-left">
-            {error}
-          </p>
-        )}
-        <form onSubmit={handleSubmit} className="flex flex-col">
-          <input
-            type="text"
-            name="name"
-            placeholder="First Name"
-            className="mb-3 p-2 bg-[#f7f1e4] text-sm font-bold text-[#464646] placeholder-[#464646] outline-none"
-            onChange={handleChange}
-            required
-          />
-          <input
-            type="text"
-            name="surname"
-            placeholder="Last Name"
-            className="mb-3 p-2 bg-[#f7f1e4] text-sm font-bold text-[#464646] placeholder-[#464646] outline-none"
-            onChange={handleChange}
-            required
-          />
-          <input
-            type="email"
-            name="email"
-            placeholder="Email"
-            className="mb-3 p-2 bg-[#f7f1e4] text-sm font-bold text-[#464646] placeholder-[#464646] outline-none"
-            onChange={handleChange}
-            required
-          />
-          <input
-            type="password"
-            name="password"
-            placeholder="Password"
-            className="mb-3 p-2 bg-[#f7f1e4] text-sm font-bold text-[#464646] placeholder-[#464646] outline-none"
-            onChange={handleChange}
-            required
-          />
-          <input
-            type="text"
-            name="street"
-            placeholder="Street"
-            className="mb-3 p-2 bg-[#f7f1e4] text-sm font-bold text-[#464646] placeholder-[#464646] outline-none"
-            onChange={handleChange}
-            required
-          />
-          <input
-            type="text"
-            name="city"
-            placeholder="City"
-            className="mb-3 p-2 bg-[#f7f1e4] text-sm font-bold text-[#464646] placeholder-[#464646] outline-none"
-            onChange={handleChange}
-            required
-          />
-          <input
-            type="text"
-            name="zipcode"
-            placeholder="Zipcode"
-            className="mb-3 p-2 bg-[#f7f1e4] text-sm font-bold text-[#464646] placeholder-[#464646] outline-none"
-            onChange={handleChange}
-            required
-          />
-          <input
-            type="text"
-            name="about"
-            placeholder="About"
-            className="mb-3 p-2 bg-[#f7f1e4] text-sm font-bold text-[#464646] placeholder-[#464646] outline-none"
-            onChange={handleChange}
-          />
-          <input
-            type="text"
-            name="phone"
-            placeholder="Phone"
-            className="mb-3 p-2 bg-[#f7f1e4] text-sm font-bold text-[#464646] placeholder-[#464646] outline-none"
-            onChange={handleChange}
-            required
-          />
+      {showMessage && (
+        <SuccessErrorMessage
+          type={showMessage.type}
+          message={showMessage.message}
+          onClose={() => setShowMessage(null)}
+        />
+      )}
 
+      <div className="w-full text-center">
+        <h2 className="text-4xl font-extrabold text-white mb-4">Sign Up</h2>
+        <form onSubmit={handleSubmit} className="flex flex-col">
+          {[
+            "name",
+            "surname",
+            "email",
+            "password",
+            "street",
+            "city",
+            "zipcode",
+            "about",
+            "phone",
+          ].map((field) => (
+            <input
+              key={field}
+              type={
+                field === "email"
+                  ? "email"
+                  : field === "password"
+                  ? "password"
+                  : "text"
+              }
+              name={field}
+              placeholder={field.charAt(0).toUpperCase() + field.slice(1)}
+              className="mb-3 p-2 bg-[#f7f1e4] text-sm font-bold text-[#464646] placeholder-[#464646] outline-none"
+              onChange={handleChange}
+              required={field !== "about"}
+            />
+          ))}
           <Button type="submit" text="Sign Up" />
         </form>
         <p
@@ -143,7 +97,7 @@ const Signup = ({ setIsFlipped }) => {
           onClick={() => setIsFlipped(false)}
         >
           <span className="text-[#f7f1e4] font-semibold">
-            Already have an account ?
+            Already have an account?
           </span>
           <span className="text-[#fc372d] font-extrabold"> Sign In</span>
         </p>
