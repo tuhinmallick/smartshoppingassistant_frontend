@@ -79,6 +79,26 @@ export const fetchProfile = async () => {
   return response.json();
 };
 
+export const updateProfile = async (data) => {
+  const token = localStorage.getItem("token");
+
+  const response = await fetch(`${API_URL}/users/profile`, {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+    body: JSON.stringify(data),
+  });
+
+  if (!response.ok) {
+    const errorData = await response.json();
+    throw new Error(errorData.message || "Failed to update profile");
+  }
+
+  return response.json();
+};
+
 // Logout function
 export const logoutUser = () => {
   localStorage.removeItem("token");
@@ -147,6 +167,34 @@ export const fetchLiveProductData = async (name) => {
     return await response.json();
   } catch (error) {
     console.error("Error fetching live product data:", error);
+    throw error;
+  }
+};
+
+export const fetchBestPriceProducts = async () => {
+  const token = localStorage.getItem("token");
+
+  const headers = {
+    "Content-Type": "application/json",
+  };
+
+  if (token) {
+    headers.Authorization = `Bearer ${token}`;
+  }
+
+  try {
+    const response = await fetch(`${API_URL}/products/best-prices`, {
+      method: "GET",
+      headers,
+    });
+
+    if (!response.ok) {
+      throw new Error("Failed to fetch best price products");
+    }
+
+    return await response.json();
+  } catch (error) {
+    console.error("Error fetching best price products:", error);
     throw error;
   }
 };
