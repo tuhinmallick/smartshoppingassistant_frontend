@@ -1,22 +1,26 @@
 import React from "react";
-import { ArrowRight, Trash, Heart } from "lucide-react"; // Add Heart icon
+import { ArrowRight, Trash, Heart, Star } from "lucide-react";
 import Button from "./Button";
 
 const ProductCard = ({ product, onSave, isInWishlist, isWishlist }) => {
   return (
     <div
-      className="relative border-2 text-center my-4 p-6 border-[#2C2C2C] shadow-black bg-white w-auto 
-              shadow-xl hover:scale-105 transition-all duration-300 ease-in-out"
+      className="relative border-2 my-4 p-6 border-[#2C2C2C] bg-white w-auto 
+              shadow-xl hover:scale-105 transition-all duration-300 ease-in-out text-center"
     >
+      {/* Discount badge */}
       {product.discount && (
         <div className="absolute top-0 left-0 bg-[#fc372d] text-white font-bold text-sm px-3 py-1 rounded-br-lg">
           {product.discount}
         </div>
       )}
 
-      <h3 className="text-xl font-extrabold text-[#464646]">{product.name}</h3>
+      <h3 className="text-xl font-extrabold text-[#464646] mb-2">
+        {product.name}
+      </h3>
 
-      <div className="flex justify-center mt-4">
+      {/* Product image */}
+      <div className="flex justify-center">
         <img
           src={product.mainImgUrl}
           alt={product.name || "Product Image"}
@@ -24,28 +28,65 @@ const ProductCard = ({ product, onSave, isInWishlist, isWishlist }) => {
         />
       </div>
 
-      <div className="flex justify-center text-xl font-bold gap-2 mt-2">
-        <label className="text-[#464646] uppercase">Price:</label>
-        <p className="text-green-600">{product.price}</p>
+      {/* Price */}
+      <div className="text-xl font-bold mt-2">
+        <span className="text-[#464646]">Price:</span>{" "}
+        <span className="text-green-600">
+          {product.price} {product.currency}
+        </span>
       </div>
 
-      {product.oldPrice && (
-        <p className="text-2xl text-[#fc372d] font-mono mt-1 line-through">
-          {product.oldPrice}
+      {/* Shipping */}
+      {product.shippingCost && (
+        <p className="text-sm mt-1 text-gray-600">
+          Shipping: {product.shippingCost} {product.currency}
         </p>
       )}
 
-      <p className="text-sm font-bold text-[#464646] mt-2">
-        {product.description}
+      {/* Availability */}
+      {product.availability !== undefined && (
+        <p
+          className={`text-sm font-medium mt-1 ${
+            product.availability ? "text-green-600" : "text-red-500"
+          }`}
+        >
+          {product.availability ? "In Stock" : "Out of Stock"}
+        </p>
+      )}
+
+      {/* Specs */}
+      <p className="text-sm text-[#464646] mt-2">
+        {product.color && <span>Color: {product.color} </span>}
+        {product.ram_gb > 0 && <span>| RAM: {product.ram_gb}GB </span>}
+        {product.storage_gb > 0 && (
+          <span>| Storage: {product.storage_gb}GB</span>
+        )}
       </p>
 
-      <Button
-        text="To Offer"
-        onClick={() => window.open(product.link, "_blank")}
-        icon={<ArrowRight className="w-5 h-5" />}
-      />
+      {/* Seller Info */}
+      <div className="text-sm mt-2 text-gray-700">
+        <p>
+          <span className="font-medium">Seller:</span>{" "}
+          {product.seller || "Unknown"}
+        </p>
+        {product.storeRating && (
+          <p className="flex items-center justify-center gap-1">
+            <Star className="w-4 h-4 text-yellow-500" />
+            <span>{product.storeRating}/5</span>
+          </p>
+        )}
+      </div>
 
-      {/* Heart Icon */}
+      {/* External product link */}
+      <div className="mt-4">
+        <Button
+          text="To Offer"
+          onClick={() => window.open(product.link, "_blank")}
+          icon={<ArrowRight className="w-5 h-5" />}
+        />
+      </div>
+
+      {/* Wishlist icon */}
       {!isWishlist && (
         <button
           onClick={() => onSave(product)}
@@ -60,7 +101,7 @@ const ProductCard = ({ product, onSave, isInWishlist, isWishlist }) => {
         </button>
       )}
 
-      {/* Trash icon only in wishlist */}
+      {/* Trash icon (for wishlist only) */}
       {isWishlist && (
         <button
           onClick={() => onSave(product.id)}
