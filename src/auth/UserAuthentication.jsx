@@ -3,7 +3,7 @@ import { motion } from "framer-motion";
 import Login from "../modal/Login";
 import Signup from "../modal/Signup";
 
-const UserAuthentication = () => {
+const UserAuthentication = ({ setAuthModalOpen, onLoginSuccess }) => {
   const [isFlipped, setIsFlipped] = useState(false);
 
   return (
@@ -19,7 +19,11 @@ const UserAuthentication = () => {
           className="absolute w-full h-full"
           style={{ backfaceVisibility: "hidden" }}
         >
-          <Login setIsFlipped={setIsFlipped} />
+          <Login
+            setIsFlipped={setIsFlipped}
+            setAuthModalOpen={setAuthModalOpen}
+            onLoginSuccess={onLoginSuccess} // Make sure this is passed here
+          />
         </div>
 
         {/* Signup Form */}

@@ -39,7 +39,7 @@ const Home = () => {
             <h2 className="text-2xl font-extrabold uppercase text-[#464646] mt-8 mb-4 text-center md:text-left">
               Sorted By
             </h2>
-            <div className="flex flex-col gap-3">
+            <div className="flex flex-col gap-2">
               {["Apple", "Samsung", "Google", "OnePlus"].map((brand, index) => (
                 <Link
                   key={index}

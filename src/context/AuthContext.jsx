@@ -24,6 +24,10 @@ export const AuthProvider = ({ children }) => {
   }, []);
 
   const login = (token) => {
+    if (typeof token !== "string") {
+      throw new InvalidTokenError("Token must be a string");
+    }
+
     localStorage.setItem("token", token);
     const decodedUser = jwtDecode(token);
     setUser(decodedUser);
