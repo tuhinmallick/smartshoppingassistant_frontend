@@ -1,28 +1,25 @@
 import React from "react";
-import { ArrowRight, Trash } from "lucide-react"; // Add Trash icon for the remove button
+import { ArrowRight, Trash, Heart } from "lucide-react"; // Add Heart icon
 import Button from "./Button";
 
-const ProductCard = ({ product, onSave }) => {
+const ProductCard = ({ product, onSave, isInWishlist, isWishlist }) => {
   return (
     <div
       className="relative border-2 text-center my-4 p-6 border-[#2C2C2C] shadow-black bg-white w-auto 
               shadow-xl hover:scale-105 transition-all duration-300 ease-in-out"
     >
-      {/* Discount Badge */}
       {product.discount && (
         <div className="absolute top-0 left-0 bg-[#fc372d] text-white font-bold text-sm px-3 py-1 rounded-br-lg">
           {product.discount}
         </div>
       )}
 
-      {/* Product Details */}
       <h3 className="text-xl font-extrabold text-[#464646]">{product.name}</h3>
 
-      {/* Product Image */}
       <div className="flex justify-center mt-4">
         <img
-          src={product.image}
-          alt={product.name}
+          src={product.mainImgUrl}
+          alt={product.name || "Product Image"}
           className="w-28 h-28 object-contain rounded-md shadow-sm"
         />
       </div>
@@ -42,21 +39,37 @@ const ProductCard = ({ product, onSave }) => {
         {product.description}
       </p>
 
-      {/* Button for "To Offer" */}
       <Button
         text="To Offer"
-        onClick={() => alert("Redirecting to offer")}
+        onClick={() => window.open(product.link, "_blank")}
         icon={<ArrowRight className="w-5 h-5" />}
       />
 
-      {/* Remove Button */}
-      <button
-        onClick={() => onSave(product.id)} // Pass product ID to the onSave handler
-        className="absolute top-2 right-2 text-red-500 hover:text-red-700 transition-colors duration-300"
-        aria-label="Remove from Saved"
-      >
-        <Trash className="w-6 h-6" />
-      </button>
+      {/* Heart Icon */}
+      {!isWishlist && (
+        <button
+          onClick={() => onSave(product)}
+          className="absolute top-2 right-2 text-pink-500 hover:text-pink-700 transition-colors duration-300"
+          aria-label="Add to Wishlist"
+        >
+          <Heart
+            className={`w-6 h-6 ${
+              isInWishlist ? "fill-pink-500" : "fill-none"
+            }`}
+          />
+        </button>
+      )}
+
+      {/* Trash icon only in wishlist */}
+      {isWishlist && (
+        <button
+          onClick={() => onSave(product.id)}
+          className="absolute top-2 right-2 text-red-500 hover:text-red-700 transition-colors duration-300"
+          aria-label="Remove from Wishlist"
+        >
+          <Trash className="w-6 h-6" />
+        </button>
+      )}
     </div>
   );
 };

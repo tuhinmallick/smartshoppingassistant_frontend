@@ -1,6 +1,10 @@
-import { useEffect, useState } from "react";
-import { useLocation } from "react-router-dom"; // <- make sure this is here!
+import React, { useEffect, useState } from "react";
+import { useLocation } from "react-router-dom";
 import { fetchLiveProductData } from "../api/authAPI";
+import DealsGrid from "../components/DealsGrid";
+import useWishlist from "../hooks/useWishlist";
+import SearchForm from "../components/SearchForm";
+import ProductGrid from "../components/ProductGrid";
 
 const SearchResults = () => {
   const location = useLocation();
@@ -10,6 +14,8 @@ const SearchResults = () => {
 
   const [results, setResults] = useState([]);
   const [loading, setLoading] = useState(false);
+
+  const { toggleWishlistItem, isInWishlist } = useWishlist();
 
   useEffect(() => {
     const fetchResults = async () => {
@@ -29,7 +35,26 @@ const SearchResults = () => {
           ? [response]
           : [];
 
-        setResults(products);
+        const flatResults = products.flatMap((product) =>
+          product.Prices?.map((price) => ({
+            id: price.id,
+            name: product.name,
+            description: `Color: ${price.color || "N/A"} | ${
+              price.storage_gb ? `${price.storage_gb}GB` : ""
+            }`,
+            mainImgUrl: price.mainImgUrl, // ✅ key fix here
+            discount:
+              parseFloat(price.discount) > 0
+                ? `Save ${price.discount}${price.currency}`
+                : null,
+            price: `${price.price} ${price.currency}`,
+            link: price.product_link,
+            seller: price?.SellerStore?.Seller?.name || "Unknown Seller",
+            availability: price.availability,
+          }))
+        );
+
+        setResults(flatResults);
       } catch (error) {
         console.error("Error fetching search results:", error);
         setResults([]);
@@ -51,47 +76,38 @@ const SearchResults = () => {
 
   return (
     <div className="min-h-screen p-8 mt-16 w-full">
-      <h1 className="text-4xl font-bold text-gray-900 mb-8">Search Results</h1>
+      {/* Search Bar */}
+      <section className="w-full flex justify-center py-8">
+        <SearchForm />
+      </section>
 
-      {results.length === 0 ? (
-        <p className="text-xl text-gray-700">
-          No products found for "{decodedQuery}".
-        </p>
-      ) : (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {results.map((product) =>
-            product.Prices?.map((price) => (
-              <div
-                key={price.id}
-                className="bg-white shadow-lg rounded-lg p-4 hover:shadow-xl transition"
-              >
-                <img
-                  src={price.mainImgUrl}
-                  alt={product.name}
-                  className="w-full h-64 object-cover rounded-lg"
-                />
-                <h3 className="mt-4 text-xl font-semibold text-blue-700">
-                  {product.name}
-                </h3>
-                <p className="text-sm text-gray-600 mt-1">
-                  {price?.SellerStore?.Seller?.name || "Unknown Seller"}
-                </p>
-                <p className="mt-2 text-lg font-bold text-red-600">
-                  {price.price} {price.currency}
-                </p>
-                <a
-                  href={price.product_link}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-block mt-3 text-white bg-blue-600 px-4 py-2 rounded-lg hover:bg-blue-700 transition"
-                >
-                  View Product
-                </a>
-              </div>
-            ))
-          )}
+      <section className="w-full py-12 text-center px-4">
+        <h2 className="text-6xl font-extrabold uppercase text-[#fc372d] mb-8">
+          Search Results for{" "}
+          <span className=" text-[#464646]"> "{decodedQuery}"</span>
+        </h2>
+        {results.length === 0 ? (
+          <p className="text-xl  text-[#464646]">No products found.</p>
+        ) : (
+          <DealsGrid
+            products={results}
+            onSave={toggleWishlistItem}
+            isInWishlist={isInWishlist}
+            isWishlist={false}
+          />
+        )}
+      </section>
+
+      <section className="w-full py-12 text-center px-4">
+        <h2 className="text-6xl font-extrabold uppercase text-[#fc372d] mb-8">
+          Hottest Offers
+        </h2>
+        <div className="flex flex-col md:flex-row gap-10">
+          <div className="w-full mt-16">
+            <ProductGrid />
+          </div>
         </div>
-      )}
+      </section>
     </div>
   );
 };

@@ -1,28 +1,20 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import ProductCard from "../components/ui/ProductCard";
+import useWishlist from "../hooks/useWishlist"; // Import useWishlist hook
+import { FaTrash } from "react-icons/fa"; // Import trash icon
 
 const SavedProducts = () => {
-  const [savedProducts, setSavedProducts] = useState([]); // Corrected initial state
+  const { wishlist, toggleWishlistItem } = useWishlist(); // Get wishlist data and toggle function from the hook
+  const [savedProducts, setSavedProducts] = useState([]);
 
   useEffect(() => {
-    const fetchSavedProducts = async () => {
-      try {
-        const response = await fetch("./src/data/data.json");
-        const data = await response.json();
-        setSavedProducts(data.users[0].savedProducts || []); // Setting fetched products
-      } catch (error) {
-        console.error("Error fetching saved products:", error);
-      }
-    };
-
-    fetchSavedProducts();
-  }, []);
+    // Use wishlist data directly
+    setSavedProducts(Object.values(wishlist)); // Convert the wishlist object to an array of products
+  }, [wishlist]);
 
   const handleRemoveProduct = (productId) => {
-    setSavedProducts(
-      (prevProducts) =>
-        prevProducts.filter((product) => product.id !== productId) // Remove product by id
-    );
+    // Call the toggle function to remove the product from the wishlist
+    toggleWishlistItem({ id: productId });
   };
 
   return (
@@ -39,11 +31,13 @@ const SavedProducts = () => {
       ) : (
         <div className="grid sm:grid-cols-1 md:grid-cols-3 lg:grid-cols-4 md:gap-6 justify-center">
           {savedProducts.map((product) => (
-            <ProductCard
-              key={product.id}
-              product={product}
-              onSave={handleRemoveProduct} // Pass the remove function
-            />
+            <div key={product.id} className="relative">
+              {/* Pass product details to the ProductCard component and set isSavedPage to true */}
+              <ProductCard
+                product={product}
+                onRemove={() => handleRemoveProduct(product.id)} // Remove function for trash icon
+              />
+            </div>
           ))}
         </div>
       )}
