@@ -8,7 +8,7 @@ const Wishlist = () => {
   console.log("Wishlist state:", wishlist);
 
   const wishlistItems = useMemo(() => {
-    return Object.values(wishlist);
+    return Object.values(wishlist); // Extract wishlist items
   }, [wishlist]);
 
   return (
@@ -22,9 +22,9 @@ const Wishlist = () => {
       ) : (
         <DealsGrid
           products={wishlistItems}
-          onSave={toggleWishlistItem}
-          isInWishlist={isInWishlist}
-          isWishlist={true}
+          onSave={toggleWishlistItem} // Handle adding/removing from wishlist
+          isInWishlist={isInWishlist} // Check if item is in wishlist
+          isWishlist={true} // Ensure Trash icon appears on the Wishlist page
         />
       )}
     </section>
