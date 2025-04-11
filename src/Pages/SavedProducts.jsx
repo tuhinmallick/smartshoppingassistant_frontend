@@ -1,20 +1,18 @@
 import React, { useEffect, useState } from "react";
 import ProductCard from "../components/ui/ProductCard";
-import useWishlist from "../hooks/useWishlist"; // Import useWishlist hook
-import { FaTrash } from "react-icons/fa"; // Import trash icon
+import useWishlist from "../hooks/useWishlist";
+import { FaTrash } from "react-icons/fa"; // Import Trash icon from react-icons
 
 const SavedProducts = () => {
-  const { wishlist, toggleWishlistItem } = useWishlist(); // Get wishlist data and toggle function from the hook
+  const { wishlist, toggleWishlistItem } = useWishlist();
   const [savedProducts, setSavedProducts] = useState([]);
 
   useEffect(() => {
-    // Use wishlist data directly
-    setSavedProducts(Object.values(wishlist)); // Convert the wishlist object to an array of products
+    setSavedProducts(Object.values(wishlist)); // Use wishlist state to get saved products
   }, [wishlist]);
 
   const handleRemoveProduct = (productId) => {
-    // Call the toggle function to remove the product from the wishlist
-    toggleWishlistItem({ id: productId });
+    toggleWishlistItem({ id: productId }); // Call the toggle function to remove product
   };
 
   return (
@@ -32,10 +30,11 @@ const SavedProducts = () => {
         <div className="grid sm:grid-cols-1 md:grid-cols-3 lg:grid-cols-4 md:gap-6 justify-center">
           {savedProducts.map((product) => (
             <div key={product.id} className="relative">
-              {/* Pass product details to the ProductCard component and set isSavedPage to true */}
               <ProductCard
                 product={product}
-                onRemove={() => handleRemoveProduct(product.id)} // Remove function for trash icon
+                onSave={() => handleRemoveProduct(product.id)} // Handle product removal
+                isWishlist={true} // This ensures Trash icon is shown
+                isSavedProductsPage={true} // This prop ensures we display the Trash icon on this page
               />
             </div>
           ))}

@@ -39,18 +39,24 @@ const SearchResults = () => {
           product.Prices?.map((price) => ({
             id: price.id,
             name: product.name,
-            description: `Color: ${price.color || "N/A"} | ${
-              price.storage_gb ? `${price.storage_gb}GB` : ""
-            }`,
-            mainImgUrl: price.mainImgUrl, // ✅ key fix here
+            mainImgUrl: price.mainImgUrl,
+            price: price.price,
+            currency: price.currency,
             discount:
               parseFloat(price.discount) > 0
                 ? `Save ${price.discount}${price.currency}`
                 : null,
-            price: `${price.price} ${price.currency}`,
-            link: price.product_link,
-            seller: price?.SellerStore?.Seller?.name || "Unknown Seller",
+            shippingCost: price.shippingCost,
             availability: price.availability,
+            color: price.color,
+            ram_gb: price.ram_gb,
+            storage_gb: price.storage_gb,
+            seller: price?.SellerStore?.Seller?.name || "Unknown Seller",
+            storeRating: price?.SellerStore?.rating,
+            link: price.product_link,
+            description: `Color: ${price.color || "N/A"}, RAM: ${
+              price.ram_gb
+            }GB, Storage: ${price.storage_gb}GB`,
           }))
         );
 
@@ -76,7 +82,6 @@ const SearchResults = () => {
 
   return (
     <div className="min-h-screen p-8 mt-16 w-full">
-      {/* Search Bar */}
       <section className="w-full flex justify-center py-8">
         <SearchForm />
       </section>
@@ -84,10 +89,10 @@ const SearchResults = () => {
       <section className="w-full py-12 text-center px-4">
         <h2 className="text-6xl font-extrabold uppercase text-[#fc372d] mb-8">
           Search Results for{" "}
-          <span className=" text-[#464646]"> "{decodedQuery}"</span>
+          <span className="text-[#464646]">"{decodedQuery}"</span>
         </h2>
         {results.length === 0 ? (
-          <p className="text-xl  text-[#464646]">No products found.</p>
+          <p className="text-xl text-[#464646]">No products found.</p>
         ) : (
           <DealsGrid
             products={results}
