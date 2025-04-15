@@ -1,11 +1,11 @@
 import amazonLogo from "../../assets/amazonLogo.svg";
-import ebayLogo from "../../assets/eBayLogo.svg";
+import eBayLogo from "../../assets/eBayLogo.svg";
 import ottoLogo from "../../assets/ottoLogo.svg";
 
 // Map store names to logos
 const logoMap = {
   "Amazon.de": amazonLogo,
-  "eBay.de": ebayLogo,
+  "eBay.de": eBayLogo,
   "Otto.de": ottoLogo,
 };
 
