@@ -1,8 +1,18 @@
 import React from "react";
 import { ArrowRight, Trash, Heart, Star } from "lucide-react";
 import Button from "./Button";
+import logoMap from "../ui/logoMap";
 
-const ProductCard = ({ product, onSave, isInWishlist, isWishlist }) => {
+const ProductCard = ({
+  product,
+  onSave,
+  isInWishlist,
+  isWishlist,
+  onViewDetails,
+}) => {
+  const storeName = product?.Store;
+  const storeLogo = logoMap[storeName];
+
   return (
     <div
       className="relative border-2 my-4 p-6 border-[#2C2C2C] bg-white w-auto 
@@ -65,10 +75,17 @@ const ProductCard = ({ product, onSave, isInWishlist, isWishlist }) => {
 
       {/* Seller Info */}
       <div className="text-sm mt-2 text-gray-700">
-        <p>
-          <span className="font-medium">Seller:</span>{" "}
-          {product.seller || "Unknown"}
-        </p>
+        {/* Store Logo */}
+        {storeLogo && (
+          <div className="flex justify-center mb-2">
+            <img
+              src={storeLogo}
+              alt={`${storeName} logo`}
+              className="w-20 h-auto object-contain"
+            />
+          </div>
+        )}
+
         {product.storeRating && (
           <p className="flex items-center justify-center gap-1">
             <Star className="w-4 h-4 text-yellow-500" />
@@ -81,7 +98,7 @@ const ProductCard = ({ product, onSave, isInWishlist, isWishlist }) => {
       <div className="mt-4">
         <Button
           text="To Offer"
-          onClick={() => window.open(product.link, "_blank")}
+          onClick={() => onViewDetails?.(product)} // use optional chaining just in case
           icon={<ArrowRight className="w-5 h-5" />}
         />
       </div>
@@ -89,7 +106,7 @@ const ProductCard = ({ product, onSave, isInWishlist, isWishlist }) => {
       {/* Wishlist icon */}
       {!isWishlist && (
         <button
-          onClick={() => onSave(product)}
+          onClick={() => onSave(product)} // Add to wishlist or remove it
           className="absolute top-2 right-2 text-pink-500 hover:text-pink-700 transition-colors duration-300"
           aria-label="Add to Wishlist"
         >
@@ -104,7 +121,7 @@ const ProductCard = ({ product, onSave, isInWishlist, isWishlist }) => {
       {/* Trash icon (for wishlist only) */}
       {isWishlist && (
         <button
-          onClick={() => onSave(product.id)}
+          onClick={() => onSave(product.id)} // Remove from wishlist
           className="absolute top-2 right-2 text-red-500 hover:text-red-700 transition-colors duration-300"
           aria-label="Remove from Wishlist"
         >

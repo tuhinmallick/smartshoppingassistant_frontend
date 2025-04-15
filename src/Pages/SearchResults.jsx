@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { fetchLiveProductData } from "../api/authAPI";
 import DealsGrid from "../components/DealsGrid";
 import useWishlist from "../hooks/useWishlist";
@@ -11,11 +12,15 @@ const SearchResults = () => {
   const queryParams = new URLSearchParams(location.search);
   const query = queryParams.get("q") || "";
   const decodedQuery = decodeURIComponent(query).trim();
+  const navigate = useNavigate();
 
   const [results, setResults] = useState([]);
   const [loading, setLoading] = useState(false);
 
   const { toggleWishlistItem, isInWishlist } = useWishlist();
+  const handleViewDetails = (product) => {
+    navigate(`/product/${product.name}`); // ✅ navigate instead of history.push
+  };
 
   useEffect(() => {
     const fetchResults = async () => {
@@ -39,6 +44,7 @@ const SearchResults = () => {
           product.Prices?.map((price) => ({
             id: price.id,
             name: product.name,
+            brand: product.brand, // ✅ Added brand
             mainImgUrl: price.mainImgUrl,
             price: price.price,
             currency: price.currency,
@@ -57,6 +63,7 @@ const SearchResults = () => {
             description: `Color: ${price.color || "N/A"}, RAM: ${
               price.ram_gb
             }GB, Storage: ${price.storage_gb}GB`,
+            Store: price?.SellerStore?.Store?.name || "",
           }))
         );
 
@@ -99,6 +106,7 @@ const SearchResults = () => {
             onSave={toggleWishlistItem}
             isInWishlist={isInWishlist}
             isWishlist={false}
+            onViewDetails={handleViewDetails} // ✅ pass it to ProductCard
           />
         )}
       </section>

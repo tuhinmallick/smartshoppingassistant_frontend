@@ -1,78 +1,35 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { useParams, Link } from "react-router-dom";
-
-const brandData = {
-  apple: {
-    name: "Apple",
-    description:
-      "Explore the latest Apple products, including iPhones, iPads, and MacBooks.",
-    products: [
-      {
-        id: 1,
-        name: "iPhone 13",
-        description:
-          "The latest iPhone with A15 Bionic chip and stunning OLED display.",
-        image: "/src/assets/Iphone14.jpg",
-      },
-      {
-        id: 2,
-        name: "MacBook Pro",
-        description: "Powerful laptop with M1 chip and Retina display.",
-        image: "/src/assets/applelaptop.jpg",
-      },
-    ],
-  },
-  samsung: {
-    name: "Samsung",
-    description:
-      "Discover Samsung's range of smartphones, tablets, and smartwatches.",
-    products: [
-      {
-        id: 1,
-        name: "Galaxy S22",
-        description: "Dynamic AMOLED 2X display with 120Hz refresh rate.",
-        image: "/src/assets/samsung22.jpg",
-      },
-    ],
-  },
-  google: {
-    name: "Google",
-    description: "Check out Google's Pixel phones, Nest devices, and more.",
-    products: [
-      {
-        id: 1,
-        name: "Pixel 7",
-        description: "Next-gen AI camera and pure Android experience.",
-        image: "/src/assets/google-phone.png",
-      },
-    ],
-  },
-  oneplus: {
-    name: "OnePlus",
-    description:
-      "Experience the speed and power of OnePlus smartphones and accessories.",
-    products: [
-      {
-        id: 1,
-        name: "OnePlus 11",
-        description:
-          "Flagship smartphone with Snapdragon 8 Gen 2 and Hasselblad camera.",
-        image: "/src/assets/oneplus11.jpg",
-      },
-      {
-        id: 2,
-        name: "OnePlus Buds Pro 2",
-        description:
-          "Premium wireless earbuds with ANC and superior sound quality.",
-        image: "/src/assets/oneplusbuds.jpg",
-      },
-    ],
-  },
-};
 
 const BrandDetails = () => {
   const { brand } = useParams();
-  const brandDetails = brandData[brand.toLowerCase()];
+  const [brandDetails, setBrandDetails] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    const fetchBrandDetails = async () => {
+      try {
+        const response = await fetch(`/api/brands/${brand}`);
+        const data = await response.json();
+        setBrandDetails(data);
+      } catch (err) {
+        setError("Failed to load brand details");
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchBrandDetails();
+  }, [brand]);
+
+  if (loading) {
+    return <div>Loading...</div>;
+  }
+
+  if (error) {
+    return <div>{error}</div>;
+  }
 
   if (!brandDetails) {
     return <div className="min-h-screen p-4">Brand not found</div>;

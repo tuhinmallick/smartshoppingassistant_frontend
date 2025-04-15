@@ -1,18 +1,31 @@
 import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom"; // ✅ Import useNavigate
 import ProductCard from "../components/ui/ProductCard";
 import useWishlist from "../hooks/useWishlist";
-import { FaTrash } from "react-icons/fa"; // Import Trash icon from react-icons
+import { FaTrash } from "react-icons/fa";
 
 const SavedProducts = () => {
+  const navigate = useNavigate(); // ✅ Initialize navigate
   const { wishlist, toggleWishlistItem } = useWishlist();
   const [savedProducts, setSavedProducts] = useState([]);
 
   useEffect(() => {
-    setSavedProducts(Object.values(wishlist)); // Use wishlist state to get saved products
+    const validProducts = Object.values(wishlist).filter(
+      (product) => product && product.id
+    );
+    setSavedProducts(validProducts);
   }, [wishlist]);
 
+  const handleViewDetails = (product) => {
+    navigate(`/product/${product.name}`); // ✅ Use navigate properly
+  };
+
   const handleRemoveProduct = (productId) => {
-    toggleWishlistItem({ id: productId }); // Call the toggle function to remove product
+    if (!productId) {
+      console.error("Invalid product ID:", productId);
+      return;
+    }
+    toggleWishlistItem({ id: productId });
   };
 
   return (
@@ -28,16 +41,24 @@ const SavedProducts = () => {
         <p className="text-[#464646] mt-4 text-center">No saved products.</p>
       ) : (
         <div className="grid sm:grid-cols-1 md:grid-cols-3 lg:grid-cols-4 md:gap-6 justify-center">
-          {savedProducts.map((product) => (
-            <div key={product.id} className="relative">
-              <ProductCard
-                product={product}
-                onSave={() => handleRemoveProduct(product.id)} // Handle product removal
-                isWishlist={true} // This ensures Trash icon is shown
-                isSavedProductsPage={true} // This prop ensures we display the Trash icon on this page
-              />
-            </div>
-          ))}
+          {savedProducts.map((product) => {
+            if (!product.id) {
+              console.error("Product missing id:", product);
+              return null;
+            }
+
+            return (
+              <div key={product.id} className="relative">
+                <ProductCard
+                  product={product}
+                  onSave={() => handleRemoveProduct(product.id)}
+                  isWishlist={true}
+                  isSavedProductsPage={true}
+                  onViewDetails={handleViewDetails}
+                />
+              </div>
+            );
+          })}
         </div>
       )}
     </section>

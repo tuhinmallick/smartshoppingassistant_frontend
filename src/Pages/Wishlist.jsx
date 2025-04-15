@@ -1,14 +1,20 @@
 import React, { useMemo } from "react";
+import { useNavigate } from "react-router-dom"; // ✅ Import useNavigate
 import DealsGrid from "../components/DealsGrid";
 import useWishlist from "../hooks/useWishlist";
+import { FaTrash } from "react-icons/fa";
 
 const Wishlist = () => {
+  const navigate = useNavigate(); // ✅ Initialize navigate
+
   const { wishlist, toggleWishlistItem, isInWishlist } = useWishlist();
 
-  console.log("Wishlist state:", wishlist);
+  const handleViewDetails = (product) => {
+    navigate(`/product/${product.name}`); // ✅ navigate instead of history.push
+  };
 
   const wishlistItems = useMemo(() => {
-    return Object.values(wishlist); // Extract wishlist items
+    return Object.values(wishlist).filter((product) => product && product.id);
   }, [wishlist]);
 
   return (
@@ -22,9 +28,10 @@ const Wishlist = () => {
       ) : (
         <DealsGrid
           products={wishlistItems}
-          onSave={toggleWishlistItem} // Handle adding/removing from wishlist
-          isInWishlist={isInWishlist} // Check if item is in wishlist
-          isWishlist={true} // Ensure Trash icon appears on the Wishlist page
+          onSave={toggleWishlistItem}
+          isInWishlist={isInWishlist}
+          isWishlist={true}
+          onViewDetails={handleViewDetails}
         />
       )}
     </section>

@@ -45,9 +45,8 @@ function App() {
               <Route index element={<Home />} /> {/* Home page route */}
               <Route path="/search" element={<SearchResults />} />{" "}
               {/* Search results page */}
-              <Route path="/product/:id" element={<ProductDetails />} />{" "}
+              <Route path="/product/:name" element={<ProductDetails />} />
               {/* Product details page */}
-              <Route path="/brand/:brand" element={<BrandDetails />} />{" "}
               {/* Brand details page */}
               {/* Private Routes */}
               <Route

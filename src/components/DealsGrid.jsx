@@ -1,7 +1,13 @@
 import React from "react";
 import ProductCard from "./ui/ProductCard";
 
-const DealsGrid = ({ products = [], onSave, isInWishlist, isWishlist }) => {
+const DealsGrid = ({
+  products = [],
+  onSave,
+  isInWishlist,
+  isWishlist,
+  onViewDetails,
+}) => {
   // Add a fallback for products in case it's undefined
   if (!Array.isArray(products)) {
     console.error("Expected products to be an array, but got:", products);
@@ -19,9 +25,10 @@ const DealsGrid = ({ products = [], onSave, isInWishlist, isWishlist }) => {
           <ProductCard
             key={product.id} // Ensure this is a unique identifier
             product={product}
-            onSave={() => onSave(product)} // Pass the entire product
-            isInWishlist={isInWishlist(product.id)}
+            onSave={onSave}
+            isInWishlist={isInWishlist(product)}
             isWishlist={isWishlist}
+            onViewDetails={onViewDetails} // ✅ pass it here
           />
         ))
       )}
