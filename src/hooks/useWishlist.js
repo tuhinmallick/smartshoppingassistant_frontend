@@ -10,14 +10,12 @@ const useWishlist = () => {
   useEffect(() => {
     console.log("useEffect triggered to load wishlist from localStorage");
 
-    // Prevent multiple initializations
     if (isInitialized.current) return;
 
     const stored = localStorage.getItem(WISHLIST_KEY);
     if (stored) {
       try {
         const parsedWishlist = JSON.parse(stored);
-        // Ensure the wishlist is stored as an object
         if (
           typeof parsedWishlist === "object" &&
           !Array.isArray(parsedWishlist)
@@ -40,18 +38,23 @@ const useWishlist = () => {
     localStorage.setItem(WISHLIST_KEY, JSON.stringify(wishlist));
   }, [wishlist]);
 
-  // Add/remove product from wishlist
   const toggleWishlistItem = (product) => {
+    const id = product?.id || product?.productId;
+
+    if (!id) {
+      console.error("Invalid product passed to toggleWishlistItem:", product);
+      return;
+    }
+
     setWishlist((prev) => {
       const newList = { ...prev };
-      if (newList[product.id]) {
-        // If the product is already in the wishlist, remove it
-        delete newList[product.id];
+      if (newList[id]) {
+        delete newList[id];
       } else {
-        // Otherwise, add the product to the wishlist
-        newList[product.id] = {
+        newList[id] = {
           ...product,
-          mainImgUrl: product.mainImgUrl || product.image || "", // Ensure product image is available
+          id, // ensure `id` is set
+          mainImgUrl: product.mainImgUrl || product.image || "",
         };
       }
       return newList;
