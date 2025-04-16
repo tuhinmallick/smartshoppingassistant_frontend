@@ -43,7 +43,7 @@ const ProductDetails = () => {
   const [limit] = useState(10);
 
   const location = useLocation();
-  const { productId, productLink } = location.state || {};
+  const { productId, Product_link } = location.state || {};
 
   const paymentIcons = {
     Visa: "💳",
@@ -118,19 +118,15 @@ const ProductDetails = () => {
   const handleManualPriceRefresh = async () => {
     try {
       const product = products[0];
+
       if (!product) return;
 
       setRefreshing(true);
       const token = localStorage.getItem("token");
 
-      console.log("Sending to refreshProductPrice:", {
-        productId: productId || product.productId,
-        productLink: productLink || product.product_link,
-      });
-
       await refreshProductPrice({
-        productId: product._id,
-        product_link: product.productLink,
+        productId: product.productId,
+        Product_link: product.product_link, // ✅ match backend casing
         token,
       });
 

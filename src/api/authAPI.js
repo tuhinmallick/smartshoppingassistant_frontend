@@ -339,7 +339,7 @@ export const markNotificationAsRead = async (notificationId) => {
 
 export const refreshProductPrice = async ({
   productId,
-  product_link,
+  Product_link,
   token,
 }) => {
   if (!token) throw new Error("Unauthorized: No token found");
@@ -350,7 +350,8 @@ export const refreshProductPrice = async ({
       "Content-Type": "application/json",
       Authorization: `Bearer ${token}`,
     },
-    body: JSON.stringify({ productId, product_link }), // ✅ snake_case
+    // ✅ Match casing exactly
+    body: JSON.stringify({ productId, Product_link }),
   });
 
   if (!response.ok) {

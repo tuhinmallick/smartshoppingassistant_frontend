@@ -49,6 +49,7 @@ const SearchResults = () => {
         const flatResults = products.flatMap((product) =>
           product.Prices?.map((price) => ({
             id: price.id,
+            productId: product.id,
             name: product.name,
             brand: product.brand,
             mainImgUrl: price.mainImgUrl,
