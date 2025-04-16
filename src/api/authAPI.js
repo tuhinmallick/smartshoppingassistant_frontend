@@ -339,30 +339,25 @@ export const markNotificationAsRead = async (notificationId) => {
 
 export const refreshProductPrice = async ({
   productId,
-  productLink,
+  Product_link,
   token,
 }) => {
-  // Ensure token exists
   if (!token) throw new Error("Unauthorized: No token found");
 
-  try {
-    const response = await fetch(`${API_URL}/products/update-price`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
-      },
-      body: JSON.stringify({ productId, productLink }), // Ensure both params are passed
-    });
+  const response = await fetch(`${API_URL}/products/update-price`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+    // ✅ Match casing exactly
+    body: JSON.stringify({ productId, Product_link }),
+  });
 
-    if (!response.ok) {
-      const errorData = await response.json();
-      throw new Error(errorData.message || "Failed to refresh product price");
-    }
-
-    return await response.json();
-  } catch (error) {
-    // Propagate the error if any issue occurs during the fetch request
-    throw new Error(error.message || "Failed to refresh product price");
+  if (!response.ok) {
+    const errorData = await response.json();
+    throw new Error(errorData.message || "Failed to refresh product price");
   }
+
+  return await response.json();
 };
