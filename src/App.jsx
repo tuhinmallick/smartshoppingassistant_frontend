@@ -6,7 +6,7 @@ import {
   Navigate,
 } from "react-router-dom";
 import { AuthProvider, useAuth } from "./context/AuthContext";
-
+import { Toaster } from "react-hot-toast";
 import MainLayout from "./layout/MainLayout";
 import Home from "./Pages/Home.jsx";
 import UserDashboard from "./Pages/UserDashboard.jsx";
@@ -22,32 +22,37 @@ import Loader from "./components/Loader";
 // PrivateRoute component to protect private pages
 const PrivateRoute = ({ children }) => {
   const { user, loading } = useAuth();
-  if (loading) return null; // Wait until the user is loaded
-  return user ? children : <Navigate to="/" replace />; // Redirect if not logged in
+  if (loading) return null;
+  return user ? children : <Navigate to="/" replace />;
 };
 
 function App() {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    const timer = setTimeout(() => setIsLoading(false), 4000); // simulate loading
+    const timer = setTimeout(() => setIsLoading(false), 4000); // Change duration as per requirement
     return () => clearTimeout(timer);
   }, []);
+
+  const handleLoaderFinish = () => {
+    setIsLoading(false); // Set isLoading to false after loader animation is complete
+  };
 
   return (
     <AuthProvider>
       <Router>
+        <Toaster position="top-right" reverseOrder={false} />
         {isLoading ? (
-          <Loader /> // Show a loader while the app is loading
+          <Loader onFinish={handleLoaderFinish} />
         ) : (
           <Routes>
             <Route path="/" element={<MainLayout />}>
-              <Route index element={<Home />} /> {/* Home page route */}
-              <Route path="/search" element={<SearchResults />} />{" "}
-              {/* Search results page */}
+              <Route index element={<Home />} />
+              <Route path="/search" element={<SearchResults />} />
               <Route path="/product/:name" element={<ProductDetails />} />
-              {/* Product details page */}
-              {/* Brand details page */}
+              <Route path="/notifications" element={<PriceAlerts />} />
+              <Route path="/brand/:brand" element={<BrandDetails />} />
+
               {/* Private Routes */}
               <Route
                 path="/dashboard"
@@ -89,8 +94,8 @@ function App() {
                   </PrivateRoute>
                 }
               />
-              <Route path="*" element={<Navigate to="/" />} />{" "}
-              {/* Redirect for undefined routes */}
+
+              <Route path="*" element={<Navigate to="/" />} />
             </Route>
           </Routes>
         )}

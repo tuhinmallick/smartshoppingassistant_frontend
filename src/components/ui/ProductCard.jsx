@@ -5,7 +5,7 @@ import logoMap from "../ui/logoMap";
 
 const ProductCard = ({
   product,
-  onSave,
+  onSave, // This is the function passed down from ProductGrid
   isInWishlist,
   isWishlist,
   onViewDetails,
@@ -14,10 +14,7 @@ const ProductCard = ({
   const storeLogo = logoMap[storeName];
 
   return (
-    <div
-      className="relative border-2 my-4 p-6 border-[#2C2C2C] bg-white w-auto 
-              shadow-xl hover:scale-105 transition-all duration-300 ease-in-out text-center"
-    >
+    <div className="relative border-2 my-4 p-6 border-[#2C2C2C] bg-white w-auto shadow-xl hover:scale-105 transition-all duration-300 ease-in-out text-center">
       {/* Discount badge */}
       {product.discount && (
         <div className="absolute top-0 left-0 bg-[#fc372d] text-white font-bold text-sm px-3 py-1 rounded-br-lg">
@@ -28,7 +25,6 @@ const ProductCard = ({
       <h3 className="text-xl font-extrabold text-[#464646] mb-2">
         {product.name}
       </h3>
-
       {/* Product image */}
       <div className="flex justify-center">
         <img
@@ -41,7 +37,7 @@ const ProductCard = ({
       {/* Price */}
       <div className="text-xl font-bold mt-2">
         <span className="text-[#464646]">Price:</span>{" "}
-        <span className="text-green-600">
+        <span className="text-[#fc372d]">
           {product.price} {product.currency}
         </span>
       </div>
@@ -67,14 +63,13 @@ const ProductCard = ({
       {/* Specs */}
       <p className="text-sm text-[#464646] mt-2">
         {product.color && <span>Color: {product.color} </span>}
-        {product.ram_gb > 0 && <span>| RAM: {product.ram_gb}GB </span>}
         {product.storage_gb > 0 && (
           <span>| Storage: {product.storage_gb}GB</span>
         )}
       </p>
 
       {/* Seller Info */}
-      <div className="text-sm mt-2 text-gray-700">
+      <div className="text-sm mt-2 text-[#464646]">
         {/* Store Logo */}
         {storeLogo && (
           <div className="flex justify-center mb-2">
@@ -106,12 +101,12 @@ const ProductCard = ({
       {/* Wishlist icon */}
       {!isWishlist && (
         <button
-          onClick={() => onSave(product)} // Add to wishlist or remove it
-          className="absolute top-2 right-2 text-pink-500 hover:text-pink-700 transition-colors duration-300"
+          onClick={() => onSave(product)} // Calls toggleWishlistItem
+          className="absolute top-2 right-2 text-pink-500 hover:text-pink-700 transition-colors duration-300 ease-in-out"
           aria-label="Add to Wishlist"
         >
           <Heart
-            className={`w-6 h-6 ${
+            className={`w-6 h-6 transition-all duration-300 ease-in-out ${
               isInWishlist ? "fill-pink-500" : "fill-none"
             }`}
           />
@@ -121,11 +116,11 @@ const ProductCard = ({
       {/* Trash icon (for wishlist only) */}
       {isWishlist && (
         <button
-          onClick={() => onSave(product.id)} // Remove from wishlist
-          className="absolute top-2 right-2 text-red-500 hover:text-red-700 transition-colors duration-300"
+          onClick={() => onSave(product.id)} // Removes from wishlist
+          className="absolute top-2 right-2 text-red-500 hover:text-red-700 transition-colors duration-300 ease-in-out"
           aria-label="Remove from Wishlist"
         >
-          <Trash className="w-6 h-6" />
+          <Trash className="w-6 h-6 transition-all duration-300 ease-in-out hover:scale-110" />
         </button>
       )}
     </div>

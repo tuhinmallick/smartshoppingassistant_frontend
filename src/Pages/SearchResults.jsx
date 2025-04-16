@@ -18,6 +18,7 @@ const SearchResults = () => {
   const [loading, setLoading] = useState(false);
 
   const { toggleWishlistItem, isInWishlist } = useWishlist();
+
   const handleViewDetails = (product) => {
     navigate(`/product/${product.name}`); // ✅ navigate instead of history.push
   };
@@ -44,7 +45,7 @@ const SearchResults = () => {
           product.Prices?.map((price) => ({
             id: price.id,
             name: product.name,
-            brand: product.brand, // ✅ Added brand
+            brand: product.brand,
             mainImgUrl: price.mainImgUrl,
             price: price.price,
             currency: price.currency,
@@ -104,7 +105,7 @@ const SearchResults = () => {
           <DealsGrid
             products={results}
             onSave={toggleWishlistItem}
-            isInWishlist={isInWishlist}
+            isInWishlist={isInWishlist} // Pass isInWishlist here
             isWishlist={false}
             onViewDetails={handleViewDetails} // ✅ pass it to ProductCard
           />

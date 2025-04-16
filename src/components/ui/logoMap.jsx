@@ -1,5 +1,7 @@
 import amazonLogo from "../../assets/amazonLogo.svg";
+
 import ebayLogo from "../../assets/ebayLogo.svg";
+
 import ottoLogo from "../../assets/ottoLogo.svg";
 
 // Map store names to logos

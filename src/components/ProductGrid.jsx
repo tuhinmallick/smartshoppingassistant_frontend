@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import ProductCard from "./ui/ProductCard";
+import useWishlist from "../hooks/useWishlist"; // Import the hook
 
 const PRODUCTS_PER_PAGE = 4;
 
@@ -10,6 +11,8 @@ const ProductGrid = ({
   isWishlist,
   onViewDetails,
 }) => {
+  const { toggleWishlistItem } = useWishlist(); // Use the hook to get the function
+
   const [loading, setLoading] = useState(true);
   const [currentPage, setCurrentPage] = useState(0);
 
@@ -53,10 +56,10 @@ const ProductGrid = ({
             <ProductCard
               key={product.id}
               product={product}
-              onSave={onSave}
-              isInWishlist={isInWishlist(product)}
+              onSave={toggleWishlistItem} // Pass the toggleWishlistItem function
+              isInWishlist={isInWishlist(product.id)}
               isWishlist={isWishlist}
-              onViewDetails={onViewDetails} // ✅ pass it here
+              onViewDetails={onViewDetails}
             />
           ))
         )}
