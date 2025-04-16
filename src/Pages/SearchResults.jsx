@@ -20,7 +20,12 @@ const SearchResults = () => {
   const { toggleWishlistItem, isInWishlist } = useWishlist();
 
   const handleViewDetails = (product) => {
-    navigate(`/product/${product.name}`); // ✅ navigate instead of history.push
+    navigate(`/product/${encodeURIComponent(product.name)}`, {
+      state: {
+        productId: product.id,
+        productLink: product.product_link,
+      },
+    });
   };
 
   useEffect(() => {
@@ -44,6 +49,7 @@ const SearchResults = () => {
         const flatResults = products.flatMap((product) =>
           product.Prices?.map((price) => ({
             id: price.id,
+            productId: product.id,
             name: product.name,
             brand: product.brand,
             mainImgUrl: price.mainImgUrl,
