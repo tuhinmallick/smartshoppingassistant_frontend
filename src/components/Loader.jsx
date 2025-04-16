@@ -1,5 +1,6 @@
 import React from "react";
 import { motion } from "framer-motion";
+import loaderGif from "../assets/loader.gif"; // adjust path based on your file structure
 
 const Loader = ({ onFinish }) => {
   return (
@@ -10,11 +11,7 @@ const Loader = ({ onFinish }) => {
       transition={{ duration: 2, delay: 1 }} // Increased delay for a better load time
       onAnimationComplete={onFinish} // Will be called when the animation ends
     >
-      <img
-        src="../src/assets/loader.gif"
-        alt="Loading..."
-        className="w-96 h-96"
-      />
+      <img src={loaderGif} alt="Loading..." className="w-96 h-96" />
     </motion.div>
   );
 };

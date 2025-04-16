@@ -52,9 +52,9 @@ const ProductGrid = ({
             No products to display
           </p>
         ) : (
-          currentProducts.map((product) => (
+          currentProducts.map((product, index) => (
             <ProductCard
-              key={product.id}
+              key={index}
               product={product}
               onSave={toggleWishlistItem} // Pass the toggleWishlistItem function
               isInWishlist={isInWishlist(product.id)}

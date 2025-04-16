@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import toast from "react-hot-toast";
+import PriceHistory from "../components/PriceHistory";
 import {
   fetchBestStorePrices,
   createPriceAlert,
@@ -229,7 +230,14 @@ const ProductDetails = () => {
               </div>
             </>
           )}
-
+          {products[0] && (
+            <PriceHistory
+              productId={products[0].productId}
+              storage={products[0].storage_gb}
+              color={products[0].color}
+              ram={products[0].ram}
+            />
+          )}
           <h2 className="text-2xl font-extrabold uppercase text-[#fc372d] mb-4">
             Available at Stores
           </h2>
