@@ -144,6 +144,9 @@ export const fetchLiveProductData = async (param) => {
 
   const url = new URL(`${API_URL}/liveData`);
 
+  console.log("Fetching live product data with param:", param); // Log param value
+  console.log("Generated URL:", url.toString()); // Log the generated URL
+
   if (param.length === 36) {
     url.searchParams.append("id", param);
   } else {
@@ -165,10 +168,14 @@ export const fetchLiveProductData = async (param) => {
     });
 
     if (!response.ok) {
-      throw new Error("Failed to fetch live product data");
+      throw new Error(
+        `Failed to fetch live product data, status: ${response.status}`
+      );
     }
 
-    return await response.json();
+    const data = await response.json();
+    console.log("Fetched data:", data); // Log the data for debugging
+    return data;
   } catch (error) {
     console.error("Error fetching live product data:", error);
     throw error;
@@ -234,16 +241,12 @@ export const fetchBestStorePrices = async (data) => {
   }
 };
 
-// ✅ Alerts & Notifications
+// ✅ Fetch Price Alerts
 export const fetchPriceAlerts = async () => {
   const token = localStorage.getItem("token");
-
-  if (!token) {
-    throw new Error("Unauthorized: No token found");
-  }
+  if (!token) throw new Error("Unauthorized: No token found");
 
   const response = await fetch(`${API_URL}/price-alerts`, {
-    method: "GET",
     headers: {
       "Content-Type": "application/json",
       Authorization: `Bearer ${token}`,
@@ -258,12 +261,20 @@ export const fetchPriceAlerts = async () => {
   return await response.json();
 };
 
-export const createPriceAlert = async (alertData) => {
+// ✅ Create Price Alert
+export const createPriceAlert = async ({
+  productId,
+  threshold,
+  storage_gb,
+  color,
+  ram_gb,
+}) => {
   const token = localStorage.getItem("token");
+  if (!token) throw new Error("Unauthorized: No token found");
 
-  if (!token) {
-    throw new Error("Unauthorized: No token found");
-  }
+  const payload = { productId, threshold, storage_gb };
+  if (color) payload.color = color;
+  if (ram_gb) payload.ram_gb = ram_gb;
 
   const response = await fetch(`${API_URL}/price-alerts`, {
     method: "POST",
@@ -271,7 +282,7 @@ export const createPriceAlert = async (alertData) => {
       "Content-Type": "application/json",
       Authorization: `Bearer ${token}`,
     },
-    body: JSON.stringify(alertData),
+    body: JSON.stringify(payload),
   });
 
   if (!response.ok) {
@@ -282,12 +293,10 @@ export const createPriceAlert = async (alertData) => {
   return await response.json();
 };
 
+// ✅ Delete Price Alert
 export const deletePriceAlert = async (alertId) => {
   const token = localStorage.getItem("token");
-
-  if (!token) {
-    throw new Error("Unauthorized: No token found");
-  }
+  if (!token) throw new Error("Unauthorized: No token found");
 
   const response = await fetch(`${API_URL}/price-alerts/${alertId}`, {
     method: "DELETE",
@@ -305,12 +314,10 @@ export const deletePriceAlert = async (alertId) => {
   return await response.json();
 };
 
+// ✅ Mark Notification as Read
 export const markNotificationAsRead = async (notificationId) => {
   const token = localStorage.getItem("token");
-
-  if (!token) {
-    throw new Error("Unauthorized: No token found");
-  }
+  if (!token) throw new Error("Unauthorized: No token found");
 
   const response = await fetch(
     `${API_URL}/notification/${notificationId}/read`,
@@ -330,49 +337,24 @@ export const markNotificationAsRead = async (notificationId) => {
   return await response.json();
 };
 
-const WISHLIST_KEY = "user_wishlist";
-
-export const fetchUserWishlist = async () => {
+// ✅ Manually Refresh Product Price
+export const refreshProductPrice = async ({ productId, productLink }) => {
   const token = localStorage.getItem("token");
+  if (!token) throw new Error("Unauthorized: No token found");
 
-  const getLocalWishlist = () => {
-    try {
-      const raw = localStorage.getItem(WISHLIST_KEY);
-      const parsed = raw ? JSON.parse(raw) : {};
-      console.log("📦 LocalStorage fallback wishlist:", parsed);
-      return Object.values(parsed);
-    } catch (error) {
-      console.error("❌ Error parsing localStorage wishlist:", error);
-      return [];
-    }
-  };
+  const response = await fetch(`${API_URL}/products/update-price`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+    body: JSON.stringify({ productId, productLink }),
+  });
 
-  if (!token) {
-    return getLocalWishlist();
+  if (!response.ok) {
+    const errorData = await response.json();
+    throw new Error(errorData.message || "Failed to refresh product price");
   }
 
-  try {
-    const response = await fetch(`${API_URL}/wishlist`, {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
-      },
-    });
-
-    if (!response.ok) {
-      throw new Error("Failed to fetch wishlist");
-    }
-
-    const data = await response.json();
-
-    if (Array.isArray(data) && data.length === 0) {
-      return getLocalWishlist();
-    }
-
-    return data;
-  } catch (error) {
-    console.error("🛑 Error fetching wishlist from API:", error);
-    return getLocalWishlist();
-  }
+  return await response.json();
 };

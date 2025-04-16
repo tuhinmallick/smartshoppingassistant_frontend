@@ -10,9 +10,8 @@ const Chatbot = () => {
       script.src = "//code.tidio.co/8sqe2ajtc16boe6l8to0vbyoepbe2i31.js";
       script.async = true;
       script.onload = () => {
-        
         if (window.tidioChatApi) {
-          window.tidioChatApi.hide(); 
+          window.tidioChatApi.hide();
         }
       };
       document.body.appendChild(script);

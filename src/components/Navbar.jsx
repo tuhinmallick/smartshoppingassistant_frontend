@@ -120,13 +120,6 @@ const Navbar = () => {
               ❤️
             </Link>
 
-            <button
-              onClick={() => console.log("Open chatbot")}
-              className="text-4xl hover:text-green-400 transition-colors duration-300"
-            >
-              💬
-            </button>
-
             <div className="relative inline-block" ref={menuRef}>
               <button
                 onClick={() => setMenuOpen(!menuOpen)}
