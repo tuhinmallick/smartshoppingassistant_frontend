@@ -22,7 +22,7 @@ const PriceAlerts = () => {
     setLoading(true);
     try {
       await deletePriceAlert(alertId);
-      setAlerts(alerts.filter((alert) => alert.id !== alertId)); // Remove deleted alert from the list
+      setAlerts((prev) => prev.filter((alert) => alert.id !== alertId));
     } catch (error) {
       console.error("Error deleting price alert:", error);
     } finally {
@@ -35,7 +35,7 @@ const PriceAlerts = () => {
   }, []);
 
   return (
-    <section className="text-center pt-4">
+    <section className="text-center pt-4 min-h-[60vh]">
       <h2 className="text-5xl font-extrabold uppercase text-[#fc372d] mb-2">
         Pricing Alerts
       </h2>
@@ -43,41 +43,58 @@ const PriceAlerts = () => {
         🔔 Track price alerts here.
       </p>
 
-      {loading && <p>Loading...</p>}
+      {loading ? (
+        <p className="text-lg font-semibold">Loading...</p>
+      ) : alerts.length === 0 ? (
+        <p className="text-gray-500 text-lg font-semibold">
+          You haven’t saved any price alerts yet.
+        </p>
+      ) : (
+        <div className="grid sm:grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-6 justify-center">
+          {alerts.map((alert) => (
+            <div
+              key={alert.id}
+              className="relative border-2 itext-center p-6 bg-white shadow-xl shadow-black"
+            >
+              {/* Product Name */}
+              <h3 className="text-2xl font-extrabold uppercase text-[#464646] py-4">
+                {alert.Product?.name || "Unknown Product"}
+              </h3>
 
-      <div className="grid sm:grid-cols-1 md:grid-cols-3 lg:grid-cols-4 md:gap-6 justify-center">
-        {alerts.map((alert) => (
-          <div
-            key={alert.id}
-            className="relative border-2 text-center my-4 p-6 bg-white w-auto shadow-lg"
-          >
-            <h3 className="text-xl font-extrabold text-[#464646] py-8">
-              {alert.product}
-            </h3>
+              <ul className="mt-4 space-y-1 text-sm font-bold capitalize text-[#464646]">
+                {/* Threshold */}
+                <li>
+                  🔔 Threshold: {alert.threshold} {alert.currency || "€"}
+                </li>
 
-            <p className="text-[#fc372d] text-sm font-bold mt-2 line-through">
-              {alert.currentPrice}
-            </p>
+                {/* Storage */}
+                <li>💾 Storage: {alert.storage_gb} GB</li>
 
-            <ul className="mt-4 space-y-1 text-sm font-bold uppercase text-[#464646]">
-              <li>🔔 Threshold: €{alert.threshold}</li>
-              <li>💾 Storage: {alert.storage_gb} GB</li>
-              {alert.ram_gb && <li>⚙️ RAM: {alert.ram_gb} GB</li>}
-              {alert.color && <li>🎨 Color: {alert.color}</li>}
-              <li>
-                {alert.status.toLowerCase() === "active" ? "✅" : "❌"}{" "}
-                {alert.status}
-              </li>
-            </ul>
+                {/* RAM */}
+                {alert.ram_gb && <li>⚙️ RAM: {alert.ram_gb} GB</li>}
 
-            <Button
-              text="Delete Alert"
-              onClick={() => handleDelete(alert.id)}
-              className="bg-red-600 hover:bg-red-700 text-white"
-            />
-          </div>
-        ))}
-      </div>
+                {/* Color */}
+                {alert.color && <li>🎨 Color: {alert.color}</li>}
+
+                {/* Status */}
+                <li>
+                  {alert.status?.toLowerCase() === "active"
+                    ? "✅ In Stock"
+                    : "❌ Out of Stock"}
+                </li>
+              </ul>
+
+              <div className="mt-6">
+                <Button
+                  text="Delete Alert"
+                  onClick={() => handleDelete(alert.id)}
+                  className="bg-red-600 hover:bg-red-700 text-white"
+                />
+              </div>
+            </div>
+          ))}
+        </div>
+      )}
     </section>
   );
 };

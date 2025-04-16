@@ -1,16 +1,23 @@
 import React, { useMemo } from "react";
-import { useNavigate } from "react-router-dom"; // ✅ Import useNavigate
+import { useNavigate } from "react-router-dom";
 import DealsGrid from "../components/DealsGrid";
 import useWishlist from "../hooks/useWishlist";
 import { FaTrash } from "react-icons/fa";
 
 const Wishlist = () => {
-  const navigate = useNavigate(); // ✅ Initialize navigate
-
+  const navigate = useNavigate();
   const { wishlist, toggleWishlistItem, isInWishlist } = useWishlist();
 
   const handleViewDetails = (product) => {
-    navigate(`/product/${product.name}`); // ✅ navigate instead of history.push
+    navigate(`/product/${product.name}`);
+  };
+
+  const handleRemoveProduct = (productId) => {
+    if (!productId) {
+      console.error("Invalid product ID:", productId);
+      return;
+    }
+    toggleWishlistItem({ id: productId }); // Ensure product ID is passed correctly
   };
 
   const wishlistItems = useMemo(() => {
@@ -28,7 +35,7 @@ const Wishlist = () => {
       ) : (
         <DealsGrid
           products={wishlistItems}
-          onSave={toggleWishlistItem}
+          onSave={handleRemoveProduct} // Use the handleRemoveProduct function here
           isInWishlist={isInWishlist}
           isWishlist={true}
           onViewDetails={handleViewDetails}

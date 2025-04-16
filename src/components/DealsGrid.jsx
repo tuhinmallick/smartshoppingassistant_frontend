@@ -4,7 +4,7 @@ import ProductCard from "./ui/ProductCard";
 const DealsGrid = ({
   products = [],
   onSave,
-  isInWishlist,
+  isInWishlist, // Use isInWishlist here
   isWishlist,
   onViewDetails,
 }) => {
@@ -26,7 +26,7 @@ const DealsGrid = ({
             key={product.id} // Ensure this is a unique identifier
             product={product}
             onSave={onSave}
-            isInWishlist={isInWishlist(product)}
+            isInWishlist={isInWishlist(product.id)} // Use isInWishlist here
             isWishlist={isWishlist}
             onViewDetails={onViewDetails} // ✅ pass it here
           />
