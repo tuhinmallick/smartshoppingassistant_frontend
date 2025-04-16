@@ -26,12 +26,16 @@ const PriceHistory = ({ productId, storage, color, ram }) => {
   const [showChart, setShowChart] = useState(false);
   const [timeframe, setTimeframe] = useState("3m");
   const [chartData, setChartData] = useState([]);
+  const [chartError, setChartError] = useState(null);
 
   useEffect(() => {
+    setChartData([]);
+    setChartError(null);
+
     const loadPriceHistory = async () => {
       if (!productId || !storage) return;
 
-      console.log("Fetching data with timeframe:", timeframe); // Log the selected timeframe
+      console.log("Fetching data with timeframe:", timeframe);
 
       try {
         const historyData = await fetchPriceHistoryChart(productId, {
@@ -41,11 +45,15 @@ const PriceHistory = ({ productId, storage, color, ram }) => {
           timeframe,
         });
 
-        console.log("Fetched history data:", historyData); // Log the fetched data
-        setChartData(historyData || []);
+        if (historyData.message === "No matching variant found.") {
+          setChartError("No price history available for the selected variant.");
+          setChartData([]);
+        } else {
+          setChartData(historyData || []);
+        }
       } catch (err) {
         console.error("Error fetching price history:", err.message);
-        setChartData([]);
+        setChartError("Price history fetch failed.");
       }
     };
 
@@ -104,19 +112,23 @@ const PriceHistory = ({ productId, storage, color, ram }) => {
         <>
           <div className="my-4">
             <select
-              onChange={(e) => setTimeframe(e.target.value)} // Updates the 'timeframe' state when a selection is made
+              onChange={(e) => setTimeframe(e.target.value)}
               value={timeframe}
               className="p-2 border rounded"
             >
               <option value="1m">1 Month</option>
+              <option value="3m">3 Months</option>
+              <option value="6m">6 Months</option>
             </select>
           </div>
 
           <div className="mt-6">
-            {chartData.length > 0 ? (
+            {chartError ? (
+              <p className="text-red-500">{chartError}</p>
+            ) : chartData.length > 0 ? (
               <Line data={data} options={options} />
             ) : (
-              <p>No price history available for the selected timeframe.</p>
+              <p>Loading chart data...</p>
             )}
           </div>
         </>
