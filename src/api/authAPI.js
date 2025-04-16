@@ -107,31 +107,41 @@ export const logoutUser = () => {
 
 // ✅ Fetch all products
 export const fetchAllProducts = async () => {
-    const token = localStorage.getItem('token');
+  const token = localStorage.getItem("token");
 
-    if (!token) {
-        console.warn('No token found in localStorage.');
-        throw new Error('Unauthorized: No token found');
+  if (!token) {
+    console.warn("No token found in localStorage. Skipping fetchAllProducts.");
+    return []; // ✅ optionally return an empty array instead of throwing
+    // throw new Error("Unauthorized: No token found");
+  }
+
+  try {
+    const response = await fetch(`${API_URL}/products`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    });
+
+    if (!response.ok) {
+      const errorText = await response.text();
+      console.error(
+        "Failed to fetch products. Status:",
+        response.status,
+        "Response:",
+        errorText
+      );
+      throw new Error("Failed to fetch products");
     }
 
-    try {
-        const response = await fetch(`${API_URL}/products`, {
-            method: 'GET',
-            headers: {
-                'Content-Type': 'application/json',
-                Authorization: `Bearer ${token}`,
-            },
-        });
-
-        if (!response.ok) {
-            throw new Error('Failed to fetch products');
-        }
-
-        return await response.json();
-    } catch (error) {
-        console.error('Error fetching all products:', error);
-        throw error;
-    }
+    const data = await response.json();
+    console.log("Fetched products:", data); // ✅ helpful debug log
+    return data;
+  } catch (error) {
+    console.error("Error fetching all products:", error.message);
+    throw error;
+  }
 };
 
 export const fetchLiveProductData = async (param) => {
@@ -278,29 +288,41 @@ export const fetchPriceAlerts = async () => {
 };
 
 // ✅ Create Price Alert
-export const createPriceAlert = async ({ productId, threshold, storage_gb, color, ram_gb }) => {
-    const token = localStorage.getItem('token');
-    if (!token) throw new Error('Unauthorized: No token found');
+export const createPriceAlert = async ({
+  productId,
+  threshold,
+  storage_gb,
+  color,
+  ram_gb,
+}) => {
+  const token = localStorage.getItem("token");
+  if (!token) throw new Error("Unauthorized: No token found");
 
-    const payload = { productId, threshold, storage_gb };
-    if (color) payload.color = color;
-    if (ram_gb) payload.ram_gb = ram_gb;
+  const payload = { productId, threshold, storage_gb };
+  if (color) payload.color = color;
+  if (ram_gb) payload.ram_gb = ram_gb;
 
-    const response = await fetch(`${API_URL}/price-alerts`, {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-            Authorization: `Bearer ${token}`,
-        },
-        body: JSON.stringify(payload),
-    });
+  const response = await fetch(`${API_URL}/price-alerts`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+    body: JSON.stringify(payload),
+  });
 
-    if (!response.ok) {
-        const errorData = await response.json();
-        throw new Error(errorData.message || 'Failed to create price alert');
+  if (!response.ok) {
+    const errorData = await response.json();
+
+    // Check if the error message indicates that the alert already exists
+    if (errorData.message && errorData.message === "Alert already exists") {
+      throw new Error("Message: Alert already exists.");
+    } else {
+      throw new Error(errorData.message || "Failed to create price alert");
     }
+  }
 
-    return await response.json();
+  return await response.json();
 };
 
 // ✅ Delete Price Alert
@@ -324,6 +346,7 @@ export const deletePriceAlert = async (alertId) => {
     return await response.json();
 };
 
+
 // ✅ Mark Notification as Read
 export const markNotificationAsRead = async (notificationId) => {
     const token = localStorage.getItem('token');
@@ -344,28 +367,66 @@ export const markNotificationAsRead = async (notificationId) => {
     return await response.json();
 };
 
-export const refreshProductPrice = async ({ productId, productLink, token }) => {
-    // Ensure token exists
-    if (!token) throw new Error('Unauthorized: No token found');
+export const refreshProductPrice = async ({
+  productId,
+  Product_link,
+  token,
+}) => {
+  if (!token) throw new Error("Unauthorized: No token found");
 
-    try {
-        const response = await fetch(`${API_URL}/products/update-price`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                Authorization: `Bearer ${token}`,
-            },
-            body: JSON.stringify({ productId, productLink }), // Ensure both params are passed
-        });
+  const response = await fetch(`${API_URL}/products/update-price`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+    // ✅ Match casing exactly
+    body: JSON.stringify({ productId, Product_link }),
+  });
 
-        if (!response.ok) {
-            const errorData = await response.json();
-            throw new Error(errorData.message || 'Failed to refresh product price');
-        }
+  if (!response.ok) {
+    const errorData = await response.json();
+    throw new Error(errorData.message || "Failed to refresh product price");
+  }
 
-        return await response.json();
-    } catch (error) {
-        // Propagate the error if any issue occurs during the fetch request
-        throw new Error(error.message || 'Failed to refresh product price');
+  return await response.json();
+};
+
+export const fetchPriceHistoryChart = async (productId, options = {}) => {
+  try {
+    const token = localStorage.getItem("token");
+
+    if (!token) throw new Error("No auth token found");
+
+    const { storage, color, ram, timeframe } = options;
+
+    if (!storage) throw new Error("Missing required 'storage' value");
+
+    const queryParams = new URLSearchParams({
+      ...(storage && { storage }),
+      ...(color && { color }),
+      ...(ram && { ram }),
+      ...(timeframe && { timeframe }),
+    });
+
+    const res = await fetch(
+      `${API_URL}/price-history/chart/${productId}?${queryParams}`,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+    console.log(`${API_URL}/price-history/chart/${productId}?${queryParams}`);
+
+    if (!res.ok) {
+      const body = await res.text();
+      throw { status: res.status, body, url: res.url };
     }
+
+    return await res.json();
+  } catch (error) {
+    console.error("Failed to fetch chart data:", error);
+    throw new Error("Price history fetch failed.");
+  }
 };

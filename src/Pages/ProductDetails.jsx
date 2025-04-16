@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import toast from "react-hot-toast";
+import PriceHistory from "../components/PriceHistory";
 import {
   fetchBestStorePrices,
   createPriceAlert,
@@ -11,6 +12,7 @@ import Button from "../components/ui/Button";
 import logoMap from "../components/ui/logoMap";
 import { ArrowRight } from "lucide-react";
 import { motion } from "framer-motion";
+import { useLocation } from "react-router-dom";
 
 const storeSearchUrls = {
   Amazon: (productName) =>
@@ -40,6 +42,9 @@ const ProductDetails = () => {
   const [refreshing, setRefreshing] = useState(false);
   const [page] = useState(1);
   const [limit] = useState(10);
+
+  const location = useLocation();
+  const { productId, Product_link } = location.state || {};
 
   const paymentIcons = {
     Visa: "💳",
@@ -103,82 +108,33 @@ const ProductDetails = () => {
     };
 
     try {
-      // First, check if the alert already exists for this product variant
-      const existingAlert = await checkIfAlertExists(payload); // You need to implement this function
-
-      if (existingAlert) {
-        toast.error("⚠️ Price alert already exists for this product variant.");
-        return;
-      }
-
-      // If no existing alert, create the new one
       await createPriceAlert(payload);
       toast.success("✅ Price alert successfully created!");
     } catch (err) {
       console.error("❌ Error creating alert:", err);
-      toast.error("❌ Failed to create price alert.");
-    }
-  };
-
-  // Helper function to check if an alert already exists
-  const checkIfAlertExists = async (payload) => {
-    try {
-      const response = await fetch(`/api/alerts/check`, {
-        method: "POST",
-        body: JSON.stringify(payload),
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
-
-      const data = await response.json();
-      return data.exists; // Assuming the response contains an `exists` boolean
-    } catch (err) {
-      console.error("❌ Error checking if alert exists:", err);
-      return false;
+      toast.error("Failed to create price alert.");
     }
   };
 
   const handleManualPriceRefresh = async () => {
     try {
-      const product = products[0]; // Select the first product
+      const product = products[0];
 
-      // Check if a product is selected
-      if (!product) {
-        toast.error("⚠️ No product selected for price refresh.");
-        return;
-      }
-
-      // Destructure productId and product_link
-      const { productId, product_link } = product;
-
-      // Ensure both productId and product_link are available
-      if (!productId || !product_link) {
-        toast.error("⚠️ productId and product_link are required.");
-        return;
-      }
+      if (!product) return;
 
       setRefreshing(true);
-
       const token = localStorage.getItem("token");
 
-      // Ensure token is available
-      if (!token) {
-        toast.error("⚠️ Token not found. Please log in.");
-        return;
-      }
-
-      // Call the refreshProductPrice API with the correct parameters
-      const response = await refreshProductPrice({
-        productId,
-        productLink: product_link,
+      await refreshProductPrice({
+        productId: product.productId,
+        Product_link: product.product_link, // ✅ match backend casing
         token,
       });
 
       toast.success("✅ Price updated successfully!");
     } catch (error) {
       console.error("Error refreshing product info:", error.message);
-      toast.error(`❌ Failed to refresh price: ${error.message}`);
+      toast.error("❌ Failed to refresh price");
     } finally {
       setRefreshing(false);
     }
@@ -274,7 +230,14 @@ const ProductDetails = () => {
               </div>
             </>
           )}
-
+          {products[0] && (
+            <PriceHistory
+              productId={products[0].productId}
+              storage={products[0].storage_gb}
+              color={products[0].color}
+              ram={products[0].ram}
+            />
+          )}
           <h2 className="text-2xl font-extrabold uppercase text-[#fc372d] mb-4">
             Available at Stores
           </h2>

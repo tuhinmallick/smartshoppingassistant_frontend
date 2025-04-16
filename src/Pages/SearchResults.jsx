@@ -19,9 +19,14 @@ const SearchResults = () => {
 
     const { toggleWishlistItem, isInWishlist } = useWishlist();
 
-    const handleViewDetails = (product) => {
-        navigate(`/product/${product.name}`); // ✅ navigate instead of history.push
-    };
+  const handleViewDetails = (product) => {
+    navigate(`/product/${encodeURIComponent(product.name)}`, {
+      state: {
+        productId: product.id,
+        productLink: product.product_link,
+      },
+    });
+  };
 
     useEffect(() => {
         const fetchResults = async () => {
@@ -37,29 +42,34 @@ const SearchResults = () => {
                 const response = await fetchLiveProductData(decodedQuery);
                 const products = Array.isArray(response?.products) ? response.products : response ? [response] : [];
 
-                const flatResults = products.flatMap((product) =>
-                    product.Prices?.map((price) => ({
-                        id: price.id,
-                        name: product.name,
-                        brand: product.brand,
-                        mainImgUrl: price.mainImgUrl,
-                        price: price.price,
-                        currency: price.currency,
-                        discount: parseFloat(price.discount) > 0 ? `Save ${price.discount}${price.currency}` : null,
-                        shippingCost: price.shippingCost,
-                        availability: price.availability,
-                        color: price.color,
-                        ram_gb: price.ram_gb,
-                        storage_gb: price.storage_gb,
-                        seller: price?.SellerStore?.Seller?.name || 'Unknown Seller',
-                        storeRating: price?.SellerStore?.rating,
-                        link: price.product_link,
-                        description: `Color: ${price.color || 'N/A'}, RAM: ${price.ram_gb}GB, Storage: ${
-                            price.storage_gb
-                        }GB`,
-                        Store: price?.SellerStore?.Store?.name || '',
-                    }))
-                );
+
+        const flatResults = products.flatMap((product) =>
+          product.Prices?.map((price) => ({
+            id: price.id,
+            productId: product.id,
+            name: product.name,
+            brand: product.brand,
+            mainImgUrl: price.mainImgUrl,
+            price: price.price,
+            currency: price.currency,
+            discount:
+              parseFloat(price.discount) > 0
+                ? `Save ${price.discount}${price.currency}`
+                : null,
+            shippingCost: price.shippingCost,
+            availability: price.availability,
+            color: price.color,
+            ram_gb: price.ram_gb,
+            storage_gb: price.storage_gb,
+            seller: price?.SellerStore?.Seller?.name || "Unknown Seller",
+            storeRating: price?.SellerStore?.rating,
+            link: price.product_link,
+            description: `Color: ${price.color || "N/A"}, RAM: ${
+              price.ram_gb
+            }GB, Storage: ${price.storage_gb}GB`,
+            Store: price?.SellerStore?.Store?.name || "",
+          }))
+        );
 
                 setResults(flatResults);
             } catch (error) {
