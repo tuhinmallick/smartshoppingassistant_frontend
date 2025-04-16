@@ -103,27 +103,82 @@ const ProductDetails = () => {
     };
 
     try {
+      // First, check if the alert already exists for this product variant
+      const existingAlert = await checkIfAlertExists(payload); // You need to implement this function
+
+      if (existingAlert) {
+        toast.error("⚠️ Price alert already exists for this product variant.");
+        return;
+      }
+
+      // If no existing alert, create the new one
       await createPriceAlert(payload);
       toast.success("✅ Price alert successfully created!");
     } catch (err) {
       console.error("❌ Error creating alert:", err);
-      toast.error("Failed to create price alert.");
+      toast.error("❌ Failed to create price alert.");
+    }
+  };
+
+  // Helper function to check if an alert already exists
+  const checkIfAlertExists = async (payload) => {
+    try {
+      const response = await fetch(`/api/alerts/check`, {
+        method: "POST",
+        body: JSON.stringify(payload),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+
+      const data = await response.json();
+      return data.exists; // Assuming the response contains an `exists` boolean
+    } catch (err) {
+      console.error("❌ Error checking if alert exists:", err);
+      return false;
     }
   };
 
   const handleManualPriceRefresh = async () => {
     try {
-      const product = products[0];
-      if (!product) return;
+      const product = products[0]; // Select the first product
+
+      // Check if a product is selected
+      if (!product) {
+        toast.error("⚠️ No product selected for price refresh.");
+        return;
+      }
+
+      // Destructure productId and product_link
+      const { productId, product_link } = product;
+
+      // Ensure both productId and product_link are available
+      if (!productId || !product_link) {
+        toast.error("⚠️ productId and product_link are required.");
+        return;
+      }
 
       setRefreshing(true);
+
       const token = localStorage.getItem("token");
 
-      await refreshProductPrice(product.id, product.product_link, token);
+      // Ensure token is available
+      if (!token) {
+        toast.error("⚠️ Token not found. Please log in.");
+        return;
+      }
+
+      // Call the refreshProductPrice API with the correct parameters
+      const response = await refreshProductPrice({
+        productId,
+        productLink: product_link,
+        token,
+      });
+
       toast.success("✅ Price updated successfully!");
     } catch (error) {
       console.error("Error refreshing product info:", error.message);
-      toast.error("❌ Failed to refresh price");
+      toast.error(`❌ Failed to refresh price: ${error.message}`);
     } finally {
       setRefreshing(false);
     }
@@ -285,9 +340,28 @@ const ProductDetails = () => {
                   </div>
 
                   <div className="mt-4 md:mt-0 md:w-1/3 text-center">
-                    <p className="text-xl font-bold text-[#fc372d] mb-2">
-                      {product.price} {product.currency}
+                    <p className="mb-2">
+                      {product.discount && parseFloat(product.discount) > 0 ? (
+                        <>
+                          <span className="line-through text-md font-bold text-[#fc372d]">
+                            {product.price} {product.currency}
+                          </span>
+                          <br></br>
+                          <span className="text-xl font-extrabold text-green-600">
+                            {(
+                              parseFloat(product.price) -
+                              parseFloat(product.discount)
+                            ).toFixed(2)}{" "}
+                            {product.currency}
+                          </span>
+                        </>
+                      ) : (
+                        <span className="text-xl font-extrabold text-[#fc372d]">
+                          {product.price} {product.currency}
+                        </span>
+                      )}
                     </p>
+
                     <div className="mt-4">
                       <a
                         href={offerLink}

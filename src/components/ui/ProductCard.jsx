@@ -1,5 +1,5 @@
 import React from "react";
-import { Heart, Trash } from "lucide-react";
+import { ArrowRight, Trash, Heart, Star } from "lucide-react";
 import Button from "./Button";
 import logoMap from "../ui/logoMap";
 
@@ -37,9 +37,65 @@ const ProductCard = ({
       {/* Price */}
       <div className="text-xl font-bold mt-2">
         <span className="text-[#464646]">Price:</span>{" "}
-        <span className="text-green-600">
+        <span className="text-[#fc372d]">
           {product.price} {product.currency}
         </span>
+      </div>
+
+      {/* Shipping */}
+      {product.shippingCost && (
+        <p className="text-sm mt-1 text-gray-600">
+          Shipping: {product.shippingCost} {product.currency}
+        </p>
+      )}
+
+      {/* Availability */}
+      {product.availability !== undefined && (
+        <p
+          className={`text-sm font-medium mt-1 ${
+            product.availability ? "text-green-600" : "text-red-500"
+          }`}
+        >
+          {product.availability ? "In Stock" : "Out of Stock"}
+        </p>
+      )}
+
+      {/* Specs */}
+      <p className="text-sm text-[#464646] mt-2">
+        {product.color && <span>Color: {product.color} </span>}
+        {product.storage_gb > 0 && (
+          <span>| Storage: {product.storage_gb}GB</span>
+        )}
+      </p>
+
+      {/* Seller Info */}
+      <div className="text-sm mt-2 text-[#464646]">
+        {/* Store Logo */}
+        {storeLogo && (
+          <div className="flex justify-center mb-2">
+            <img
+              src={storeLogo}
+              alt={`${storeName} logo`}
+              className="w-20 h-auto object-contain"
+            />
+          </div>
+        )}
+
+        {product.storeRating && (
+          <p className="flex items-center justify-center gap-1">
+            <Star className="w-4 h-4 text-yellow-500" />
+            <span>{product.storeRating}/5</span>
+          </p>
+        )}
+      </div>
+
+      {/* External product link */}
+      <div className="mt-4">
+        <Button
+          text="To Offer"
+          onClick={() => onViewDetails?.(product)} // use optional chaining just in case
+          icon={<ArrowRight className="w-5 h-5" />}
+        />
       </div>
 
       {/* Wishlist icon */}
@@ -67,8 +123,6 @@ const ProductCard = ({
           <Trash className="w-6 h-6 transition-all duration-300 ease-in-out hover:scale-110" />
         </button>
       )}
-
-      <Button text="To Offer" onClick={() => onViewDetails?.(product)} />
     </div>
   );
 };
