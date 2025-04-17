@@ -1,108 +1,108 @@
-const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5001/api";
+const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5001/api';
 
 // Signup function
 export const signupUser = async (userData) => {
-  const response = await fetch(`${API_URL}/auth/register`, {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(userData),
-  });
+    const response = await fetch(`${API_URL}/auth/register`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(userData),
+    });
 
-  if (!response.ok) {
-    const errorData = await response.json();
-    throw new Error(errorData.message || "Signup failed");
-  }
+    if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.message || 'Signup failed');
+    }
 
-  const data = await response.json();
+    const data = await response.json();
 
-  if (data.token) {
-    localStorage.setItem("token", data.token);
-    console.log("Token stored in localStorage:", data.token);
-  } else {
-    throw new Error("No token received");
-  }
+    if (data.token) {
+        localStorage.setItem('token', data.token);
+        console.log('Token stored in localStorage:', data.token);
+    } else {
+        throw new Error('No token received');
+    }
 
-  return data;
+    return data;
 };
 
 // Login function
 export const loginUser = async (credentials) => {
-  if (!credentials.email || !credentials.password) {
-    throw new Error("email and password are required");
-  }
+    if (!credentials.email || !credentials.password) {
+        throw new Error('email and password are required');
+    }
 
-  const response = await fetch(`${API_URL}/auth/login`, {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(credentials),
-  });
+    const response = await fetch(`${API_URL}/auth/login`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(credentials),
+    });
 
-  if (!response.ok) {
-    const errorData = await response.json();
-    throw new Error(errorData.message || "Invalid request");
-  }
+    if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.message || 'Invalid request');
+    }
 
-  const data = await response.json();
+    const data = await response.json();
 
-  if (data.token) {
-    localStorage.setItem("token", data.token);
-  } else {
-    throw new Error("No token received");
-  }
+    if (data.token) {
+        localStorage.setItem('token', data.token);
+    } else {
+        throw new Error('No token received');
+    }
 
-  return data;
+    return data;
 };
 
 // Fetch Profile Function
 export const fetchProfile = async () => {
-  const token = localStorage.getItem("token");
+    const token = localStorage.getItem('token');
 
-  if (!token) {
-    console.warn("No token found in localStorage.");
-    throw new Error("Unauthorized: No token found");
-  }
+    if (!token) {
+        console.warn('No token found in localStorage.');
+        throw new Error('Unauthorized: No token found');
+    }
 
-  const response = await fetch(`${API_URL}/users/profile`, {
-    method: "GET",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${token}`,
-    },
-  });
+    const response = await fetch(`${API_URL}/users/profile`, {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${token}`,
+        },
+    });
 
-  if (!response.ok) {
-    const errorData = await response.json();
-    console.error("Error fetching profile:", errorData.message);
-    throw new Error(errorData.message || "Failed to fetch profile");
-  }
+    if (!response.ok) {
+        const errorData = await response.json();
+        console.error('Error fetching profile:', errorData.message);
+        throw new Error(errorData.message || 'Failed to fetch profile');
+    }
 
-  return response.json();
+    return response.json();
 };
 
 export const updateProfile = async (data) => {
-  const token = localStorage.getItem("token");
+    const token = localStorage.getItem('token');
 
-  const response = await fetch(`${API_URL}/users/profile`, {
-    method: "PUT",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${token}`,
-    },
-    body: JSON.stringify(data),
-  });
+    const response = await fetch(`${API_URL}/users/profile`, {
+        method: 'PUT',
+        headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify(data),
+    });
 
-  if (!response.ok) {
-    const errorData = await response.json();
-    throw new Error(errorData.message || "Failed to update profile");
-  }
+    if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.message || 'Failed to update profile');
+    }
 
-  return response.json();
+    return response.json();
 };
 
 // Logout function
 export const logoutUser = () => {
-  localStorage.removeItem("token");
-  console.log("User logged out. Token removed.");
+    localStorage.removeItem('token');
+    console.log('User logged out. Token removed.');
 };
 
 // ✅ Fetch all products
@@ -145,130 +145,146 @@ export const fetchAllProducts = async () => {
 };
 
 export const fetchLiveProductData = async (param) => {
-  const token = localStorage.getItem("token");
+    const token = localStorage.getItem('token');
 
-  if (!param || param === "undefined") {
-    console.warn("fetchLiveProductData called with invalid param");
-    return null;
-  }
-
-  const url = new URL(`${API_URL}/liveData`);
-
-  console.log("Fetching live product data with param:", param); // Log param value
-  console.log("Generated URL:", url.toString()); // Log the generated URL
-
-  if (param.length === 36) {
-    url.searchParams.append("id", param);
-  } else {
-    url.searchParams.append("name", param);
-  }
-
-  const headers = {
-    "Content-Type": "application/json",
-  };
-
-  if (token) {
-    headers.Authorization = `Bearer ${token}`;
-  }
-
-  try {
-    const response = await fetch(url.toString(), {
-      method: "GET",
-      headers,
-    });
-
-    if (!response.ok) {
-      throw new Error(
-        `Failed to fetch live product data, status: ${response.status}`
-      );
+    if (!param || param === 'undefined') {
+        console.warn('fetchLiveProductData called with invalid param');
+        return null;
     }
 
-    const data = await response.json();
-    console.log("Fetched data:", data); // Log the data for debugging
-    return data;
-  } catch (error) {
-    console.error("Error fetching live product data:", error);
-    throw error;
-  }
+    const url = new URL(`${API_URL}/liveData`);
+
+    console.log('Fetching live product data with param:', param); // Log param value
+    console.log('Generated URL:', url.toString()); // Log the generated URL
+
+    if (param.length === 36) {
+        url.searchParams.append('id', param);
+    } else {
+        url.searchParams.append('name', param);
+    }
+
+    const headers = {
+        'Content-Type': 'application/json',
+    };
+
+    if (token) {
+        headers.Authorization = `Bearer ${token}`;
+    }
+
+    try {
+        const response = await fetch(url.toString(), {
+            method: 'GET',
+            headers,
+        });
+
+        if (!response.ok) {
+            throw new Error(`Failed to fetch live product data, status: ${response.status}`);
+        }
+
+        const data = await response.json();
+        console.log('Fetched data:', data); // Log the data for debugging
+        return data;
+    } catch (error) {
+        console.error('Error fetching live product data:', error);
+        throw error;
+    }
 };
 
 export const fetchBestPriceProducts = async () => {
-  const token = localStorage.getItem("token");
+    const token = localStorage.getItem('token');
 
-  const headers = {
-    "Content-Type": "application/json",
-  };
+    const headers = {
+        'Content-Type': 'application/json',
+    };
 
-  if (token) {
-    headers.Authorization = `Bearer ${token}`;
-  }
-
-  try {
-    const response = await fetch(`${API_URL}/products/best-prices`, {
-      method: "GET",
-      headers,
-    });
-
-    if (!response.ok) {
-      throw new Error("Failed to fetch best price products");
+    if (token) {
+        headers.Authorization = `Bearer ${token}`;
     }
 
-    return await response.json();
-  } catch (error) {
-    console.error("Error fetching best price products:", error);
-    throw error;
-  }
+    try {
+        const response = await fetch(`${API_URL}/products/best-prices`, {
+            method: 'GET',
+            headers,
+        });
+
+        if (!response.ok) {
+            throw new Error('Failed to fetch best price products');
+        }
+
+        return await response.json();
+    } catch (error) {
+        console.error('Error fetching best price products:', error);
+        throw error;
+    }
 };
 
 export const fetchBestStorePrices = async (data) => {
-  const token = localStorage.getItem("token");
+    const token = localStorage.getItem('token');
 
-  const headers = {
-    "Content-Type": "application/json",
-  };
+    const headers = {
+        'Content-Type': 'application/json',
+    };
 
-  if (token) {
-    headers.Authorization = `Bearer ${token}`;
-  }
-
-  try {
-    const response = await fetch(`${API_URL}/products/best-store-prices`, {
-      method: "POST", // ✅ use POST for this route
-      headers,
-      body: JSON.stringify(data),
-    });
-
-    console.log("Request body sent to /best-store-prices:", data);
-
-    if (!response.ok) {
-      throw new Error("Failed to fetch best store prices");
+    if (token) {
+        headers.Authorization = `Bearer ${token}`;
     }
 
-    return await response.json();
-  } catch (error) {
-    console.error("Error fetching store prices:", error);
-    throw error;
-  }
+    try {
+        const response = await fetch(`${API_URL}/products/best-store-prices`, {
+            method: 'POST', // ✅ use POST for this route
+            headers,
+            body: JSON.stringify(data),
+        });
+
+        console.log('Request body sent to /best-store-prices:', data);
+
+        if (!response.ok) {
+            throw new Error('Failed to fetch best store prices');
+        }
+
+        return await response.json();
+    } catch (error) {
+        console.error('Error fetching store prices:', error);
+        throw error;
+    }
 };
 
 // ✅ Fetch Price Alerts
+export const getAllUserNotifications = async () => {
+    const token = localStorage.getItem('token');
+    if (!token) throw new Error('Unauthorized: No token found');
+
+    const response = await fetch(`${API_URL}/notifications`, {
+        headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${token}`,
+        },
+    });
+
+    if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.message || 'Failed to fetch notifications');
+    }
+
+    return await response.json();
+};
 export const fetchPriceAlerts = async () => {
-  const token = localStorage.getItem("token");
-  if (!token) throw new Error("Unauthorized: No token found");
+    const token = localStorage.getItem('token');
+    if (!token) throw new Error('Unauthorized: No token found');
 
-  const response = await fetch(`${API_URL}/price-alerts`, {
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${token}`,
-    },
-  });
+    const response = await fetch(`${API_URL}/price-alerts`, {
+        headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${token}`,
+        },
+    });
 
-  if (!response.ok) {
-    const errorData = await response.json();
-    throw new Error(errorData.message || "Failed to fetch price alerts");
-  }
+    if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.message || 'Failed to fetch price alerts');
+    }
 
-  return await response.json();
+    return await response.json();
 };
 
 // ✅ Create Price Alert
@@ -311,46 +327,44 @@ export const createPriceAlert = async ({
 
 // ✅ Delete Price Alert
 export const deletePriceAlert = async (alertId) => {
-  const token = localStorage.getItem("token");
-  if (!token) throw new Error("Unauthorized: No token found");
+    const token = localStorage.getItem('token');
+    if (!token) throw new Error('Unauthorized: No token found');
 
-  const response = await fetch(`${API_URL}/price-alerts/${alertId}`, {
-    method: "DELETE",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${token}`,
-    },
-  });
+    const response = await fetch(`${API_URL}/price-alerts/${alertId}`, {
+        method: 'DELETE',
+        headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${token}`,
+        },
+    });
 
-  if (!response.ok) {
-    const errorData = await response.json();
-    throw new Error(errorData.message || "Failed to delete price alert");
-  }
+    if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.message || 'Failed to delete price alert');
+    }
 
-  return await response.json();
+    return await response.json();
 };
+
 
 // ✅ Mark Notification as Read
 export const markNotificationAsRead = async (notificationId) => {
-  const token = localStorage.getItem("token");
-  if (!token) throw new Error("Unauthorized: No token found");
+    const token = localStorage.getItem('token');
+    if (!token) throw new Error('Unauthorized: No token found');
 
-  const response = await fetch(
-    `${API_URL}/notification/${notificationId}/read`,
-    {
-      method: "PUT",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
-      },
+    const response = await fetch(`${API_URL}/notifications/${notificationId}/read`, {
+        method: 'PUT',
+        headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${token}`,
+        },
+    });
+
+    if (!response.ok) {
+        throw new Error('Failed to mark notification as read');
     }
-  );
 
-  if (!response.ok) {
-    throw new Error("Failed to mark notification as read");
-  }
-
-  return await response.json();
+    return await response.json();
 };
 
 export const refreshProductPrice = async ({

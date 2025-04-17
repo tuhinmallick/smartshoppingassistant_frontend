@@ -45,7 +45,6 @@ const Home = () => {
   return (
     <div className="min-h-screen flex flex-col">
       <HeroSection />
-
       <section className="w-full flex justify-center py-8">
         <SearchForm />
       </section>
@@ -89,6 +88,13 @@ const Home = () => {
           </div>
         </div>
       </section>
+      <section className="w-full flex justify-center py-8">
+        <SearchForm />
+      </section>
+
+      <Newsletter />
+
+    
     </div>
   );
 };
