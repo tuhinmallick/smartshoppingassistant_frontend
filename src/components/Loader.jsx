@@ -8,7 +8,7 @@ const Loader = ({ onFinish }) => {
       className="h-screen w-screen flex flex-col items-center justify-center"
       initial={{ opacity: 1 }}
       animate={{ opacity: 0 }}
-      transition={{ duration: 2, delay: 1 }} // Increased delay for a better load time
+      transition={{ duration:120, delay: 120 }} // Increased delay for a better load time
       onAnimationComplete={onFinish} // Will be called when the animation ends
     >
       <img src={loaderGif} alt="Loading..." className="w-96 h-96" />
