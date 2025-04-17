@@ -20,16 +20,15 @@ const Login = ({ setIsFlipped, setAuthModalOpen, onLoginSuccess }) => {
     try {
       const data = await loginUser(formData);
       if (data?.token) {
-        localStorage.setItem("token", data.token); // Store the token in localStorage
+        localStorage.setItem("token", data.token);
 
-        // Call the onLoginSuccess function passed down as a prop
         setShowMessage({
           type: "success",
           message: "Login successful! Redirecting...",
         });
 
         setTimeout(() => {
-          onLoginSuccess(data); // Pass the user data along, ensure it's the right structure
+          onLoginSuccess(data);
         }, 1500);
       } else {
         throw new Error("No token returned from server.");
@@ -41,28 +40,29 @@ const Login = ({ setIsFlipped, setAuthModalOpen, onLoginSuccess }) => {
 
   return (
     <motion.div
-      className="flex flex-col items-center justify-center w-full bg-[#2c2c2c] p-6 shadow-xl rounded-lg"
+      className="w-full max-w-sm sm:max-w-md md:max-w-lg bg-[#2c2c2c] p-6 sm:p-8  shadow-xl mx-auto"
       initial={{ opacity: 0, rotateY: -180 }}
       animate={{ opacity: 1, rotateY: 0 }}
       transition={{ duration: 0.6 }}
     >
       {showMessage && (
         <SuccessErrorMessage
-          closeAuthModal={setAuthModalOpen} // Ensure this is passed correctly
+          closeAuthModal={setAuthModalOpen}
           type={showMessage.type}
           message={showMessage.message}
           onClose={() => setShowMessage(null)}
         />
       )}
-
-      <div className="w-full text-center">
-        <h2 className="text-4xl font-extrabold text-white mb-4">Login</h2>
+      <div className="text-center">
+        <h2 className="text-3xl sm:text-4xl font-extrabold text-white mb-4">
+          Login
+        </h2>
         <form onSubmit={handleSubmit} className="flex flex-col">
           <input
             type="email"
             name="email"
             placeholder="Enter Email"
-            className="mb-3 p-2 bg-[#f7f1e4] text-sm font-bold text-[#464646] placeholder-[#464646] outline-none"
+            className="mb-3 p-2  bg-[#f7f1e4] text-sm font-bold text-[#464646] placeholder-[#464646] outline-none"
             onChange={handleChange}
             required
           />
@@ -70,7 +70,7 @@ const Login = ({ setIsFlipped, setAuthModalOpen, onLoginSuccess }) => {
             type="password"
             name="password"
             placeholder="Enter Password"
-            className="mb-3 p-2 bg-[#f7f1e4] text-sm font-bold text-[#464646] placeholder-[#464646] outline-none"
+            className="mb-3 p-2  bg-[#f7f1e4] text-sm font-bold text-[#464646] placeholder-[#464646] outline-none"
             onChange={handleChange}
             required
           />

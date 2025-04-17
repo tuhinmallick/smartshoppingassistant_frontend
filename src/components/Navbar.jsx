@@ -74,17 +74,20 @@ const Navbar = () => {
         <div className="hidden md:flex items-center space-x-6 text-[#2c2c2c] text-2xl">
           <Link
             to="/notifications"
-            className="hover:text-yellow-400 transition"
+            className="hover:text-yellow-400 transition text-4xl"
           >
             🔔
           </Link>
-          <Link to="/wishlist" className="hover:text-red-400 transition">
+          <Link
+            to="/wishlist"
+            className="hover:text-red-400 transition text-4xl"
+          >
             ❤️
           </Link>
           <div className="relative" ref={menuRef}>
             <button
               onClick={() => setMenuOpen(!menuOpen)}
-              className="hover:text-gray-400 transition"
+              className="hover:text-gray-400 transition text-4xl"
             >
               👤
             </button>
@@ -187,29 +190,15 @@ const Navbar = () => {
             animate={{ height: "auto", opacity: 1 }}
             exit={{ height: 0, opacity: 0 }}
             transition={{ duration: 0.3 }}
-            className="md:hidden bg-[#f7f1e4] shadow-md text-xl text-[#2c2c2c] px-4 py-4 space-y-4"
+            className="md:hidden bg-[#f7f1e4] text-xl text-md text-[#464646] font-bold uppercase shadow-black shadow-lg px-4 py-4 space-y-4"
           >
-            <Link
-              to="/notifications"
-              className="block"
-              onClick={() => setMobileNavOpen(false)}
-            >
-              🔔 Notifications
-            </Link>
-            <Link
-              to="/wishlist"
-              className="block"
-              onClick={() => setMobileNavOpen(false)}
-            >
-              ❤️ Wishlist
-            </Link>
             {!user ? (
               <button
                 onClick={() => {
                   setAuthModalOpen(true);
                   setMobileNavOpen(false);
                 }}
-                className="w-full text-left"
+                className="w-full text-left uppercase"
               >
                 🔑 Log In
               </button>
@@ -234,7 +223,7 @@ const Navbar = () => {
                   className="block"
                   onClick={() => setMobileNavOpen(false)}
                 >
-                  💾 Saved
+                  💾 Wishlist
                 </Link>
                 <Link
                   to="/price-alert"
@@ -248,7 +237,7 @@ const Navbar = () => {
                     logout();
                     setMobileNavOpen(false);
                   }}
-                  className="w-full text-left"
+                  className="w-full text-left uppercase"
                 >
                   🚪 Log Out
                 </button>
@@ -260,9 +249,9 @@ const Navbar = () => {
 
       {isAuthModalOpen && (
         <div className="fixed inset-0 bg-[#2c2c2c] bg-opacity-75 flex justify-center items-center z-50">
-          <div className="relative p-6 bg-white rounded-lg shadow-lg max-w-md w-full">
+          <div className="relative p-6 shadow-lg max-w-md w-full">
             <button
-              className="absolute top-2 right-2 bg-[#fc372d] text-white py-1 px-2 text-sm rounded-xl font-bold"
+              className="absolute top-2 right-2 bg-[#fc372d] text-white py-1 px-2 text-sm font-bold"
               onClick={() => setAuthModalOpen(false)}
             >
               X
