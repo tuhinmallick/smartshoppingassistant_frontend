@@ -304,25 +304,11 @@ const ProductDetails = () => {
 
                   <div className="mt-4 md:mt-0 md:w-1/3 text-center">
                     <p className="mb-2">
-                      {product.discount && parseFloat(product.discount) > 0 ? (
-                        <>
-                          <span className="line-through text-md font-bold text-[#fc372d]">
-                            {product.price} {product.currency}
-                          </span>
-                          <br></br>
-                          <span className="text-xl font-extrabold text-green-600">
-                            {(
-                              parseFloat(product.price) -
-                              parseFloat(product.discount)
-                            ).toFixed(2)}{" "}
-                            {product.currency}
-                          </span>
-                        </>
-                      ) : (
+                     
                         <span className="text-xl font-extrabold text-[#fc372d]">
                           {product.price} {product.currency}
                         </span>
-                      )}
+                      
                     </p>
 
                     <div className="mt-4">
