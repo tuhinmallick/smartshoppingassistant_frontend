@@ -35,7 +35,7 @@ const Signup = ({ setIsFlipped }) => {
         });
 
         setTimeout(() => {
-          setIsFlipped(false); // Go to login
+          setIsFlipped(false);
         }, 2000);
       } else {
         throw new Error("Invalid response from server.");
@@ -47,7 +47,7 @@ const Signup = ({ setIsFlipped }) => {
 
   return (
     <motion.div
-      className="flex flex-col items-center justify-center w-full bg-[#2c2c2c] p-6 shadow-xl rounded-lg"
+      className="w-full max-w-sm sm:max-w-md md:max-w-lg bg-[#2c2c2c] p-6 sm:p-8 shadow-xl mx-auto"
       initial={{ opacity: 0, rotateY: 180 }}
       animate={{ opacity: 1, rotateY: 0 }}
       transition={{ duration: 0.6 }}
@@ -59,9 +59,10 @@ const Signup = ({ setIsFlipped }) => {
           onClose={() => setShowMessage(null)}
         />
       )}
-
-      <div className="w-full text-center">
-        <h2 className="text-4xl font-extrabold text-white mb-4">Sign Up</h2>
+      <div className="text-center">
+        <h2 className="text-3xl sm:text-4xl font-extrabold text-white mb-4">
+          Sign Up
+        </h2>
         <form onSubmit={handleSubmit} className="flex flex-col">
           {[
             "name",
@@ -85,7 +86,7 @@ const Signup = ({ setIsFlipped }) => {
               }
               name={field}
               placeholder={field.charAt(0).toUpperCase() + field.slice(1)}
-              className="mb-3 p-2 bg-[#f7f1e4] text-sm font-bold text-[#464646] placeholder-[#464646] outline-none"
+              className="mb-3 p-2  bg-[#f7f1e4] text-sm font-bold text-[#464646] placeholder-[#464646] outline-none"
               onChange={handleChange}
               required={field !== "about"}
             />

@@ -22,7 +22,7 @@ const SearchForm = () => {
         {/* Input Field */}
         <input
           type="text"
-          placeholder="Search for phones, brands here ..."
+          placeholder="Search phones here ..."
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
           onFocus={() => setIsFocused(true)}
