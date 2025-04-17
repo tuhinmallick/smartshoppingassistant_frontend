@@ -304,11 +304,9 @@ const ProductDetails = () => {
 
                   <div className="mt-4 md:mt-0 md:w-1/3 text-center">
                     <p className="mb-2">
-                   
-                        <span className="text-xl font-extrabold text-[#fc372d]">
+                       <span className="text-xl font-extrabold text-[#fc372d]">
                           {product.price} {product.currency}
                         </span>
-                    
                     </p>
 
                     <div className="mt-4">
