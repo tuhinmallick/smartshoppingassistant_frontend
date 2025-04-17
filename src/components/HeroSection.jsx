@@ -3,39 +3,39 @@ import { Link } from "react-router-dom";
 
 const HeroSection = () => {
   return (
-    <section className="relative w-full flex flex-col md:flex-row items-center pb-10 pt-20 px-20 overflow-hidden">
+    <section className="relative w-full flex flex-col md:flex-row items-center pb-10 pt-16 px-6 md:px-20 overflow-hidden">
       {/* Hero Content */}
-      <div className="relative w-full md:w-1/2 z-10">
-        <h2 className="text-[#fc372d] font-extrabold uppercase">
-          <span className="text-4xl">The</span> <br />
-          <span className="text-8xl">
+      <div className="relative w-full md:w-1/2 z-10 text-center md:text-left">
+        <h2 className="text-[#fc372d] font-extrabold uppercase leading-tight">
+          <span className="text-3xl sm:text-4xl">The</span> <br />
+          <span className="text-5xl sm:text-6xl md:text-8xl">
             Smart <br /> Shoppers
           </span>
           <br />
-          <span className="text-4xl">Corner of the Internet</span>
+          <span className="text-2xl sm:text-3xl">Corner of the Internet</span>
         </h2>
-        <p className="text-xl font-semibold text-[#464646] mt-4">
-          The ultimate platform that helps you find the best deals, <br />
+        <p className="text-base sm:text-lg md:text-xl font-semibold text-[#464646] mt-4">
+          The ultimate platform that helps you find the best deals,{" "}
+          <br className="hidden sm:inline" />
           compare prices, and save money effortlessly!
         </p>
       </div>
 
       {/* Hero Image with Floating Animations */}
-      <div className="relative w-full md:w-1/2 flex justify-center items-center">
+      <div className="relative w-full md:w-1/2 mt-10 md:mt-0 flex justify-center items-center">
         <div className="relative w-full h-full flex justify-center">
           {/* Main Hero Image */}
           <img
             src="./src/assets/herosection.png"
             alt="Hero"
-            className="w-full max-w-md transform transition-all duration-500 hover:scale-105"
+            className="w-4/5 sm:w-3/4 md:max-w-md transform transition-all duration-500 hover:scale-105"
           />
 
-          {/* Floating Elements */}
+          {/* Floating SVG Element */}
           <div
-            className="absolute top-[-5%] right-[15%] w-20 md:w-28"
+            className="absolute top-[-6%] right-[10%] w-16 sm:w-20 md:w-28"
             style={{ animation: "float 5s ease-in-out infinite" }}
           >
-            {/* SVG Lightning Effect */}
             <svg
               xmlns="http://www.w3.org/2000/svg"
               fill="none"
@@ -51,14 +51,16 @@ const HeroSection = () => {
               />
             </svg>
           </div>
+
+          {/* Floating Price Comparison Image */}
           <div
-            className="absolute bottom-[-5%] right-[-5%]"
+            className="absolute bottom-[-6%] md:right-[-8%] w-2/3 sm:w-1/2 md:w-[60%]"
             style={{ animation: "float 4s ease-in-out infinite" }}
           >
             <img
               src="./src/assets/Price_Comparison.png"
-              alt="Price Comparision"
-              className="w-full max-w-lg md:max-w-xl"
+              alt="Price Comparison"
+              className="w-full"
             />
           </div>
         </div>

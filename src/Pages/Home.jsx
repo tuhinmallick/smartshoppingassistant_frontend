@@ -49,9 +49,7 @@ const Home = () => {
       <section className="w-full flex justify-center py-8">
         <SearchForm />
       </section>
-
       <Newsletter />
-
       <section className="w-full py-12 text-center px-4">
         <h2 className="text-6xl font-extrabold uppercase text-[#fc372d] mb-8">
           Hottest Offers
